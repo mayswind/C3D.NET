@@ -25,5 +25,5 @@ for (Int16 i = 0; i &lt; file.AllFrames.Count; i&#43;&#43;)
 <h2><strong>More</strong></h2>
 <p>Codeplex Page:&nbsp;<a href="https://c3d.codeplex.com" target="_blank">https://c3d.codeplex.com</a></p>
 <p>Documentation:&nbsp;<a href="https://c3d.codeplex.com/documentation" target="_blank">https://c3d.codeplex.com/documentation</a></p>
-<p>Github Page:&nbsp;<a href="https://github.com/mayswind/C3D.NET" target="_blank">https://github.com/mayswind/C3D.NET/</a></p>
+<p>Github Page:&nbsp;<a href="https://github.com/mayswind/C3D.NET" target="_blank">https://github.com/mayswind/C3D.NET</a></p>
 <p>A Chinese article about C3D and this project:&nbsp;<a href="http://www.cnblogs.com/mayswind/p/3369090.html" target="_blank">http://www.cnblogs.com/mayswind/p/3369090.html</a></p>
