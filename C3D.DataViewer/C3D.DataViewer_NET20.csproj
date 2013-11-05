@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77ACD799-D2D1-4D66-A713-C3770EF14B0B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C3D.DataViewer</RootNamespace>
+    <AssemblyName>C3D.DataViewer</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\ChartScaleStatus.cs" />
+    <Compile Include="Controls\uc3DPoint.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\uc3DPoint.Designer.cs">
+      <DependentUpon>uc3DPoint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucAnalogLabels.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucAnalogLabels.Designer.cs">
+      <DependentUpon>ucAnalogLabels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucAnalogSamples.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucAnalogSamples.Designer.cs">
+      <DependentUpon>ucAnalogSamples.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucEvents.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucEvents.Designer.cs">
+      <DependentUpon>ucEvents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucHeader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucHeader.Designer.cs">
+      <DependentUpon>ucHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucParameter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucParameter.Designer.cs">
+      <DependentUpon>ucParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucPointLabels.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucPointLabels.Designer.cs">
+      <DependentUpon>ucPointLabels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gesture\Delegate.cs" />
+    <Compile Include="Gesture\MouseGesturedDirection.cs" />
+    <Compile Include="Gesture\MouseGestureEventArgs.cs" />
+    <Compile Include="Gesture\MouseGestureHandler.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\uc3DPoint.resx">
+      <DependentUpon>uc3DPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucAnalogLabels.resx">
+      <DependentUpon>ucAnalogLabels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucAnalogSamples.resx">
+      <DependentUpon>ucAnalogSamples.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucEvents.resx">
+      <DependentUpon>ucEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucHeader.resx">
+      <DependentUpon>ucHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucParameter.resx">
+      <DependentUpon>ucParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucPointLabels.resx">
+      <DependentUpon>ucPointLabels.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="TreeListConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\C3D\C3D_NET20.csproj">
+      <Project>{D389DE86-CC94-45C0-8D82-F98D099368AE}</Project>
+      <Name>C3D</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

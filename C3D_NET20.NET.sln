@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3D_NET20", "C3D\C3D_NET20.csproj", "{99010008-FEC1-4102-9F70-C1A0D98D6471}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3D.DataViewer_NET20", "C3D.DataViewer\C3D.DataViewer_NET20.csproj", "{77ACD799-D2D1-4D66-A713-C3770EF14B0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{99010008-FEC1-4102-9F70-C1A0D98D6471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99010008-FEC1-4102-9F70-C1A0D98D6471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99010008-FEC1-4102-9F70-C1A0D98D6471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99010008-FEC1-4102-9F70-C1A0D98D6471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ACD799-D2D1-4D66-A713-C3770EF14B0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ACD799-D2D1-4D66-A713-C3770EF14B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ACD799-D2D1-4D66-A713-C3770EF14B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ACD799-D2D1-4D66-A713-C3770EF14B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

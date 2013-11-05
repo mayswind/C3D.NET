@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{99010008-FEC1-4102-9F70-C1A0D98D6471}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>C3D</RootNamespace>
+    <AssemblyName>C3D</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>C3D.NET.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractC3DParameter.cs" />
+    <Compile Include="C3DAnalogSamples.cs" />
+    <Compile Include="C3DException.cs" />
+    <Compile Include="C3DFile.cs" />
+    <Compile Include="C3DFrame.cs" />
+    <Compile Include="C3DFrameCollection.cs" />
+    <Compile Include="C3DHeader.cs" />
+    <Compile Include="C3DHeaderEvent.cs" />
+    <Compile Include="C3DParameter.cs" />
+    <Compile Include="C3DParameterCache.cs" />
+    <Compile Include="C3DParameterDictionary.cs" />
+    <Compile Include="C3DParameterGroup.cs" />
+    <Compile Include="C3DParameterType.cs" />
+    <Compile Include="C3DPoint3DData.cs" />
+    <Compile Include="C3DProcessorType.cs" />
+    <Compile Include="C3DReader.cs" />
+    <Compile Include="C3DWriter.cs" />
+    <Compile Include="IO\C3DBinaryReader.cs" />
+    <Compile Include="IO\C3DBinaryWriter.cs" />
+    <Compile Include="Number\C3DBitConverter.cs" />
+    <Compile Include="Number\VAXSingle.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C3D.NET.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

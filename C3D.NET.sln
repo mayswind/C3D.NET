@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3D", "C3D\C3D.csproj", "{A2B772DF-9F26-4820-A159-C68970553063}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3D.DataViewer", "C3D.DataViewer\C3D.DataViewer.csproj", "{982104CC-B610-4771-8F30-AEF097BEB282}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs31
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = C3D.DataViewer\\C3D.DataViewer.csproj
+		SccProjectName1 = C3D.DataViewer
+		SccLocalPath1 = C3D.DataViewer
+		SccProjectUniqueName2 = C3D\\C3D.csproj
+		SccProjectName2 = C3D
+		SccLocalPath2 = C3D
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2B772DF-9F26-4820-A159-C68970553063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2B772DF-9F26-4820-A159-C68970553063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2B772DF-9F26-4820-A159-C68970553063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2B772DF-9F26-4820-A159-C68970553063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{982104CC-B610-4771-8F30-AEF097BEB282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{982104CC-B610-4771-8F30-AEF097BEB282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{982104CC-B610-4771-8F30-AEF097BEB282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{982104CC-B610-4771-8F30-AEF097BEB282}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
