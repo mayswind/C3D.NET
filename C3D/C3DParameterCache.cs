@@ -173,11 +173,15 @@ namespace C3D
             {
                 if (file.Parameters == null || file.Parameters.Count <= 0)
                 {
-                    return new C3DParameterCache(file.Parameters);
+                    return new C3DParameterCache(file.Header);
+                }
+                else if (!file.Parameters.ContainsGroup("POINT") || !file.Parameters.ContainsGroup("ANALOG"))
+                {
+                    return new C3DParameterCache(file.Header);
                 }
                 else
                 {
-                    return new C3DParameterCache(file.Header);
+                    return new C3DParameterCache(file.Parameters);
                 }
             }
             catch
