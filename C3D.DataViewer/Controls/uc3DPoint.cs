@@ -71,6 +71,7 @@ namespace C3D.DataViewer.Controls
             }
 
             this._status[4].Mins[1] = -1.0F;
+            this._status[4].Maxs[1] = Math.Max(this._status[4].Maxs[1], 1.0F);
             #endregion
 
             #region 绑定数据
