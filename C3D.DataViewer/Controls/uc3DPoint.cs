@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using C3D.DataViewer.Gesture;
+using C3D.DataViewer.Helper;
 
 namespace C3D.DataViewer.Controls
 {
@@ -114,35 +115,50 @@ namespace C3D.DataViewer.Controls
         }
         #endregion
 
-        #region 菜单点击事件
+        #region 缩放相关
+        private void gesturehandler_OnMouseGestureUp(object sender, MouseEventArgs e)
+        {
+            ChartZoomHelper.SetChartMouseUp(this._charts[_currentTab]);
+        }
+
+        private void gesturehandler_OnMouseGestureToLeftOrRight(object sender, MouseGestureEventArgs e)
+        {
+            ChartZoomHelper.SetChartMouseMoveLeftOrRight(this._charts[_currentTab], e.Delta);
+        }
+
+        private void gesturehandler_OnMouseGestureToTopOrBottom(object sender, MouseGestureEventArgs e)
+        {
+            ChartZoomHelper.SetChartMouseMoveTopOrBottom(this._charts[_currentTab], e.Delta);
+        }
+
         private void mnuHZoomIn_Click(object sender, EventArgs e)
         {
-            this.Zoom(0, -1);
+            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 0, -1);
         }
 
         private void mnuHZoomOut_Click(object sender, EventArgs e)
         {
-            this.Zoom(0, 1);
+            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 0, 1);
         }
 
         private void mnuHZoomReset_Click(object sender, EventArgs e)
         {
-            this.Zoom(0, 0);
+            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 0, 0);
         }
 
         private void mnuVZoomIn_Click(object sender, EventArgs e)
         {
-            this.Zoom(1, -1);
+            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 1, -1);
         }
 
         private void mnuVZoomOut_Click(object sender, EventArgs e)
         {
-            this.Zoom(1, 1);
+            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 1, 1);
         }
 
         private void mnuVZoomReset_Click(object sender, EventArgs e)
         {
-            this.Zoom(1, 0);
+            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 1, 0);
         }
 
         private void mnuShowMarker_Click(object sender, EventArgs e)
@@ -151,55 +167,6 @@ namespace C3D.DataViewer.Controls
             this._charts[2].Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
             this._charts[3].Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
             this._charts[4].Series[0].MarkerStyle = (this.mnuShowMarker.Checked ? MarkerStyle.Square : MarkerStyle.None);
-        }
-        #endregion
-
-        #region 鼠标手势事件
-        private void gesturehandler_OnMouseGestureUp(object sender, MouseEventArgs e)
-        {
-            this._charts[_currentTab].Cursor = Cursors.Default;
-        }
-
-        private void gesturehandler_OnMouseGestureToLeftOrRight(object sender, MouseGestureEventArgs e)
-        {
-            Axis axis = this._charts[_currentTab].ChartAreas[0].AxisX;
-            Double delta = (axis.ScaleView.ViewMaximum - axis.ScaleView.ViewMinimum) / this._charts[_currentTab].Width * e.Delta;
-
-            if (delta > 0 && axis.ScaleView.ViewMinimum - delta < axis.Minimum)//Mouse To Right
-            {
-                axis.ScaleView.Position += axis.Minimum - axis.ScaleView.ViewMinimum;
-            }
-            else if (delta < 0 && axis.ScaleView.ViewMaximum - delta > axis.Maximum)//Mouse To Left
-            {
-                axis.ScaleView.Position += axis.Maximum - axis.ScaleView.ViewMaximum;
-            }
-            else
-            {
-                axis.ScaleView.Position -= delta;
-            }
-
-            this._charts[_currentTab].Cursor = Cursors.Hand;
-        }
-
-        private void gesturehandler_OnMouseGestureToTopOrBottom(object sender, MouseGestureEventArgs e)
-        {
-            Axis axis = this._charts[_currentTab].ChartAreas[0].AxisY;
-            Double delta = (axis.ScaleView.ViewMaximum - axis.ScaleView.ViewMinimum) / this._charts[_currentTab].Height *e.Delta;
-
-            if (delta > 0 && axis.ScaleView.ViewMaximum + delta > axis.Maximum)//Mouse To Down
-            {
-                axis.ScaleView.Position += axis.Maximum - axis.ScaleView.ViewMaximum;
-            }
-            else if (delta < 0 && axis.ScaleView.ViewMinimum + delta < axis.Minimum)//Mouse To Up
-            {
-                axis.ScaleView.Position += axis.Minimum - axis.ScaleView.ViewMinimum;
-            }
-            else
-            {
-                axis.ScaleView.Position += delta;
-            }
-
-            this._charts[_currentTab].Cursor = Cursors.Hand;
         }
         #endregion
 
@@ -224,52 +191,6 @@ namespace C3D.DataViewer.Controls
             line.BorderWidth = 1;
 
             chart.ChartAreas[0].AxisX.StripLines.Add(line);
-        }
-
-        private void Zoom(Byte type, Int32 scale)
-        {
-            Axis axis = (type == 0 ? this._charts[_currentTab].ChartAreas[0].AxisX : this._charts[_currentTab].ChartAreas[0].AxisY);
-
-            if (scale == 0)//Zoom Reset
-            {
-                axis.Maximum = this._status[_currentTab].Maxs[type];
-                axis.Minimum = this._status[_currentTab].Mins[type];
-                axis.ScaleView.ZoomReset();
-
-                this._status[_currentTab].Scales[type] = scale;
-            }
-            else
-            {
-                Double diff = this._status[_currentTab].Maxs[type] - this._status[_currentTab].Mins[type];
-                Int32 newScale = this._status[_currentTab].Scales[type] + scale;
-
-                if (newScale > 0)
-                {
-                    axis.Maximum = this._status[_currentTab].Maxs[type] + diff * 0.1 * Math.Abs(newScale);
-                    axis.Minimum = this._status[_currentTab].Mins[type] - diff * 0.1 * Math.Abs(newScale);
-                }
-                else if (newScale < 0)
-                {
-                    Double vMax = this._status[_currentTab].Maxs[type] - diff * 0.5 * (1.0 - 1.0 / Math.Pow(2, Math.Abs(newScale)));
-                    Double vMin = this._status[_currentTab].Mins[type] + diff * 0.5 * (1.0 - 1.0 / Math.Pow(2, Math.Abs(newScale)));
-
-                    if (vMin >= vMax)
-                    {
-                        return;
-                    }
-
-                    axis.ScaleView.Zoom(vMin, vMax);
-                }
-                else
-                {
-                    axis.Maximum = this._status[_currentTab].Maxs[type];
-                    axis.Minimum = this._status[_currentTab].Mins[type];
-
-                    axis.ScaleView.ZoomReset();
-                }
-
-                this._status[_currentTab].Scales[type] = newScale;
-            }
         }
         #endregion
     }
