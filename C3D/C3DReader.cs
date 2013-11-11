@@ -162,6 +162,11 @@ namespace C3D
         /// <returns>C3D帧数据</returns>
         internal C3DFrame ReadNextFrame(C3DParameterCache cache)
         {
+            if (cache.FirstDataBlockPosition < 0)
+            {
+                return null;
+            }
+
             if (this._currentFrameIndex >= cache.FrameCount)
             {
                 this._currentFrameIndex = -1;
