@@ -212,8 +212,8 @@ namespace C3D
                 for (Int32 i = 0; i < cache.AnalogChannelCount; i++)
                 {
                     Single data = this._reader.ReadSingle();
-                    analogSamples[i][j] = (data - ((cache.AnalogZeroOffset != null && cache.AnalogZeroOffset.Length > 0) ? cache.AnalogZeroOffset[i] : (Int16)0))
-                        * cache.AnalogGeneralScale * (cache.AnalogChannelScale != null && cache.AnalogChannelScale.Length > 0 ? cache.AnalogChannelScale[i] : 1.0F);
+                    analogSamples[i][j] = (data - ((cache.AnalogZeroOffset != null && cache.AnalogZeroOffset.Length > i) ? cache.AnalogZeroOffset[i] : (Int16)0))
+                        * cache.AnalogGeneralScale * (cache.AnalogChannelScale != null && cache.AnalogChannelScale.Length > i ? cache.AnalogChannelScale[i] : 1.0F);
                 }
             }
 
@@ -245,8 +245,8 @@ namespace C3D
                 for (Int32 i = 0; i < cache.AnalogChannelCount; i++)
                 {
                     Int16 data = this._reader.ReadInt16();
-                    analogSamples[i][j] = (data - ((cache.AnalogZeroOffset != null && cache.AnalogZeroOffset.Length > 0) ? cache.AnalogZeroOffset[i] : (Int16)0))
-                        * cache.AnalogGeneralScale * (cache.AnalogChannelScale != null && cache.AnalogChannelScale.Length > 0 ? cache.AnalogChannelScale[i] : 1.0F);
+                    analogSamples[i][j] = (data - ((cache.AnalogZeroOffset != null && cache.AnalogZeroOffset.Length > i) ? cache.AnalogZeroOffset[i] : (Int16)0))
+                        * cache.AnalogGeneralScale * (cache.AnalogChannelScale != null && cache.AnalogChannelScale.Length > i ? cache.AnalogChannelScale[i] : 1.0F);
                 }
             }
 
