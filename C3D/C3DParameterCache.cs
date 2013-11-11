@@ -104,81 +104,192 @@ namespace C3D
         /// <param name="dictionary">C3D参数字典</param>
         private C3DParameterCache(C3DHeader header, C3DParameterDictionary dictionary)
         {
-            if (dictionary != null && dictionary.ContainsGroup("POINT"))
-            {
-                this.LoadPointsParametersFromDictionary(dictionary);
-            }
-            else if (header != null)
-            {
-                this.LoadPointsParametersFromHeader(header);
-            }
+            this.LoadFirstDataBlockPosition(header, dictionary);
 
-            if (dictionary != null && dictionary.ContainsGroup("ANALOG"))
-            {
-                this.LoadAnalogParametersFromDictionary(dictionary);
-            }
-            else if (header != null)
-            {
-                this.LoadAnalogParametersFromHeader(header);
-            }
+            this.LoadPointCount(header, dictionary);
+            this.LoadScaleFactor(header, dictionary);
+            this.LoadFrameCount(header, dictionary);
+            this.LoadFrameRate(header, dictionary);
+
+            this.LoadAnalogChannelCount(header, dictionary);
+            this.LoadAnalogSamplesPerFrame(header, dictionary);
+
+            this.LoadAnalogGeneralScale(dictionary);
+            this.LoadAnalogChannelScale(dictionary);
+            this.LoadAnalogZeroOffset(dictionary);
         }
         #endregion
 
         #region 私有方法
-        /// <summary>
-        /// 从C3D文件头中读取3D坐标相关参数
-        /// </summary>
-        /// <param name="header">C3D文件头</param>
-        private void LoadPointsParametersFromHeader(C3DHeader header)
+        private void LoadFirstDataBlockPosition(C3DHeader header, C3DParameterDictionary dictionary)
         {
-            this._firstDataBlockPosition = (header.FirstDataSectionID - 1) * C3DFile.SECTION_SIZE;
-
-            this._pointCount = header.PointCount;
-            this._scaleFactor = header.ScaleFactor;
-            this._frameCount = (UInt16)(header.LastFrameIndex - header.FirstFrameIndex + 1);
-            this._frameRate = header.FrameRate;
+            if (dictionary != null && dictionary.ContainsParameter("POINT", "DATA_START"))
+            {
+                this._firstDataBlockPosition = (dictionary["POINT", "DATA_START"].GetData<UInt16>() - 1) * C3DFile.SECTION_SIZE;
+            }
+            else if (header != null)
+            {
+                this._firstDataBlockPosition = (header.FirstDataSectionID - 1) * C3DFile.SECTION_SIZE;
+            }
+            else
+            {
+                this._firstDataBlockPosition = 0;
+            }
         }
 
-        /// <summary>
-        /// 从C3D参数字典中读取3D坐标相关参数
-        /// </summary>
-        /// <param name="dictionary">C3D参数字典</param>
-        private void LoadPointsParametersFromDictionary(C3DParameterDictionary dictionary)
+        private void LoadPointCount(C3DHeader header, C3DParameterDictionary dictionary)
         {
-            this._firstDataBlockPosition = (dictionary["POINT", "DATA_START"].GetData<UInt16>() - 1) * C3DFile.SECTION_SIZE;
-
-            this._pointCount = dictionary["POINT", "USED"].GetData<UInt16>();
-            this._scaleFactor = dictionary["POINT", "SCALE"].GetData<Single>();
-            this._frameCount = dictionary["POINT", "FRAMES"].GetData<UInt16>();
-            this._frameRate = dictionary["POINT", "RATE"].GetData<Single>();
+            if (dictionary != null && dictionary.ContainsParameter("POINT", "USED"))
+            {
+                this._pointCount = dictionary["POINT", "USED"].GetData<UInt16>();
+            }
+            else if (header != null)
+            {
+                this._pointCount = header.PointCount;
+            }
+            else
+            {
+                this._pointCount = 0;
+            }
         }
 
-        /// <summary>
-        /// 从C3D文件头中读取模拟采样相关参数
-        /// </summary>
-        /// <param name="header">C3D文件头</param>
-        private void LoadAnalogParametersFromHeader(C3DHeader header)
+        private void LoadScaleFactor(C3DHeader header, C3DParameterDictionary dictionary)
         {
-            this._analogChannelCount = (UInt16)(header.AnalogSamplesPerFrame != 0 ? header.AnalogMeasurementCount / header.AnalogSamplesPerFrame : 0);
-            this._analogSamplesPerFrame = header.AnalogSamplesPerFrame;
-
-            this._analogGeneralScale = 1.0F;
-            this._analogChannelScale = null;
-            this._analogZeroOffset = null;
+            if (dictionary != null && dictionary.ContainsParameter("POINT", "SCALE"))
+            {
+                this._scaleFactor = dictionary["POINT", "SCALE"].GetData<Single>();
+            }
+            else if (header != null)
+            {
+                this._scaleFactor = header.ScaleFactor;
+            }
+            else
+            {
+                this._scaleFactor = 0;
+            }
         }
 
-        /// <summary>
-        /// 从C3D参数字典中读取模拟采样相关参数
-        /// </summary>
-        /// <param name="dictionary">C3D参数字典</param>
-        private void LoadAnalogParametersFromDictionary(C3DParameterDictionary dictionary)
+        private void LoadFrameCount(C3DHeader header, C3DParameterDictionary dictionary)
         {
-            this._analogChannelCount = dictionary["ANALOG", "USED"].GetData<UInt16>();
-            this._analogSamplesPerFrame = (UInt16)(dictionary["ANALOG", "RATE"].GetData<Single>() / this._frameRate);
+            if (dictionary != null && dictionary.ContainsParameter("POINT", "FRAMES"))
+            {
+                this._frameCount = dictionary["POINT", "FRAMES"].GetData<UInt16>();
+            }
+            else if (header != null)
+            {
+                this._frameCount = (UInt16)(header.LastFrameIndex - header.FirstFrameIndex + 1);
+            }
+            else
+            {
+                this._frameCount = 0;
+            }
+        }
 
-            this._analogGeneralScale = dictionary["ANALOG", "GEN_SCALE"].GetData<Single>();
-            this._analogChannelScale = dictionary["ANALOG", "SCALE"].GetData<Single[]>();
-            this._analogZeroOffset = dictionary["ANALOG", "OFFSET"].GetData<Int16[]>();
+        private void LoadFrameRate(C3DHeader header, C3DParameterDictionary dictionary)
+        {
+            if (dictionary != null && dictionary.ContainsParameter("POINT", "RATE"))
+            {
+                this._frameRate = dictionary["POINT", "RATE"].GetData<Single>();
+            }
+            else if (header != null)
+            {
+                this._frameRate = header.FrameRate;
+            }
+            else
+            {
+                this._frameRate = 0;
+            }
+        }
+
+        private void LoadAnalogChannelCount(C3DHeader header, C3DParameterDictionary dictionary)
+        {
+            if (dictionary != null && dictionary.ContainsParameter("ANALOG", "USED"))
+            {
+                this._analogChannelCount = dictionary["ANALOG", "USED"].GetData<UInt16>();
+            }
+            else if (header != null)
+            {
+                this._analogChannelCount = (UInt16)(header.AnalogSamplesPerFrame != 0 ? header.AnalogMeasurementCount / header.AnalogSamplesPerFrame : 0);
+            }
+            else
+            {
+                this._analogChannelCount = 0;
+            }
+        }
+
+        private void LoadAnalogSamplesPerFrame(C3DHeader header, C3DParameterDictionary dictionary)
+        {
+            if (dictionary != null && dictionary.ContainsParameter("ANALOG", "RATE"))
+            {
+                this._analogSamplesPerFrame = (UInt16)(dictionary["ANALOG", "RATE"].GetData<Single>() / this._frameRate);
+            }
+            else if (header != null)
+            {
+                this._analogSamplesPerFrame = header.AnalogSamplesPerFrame;
+            }
+            else
+            {
+                this._analogSamplesPerFrame = 0;
+            }
+        }
+
+        private void LoadAnalogGeneralScale(C3DParameterDictionary dictionary)
+        {
+            if (dictionary != null && dictionary.ContainsParameter("ANALOG", "GEN_SCALE"))
+            {
+                this._analogGeneralScale = dictionary["ANALOG", "GEN_SCALE"].GetData<Single>();
+            }
+            else
+            {
+                this._analogGeneralScale = 1.0F;
+            }
+        }
+
+        private void LoadAnalogChannelScale(C3DParameterDictionary dictionary)
+        {
+            if (dictionary != null && dictionary.ContainsParameter("ANALOG", "SCALE"))
+            {
+                this._analogChannelScale = this.LoadFromArray<Single>(dictionary["ANALOG", "SCALE"], this._analogChannelCount);
+            }
+            else
+            {
+                this._analogChannelScale = null;
+            }
+        }
+
+        private void LoadAnalogZeroOffset(C3DParameterDictionary dictionary)
+        {
+            if (dictionary != null && dictionary.ContainsParameter("ANALOG", "OFFSET"))
+            {
+                this._analogZeroOffset = this.LoadFromArray<Int16>(dictionary["ANALOG", "OFFSET"], this._analogChannelCount);
+            }
+            else
+            {
+                this._analogZeroOffset = null;
+            }
+        }
+
+        private T[] LoadFromArray<T>(C3DParameter parameter, Int32 size)
+        {
+            Object raw = (parameter != null ? parameter.GetData() : null);
+            T[] ret = null;
+
+            if (raw != null && raw is T[])
+            {
+                ret = raw as T[];
+            }
+            else if (raw != null && raw is T && size > 0)
+            {
+                ret = new T[size];
+                T unit = (T)raw;
+
+                for (Int32 i = 0; i < ret.Length; i++)
+                {
+                    ret[i] = unit;
+                }
+            }
+
+            return ret;
         }
         #endregion
 

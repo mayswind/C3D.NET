@@ -11,25 +11,10 @@ namespace C3D.DataViewer.Controls
 
             String[] labels = (file.Parameters.ContainsParameter("ANALOG", "LABELS") ? file.Parameters["ANALOG", "LABELS"].GetData<String[]>() : null);
             String[] descriptions = (file.Parameters.ContainsParameter("ANALOG", "DESCRIPTIONS") ? file.Parameters["ANALOG", "DESCRIPTIONS"].GetData<String[]>() : null);
-            Int16[] offset = (file.Parameters.ContainsParameter("ANALOG", "OFFSET") ? file.Parameters["ANALOG", "OFFSET"].GetData<Int16[]>() : null);
-            Single[] scale = (file.Parameters.ContainsParameter("ANALOG", "SCALE") ? file.Parameters["ANALOG", "SCALE"].GetData<Single[]>() : null);
-            String[] units = null;
-            var rawunits = (file.Parameters.ContainsParameter("ANALOG", "UNITS") ? file.Parameters["ANALOG", "UNITS"].GetData() : null);
 
-            if (rawunits != null && rawunits is String[])
-            {
-                units = (String[])rawunits;
-            }
-            else if (rawunits != null && labels != null)
-            {
-                units = new String[labels.Length];
-                String unit = rawunits.ToString();
-
-                for (Int32 i = 0; i < units.Length; i++)
-                {
-                    units[i] = unit;
-                }
-            }
+            Int16[] offset = this.LoadFromArray<Int16>(file.Parameters["ANALOG", "OFFSET"], (labels != null ? labels.Length : 0));
+            Single[] scale = this.LoadFromArray<Single>(file.Parameters["ANALOG", "SCALE"], (labels != null ? labels.Length : 0));
+            String[] units = this.LoadFromArray<String>(file.Parameters["ANALOG", "UNITS"], (labels != null ? labels.Length : 0));
 
             if (labels != null && labels.Length > 0)
             {
@@ -42,6 +27,29 @@ namespace C3D.DataViewer.Controls
                         (units != null && units.Length > i ? units[i].TrimEnd() : "")}));
                 }
             }
+        }
+
+        private T[] LoadFromArray<T>(C3DParameter parameter, Int32 size)
+        {
+            Object raw = (parameter != null ? parameter.GetData() : null);
+            T[] ret = null;
+
+            if (raw != null && raw is T[])
+            {
+                ret = raw as T[];
+            }
+            else if (raw != null && raw is T && size > 0)
+            {
+                ret = new T[size];
+                T unit = (T)raw;
+
+                for (Int32 i = 0; i < ret.Length; i++)
+                {
+                    ret[i] = unit;
+                }
+            }
+
+            return ret;
         }
     }
 }
