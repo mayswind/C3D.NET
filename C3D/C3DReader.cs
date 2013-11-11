@@ -145,6 +145,7 @@ namespace C3D
         /// 读取C3D下一帧
         /// </summary>
         /// <param name="cache">C3D参数缓存</param>
+        /// <exception cref="C3DException">帧数据读取错误</exception>
         /// <returns>C3D帧数据</returns>
         internal C3DFrame ReadNextFrame(C3DParameterCache cache)
         {
@@ -171,10 +172,19 @@ namespace C3D
                 return null;
             }
 
-            C3DFrame data = cache.ScaleFactor < 0 ? this.ReadNextFloatFrame(cache) : this.ReadNextIntFrame(cache);
-            this._currentFrameIndex++;
-            
-            return data;
+            C3DFrame data = null;
+
+            try
+            {
+                data = cache.ScaleFactor < 0 ? this.ReadNextFloatFrame(cache) : this.ReadNextIntFrame(cache);
+                this._currentFrameIndex++;
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new C3DException("The frame data has broken.", ex);
+            }
         }
 
         /// <summary>

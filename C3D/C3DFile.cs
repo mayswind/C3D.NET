@@ -86,16 +86,23 @@ namespace C3D
                 this._parameterDictionary = reader.ReadParameters();
                 this._frameCollection = new C3DFrameCollection();
 
-                C3DParameterCache paramCache = C3DParameterCache.CreateCache(this);
-                C3DFrame frame = null;
-                while ((frame = reader.ReadNextFrame(paramCache)) != null)
+                try
                 {
-                    this._frameCollection.Add(frame);
+                    C3DParameterCache paramCache = C3DParameterCache.CreateCache(this);
+                    C3DFrame frame = null;
+                    while ((frame = reader.ReadNextFrame(paramCache)) != null)
+                    {
+                        this._frameCollection.Add(frame);
+                    }
                 }
+                catch { }
             }
             finally
             {
-                reader.Close();
+                if (reader != null)
+                {
+                    reader.Close();
+                }
             }
         }
         #endregion
