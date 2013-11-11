@@ -97,20 +97,11 @@ namespace C3D
         {
             Byte[] data = C3DBitConverter.GetBytes(lastPart);
 
-            if (lastPart > -1)
-            {
-                this._x = x * scaleFactor;
-                this._y = y * scaleFactor;
-                this._z = z * scaleFactor;
-                this._residual = Math.Abs((SByte)data[0] * scaleFactor);
-                this._cameraMask = (Byte)(data[1] & 0x7F);
-            }
-            else
-            {
-                this._x = this._y = this._z = 0;
-                this._residual = -1.0F;
-                this._cameraMask = 0;
-            }
+            this._x = x * scaleFactor;
+            this._y = y * scaleFactor;
+            this._z = z * scaleFactor;
+            this._residual = (lastPart > -1 ? Math.Abs((SByte)data[0] * scaleFactor) : -1.0F);
+            this._cameraMask = (this._residual > -1.0F ? (Byte)(data[1] & 0x7F) : (Byte)0);
         }
 
         /// <summary>
@@ -125,20 +116,11 @@ namespace C3D
         {
             Byte[] data = C3DBitConverter.GetBytes((Int16)lastPart);
 
-            if ((Int16)lastPart > -1)
-            {
-                this._x = x;
-                this._y = y;
-                this._z = z;
-                this._residual = Math.Abs((SByte)data[0] * scaleFactor);
-                this._cameraMask = (Byte)(data[1] & 0x7F);
-            }
-            else
-            {
-                this._x = this._y = this._z = 0;
-                this._residual = -1.0F;
-                this._cameraMask = 0;
-            }
+            this._x = x;
+            this._y = y;
+            this._z = z;
+            this._residual = ((Int16)lastPart > -1 ? Math.Abs((SByte)data[0] * scaleFactor) : -1.0F);
+            this._cameraMask = (this._residual > -1.0F ? (Byte)(data[1] & 0x7F) : (Byte)0);
         }
         #endregion
 
