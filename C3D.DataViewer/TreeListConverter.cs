@@ -63,7 +63,7 @@ namespace C3D.DataViewer
             {
                 for (Int32 i = 0; i < file.AllFrames[0].AnalogSamples.Length; i++)
                 {
-                    String name = (labels != null && labels.Length > i ? labels[i].TrimEnd() : String.Format("ANALOG {0}", i.ToString()));
+                    String name = (labels != null && labels.Length > i ? labels[i].TrimEnd() : String.Format("CHANNEL {0}", i.ToString()));
                     TreeNode treePoint = new TreeNode(String.Format("{0}<{1}>", (i + 1).ToString(), name)) { Tag = "ANALOG|" + i.ToString() };
                     treeNode.Nodes.Add(treePoint);
                 }
