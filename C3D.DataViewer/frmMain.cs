@@ -8,6 +8,8 @@ namespace C3D.DataViewer
 {
     public partial class frmMain : Form
     {
+        private const String PROGRAM_TITLE = "C3D.NET DataViewer";
+
         private String _currentFileName;
         private C3DFile _currentFile;
 
@@ -104,19 +106,27 @@ namespace C3D.DataViewer
         
         private void OpenFile(String filePath)
         {
-            this._currentFileName = filePath;
-            this._currentFile = C3DFile.LoadFromFile(this._currentFileName);
-            this.Text = String.Format("{0} - C3D.NET DataViewer", this._currentFileName);
+            try
+            {
+                this._currentFileName = filePath;
+                this._currentFile = C3DFile.LoadFromFile(this._currentFileName);
+                this.Text = String.Format("{0} - {1}", this._currentFileName, frmMain.PROGRAM_TITLE);
 
-            this.scMain.Panel2.Controls.Clear();
-            this.ShowTreeList();
+                this.scMain.Panel2.Controls.Clear();
+                this.ShowTreeList();
+            }
+            catch (Exception ex)
+            {
+                this.CloseFile();
+                MessageBox.Show(String.Format("Error: {0}", ex.Message), frmMain.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+            }
         }
 
         private void CloseFile()
         {
             this._currentFileName = null;
             this._currentFile = null;
-            this.Text = "C3D.NET DataViewer";
+            this.Text = frmMain.PROGRAM_TITLE;
 
             this.scMain.Panel2.Controls.Clear();
             this.tvItems.Nodes.Clear();
