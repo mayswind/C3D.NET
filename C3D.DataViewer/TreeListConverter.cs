@@ -41,11 +41,14 @@ namespace C3D.DataViewer
             TreeNode treeNode = new TreeNode("3D Data") { Tag = "3D" };
             String[] labels = (file.Parameters.ContainsParameter("POINT", "LABELS") ? file.Parameters["POINT", "LABELS"].GetData<String[]>() : null);
 
-            for (Int32 i = 0; i < file.AllFrames[0].Point3Ds.Length; i++)
+            if (file.AllFrames.Count > 0)
             {
-                String name = (labels != null && labels.Length > i ? labels[i].TrimEnd() : String.Format("POINT {0}", i.ToString()));
-                TreeNode treePoint = new TreeNode(String.Format("{0}<{1}>", (i + 1).ToString(), name)) { Tag = "3D|" + i.ToString() };
-                treeNode.Nodes.Add(treePoint);
+                for (Int32 i = 0; i < file.AllFrames[0].Point3Ds.Length; i++)
+                {
+                    String name = (labels != null && labels.Length > i ? labels[i].TrimEnd() : String.Format("POINT {0}", i.ToString()));
+                    TreeNode treePoint = new TreeNode(String.Format("{0}<{1}>", (i + 1).ToString(), name)) { Tag = "3D|" + i.ToString() };
+                    treeNode.Nodes.Add(treePoint);
+                }
             }
 
             return treeNode;
@@ -56,11 +59,14 @@ namespace C3D.DataViewer
             TreeNode treeNode = new TreeNode("Analog Data") { Tag = "ANALOG" };
             String[] labels = (file.Parameters.ContainsParameter("ANALOG", "LABELS") ? file.Parameters["ANALOG", "LABELS"].GetData<String[]>() : null);
 
-            for (Int32 i = 0; i < file.AllFrames[0].AnalogSamples.Length; i++)
+            if (file.AllFrames.Count > 0)
             {
-                String name = (labels != null && labels.Length > i ? labels[i].TrimEnd() : String.Format("ANALOG {0}", i.ToString()));
-                TreeNode treePoint = new TreeNode(String.Format("{0}<{1}>", (i + 1).ToString(), name)) { Tag = "ANALOG|" + i.ToString() };
-                treeNode.Nodes.Add(treePoint);
+                for (Int32 i = 0; i < file.AllFrames[0].AnalogSamples.Length; i++)
+                {
+                    String name = (labels != null && labels.Length > i ? labels[i].TrimEnd() : String.Format("ANALOG {0}", i.ToString()));
+                    TreeNode treePoint = new TreeNode(String.Format("{0}<{1}>", (i + 1).ToString(), name)) { Tag = "ANALOG|" + i.ToString() };
+                    treeNode.Nodes.Add(treePoint);
+                }
             }
 
             return treeNode;
