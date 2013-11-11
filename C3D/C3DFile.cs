@@ -75,21 +75,28 @@ namespace C3D
 
         private C3DFile(Stream stream)
         {
-            C3DReader reader = new C3DReader(stream);
+            C3DReader reader = null;
 
-            this._processorType = reader.CreateProcessorType;
-            this._header = reader.ReadHeader();
-            this._parameterDictionary = reader.ReadParameters();
-            this._frameCollection = new C3DFrameCollection();
-
-            C3DParameterCache paramCache = C3DParameterCache.CreateCache(this);
-            C3DFrame frame = null;
-            while ((frame = reader.ReadNextFrame(paramCache)) != null)
+            try
             {
-                this._frameCollection.Add(frame);
-            }
+                reader = new C3DReader(stream);
 
-            reader.Close();
+                this._processorType = reader.CreateProcessorType;
+                this._header = reader.ReadHeader();
+                this._parameterDictionary = reader.ReadParameters();
+                this._frameCollection = new C3DFrameCollection();
+
+                C3DParameterCache paramCache = C3DParameterCache.CreateCache(this);
+                C3DFrame frame = null;
+                while ((frame = reader.ReadNextFrame(paramCache)) != null)
+                {
+                    this._frameCollection.Add(frame);
+                }
+            }
+            finally
+            {
+                reader.Close();
+            }
         }
         #endregion
 
