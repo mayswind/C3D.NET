@@ -9,23 +9,23 @@ namespace C3D.DataViewer.Controls
         {
             InitializeComponent();
 
-            String[] labels = (file.Parameters.ContainsParameter("ANALOG", "LABELS") ? file.Parameters["ANALOG", "LABELS"].GetData<String[]>() : null);
-            String[] descriptions = (file.Parameters.ContainsParameter("ANALOG", "DESCRIPTIONS") ? file.Parameters["ANALOG", "DESCRIPTIONS"].GetData<String[]>() : null);
+            UInt16 analogChannelCount = (file.Parameters.ContainsParameter("ANALOG", "USED") ? file.Parameters["ANALOG", "USED"].GetData<UInt16>() :
+                (UInt16)(file.Header.AnalogSamplesPerFrame != 0 ? file.Header.AnalogMeasurementCount / file.Header.AnalogSamplesPerFrame : 0));
 
-            Int16[] offset = this.LoadFromArray<Int16>(file.Parameters["ANALOG", "OFFSET"], (labels != null ? labels.Length : 0));
-            Single[] scale = this.LoadFromArray<Single>(file.Parameters["ANALOG", "SCALE"], (labels != null ? labels.Length : 0));
-            String[] units = this.LoadFromArray<String>(file.Parameters["ANALOG", "UNITS"], (labels != null ? labels.Length : 0));
+            String[] labels = this.LoadFromArray<String>(file.Parameters["ANALOG", "LABELS"], analogChannelCount);
+            String[] descriptions = this.LoadFromArray<String>(file.Parameters["ANALOG", "DESCRIPTIONS"], analogChannelCount);
 
-            if (labels != null && labels.Length > 0)
+            Int16[] offset = this.LoadFromArray<Int16>(file.Parameters["ANALOG", "OFFSET"], analogChannelCount);
+            Single[] scale = this.LoadFromArray<Single>(file.Parameters["ANALOG", "SCALE"], analogChannelCount);
+            String[] units = this.LoadFromArray<String>(file.Parameters["ANALOG", "UNITS"], analogChannelCount);
+
+            for (Int32 i = 0; i < analogChannelCount; i++)
             {
-                for (Int32 i = 0; i < labels.Length; i++)
-                {
-                    this.lvItems.Items.Add(new ListViewItem(new String[] {
-                        (i + 1).ToString(), labels[i].TrimEnd(), (descriptions != null && descriptions.Length > i ? descriptions[i].TrimEnd() : ""),
-                        (offset != null && offset.Length > i ? offset[i].ToString() : ""),
-                        (scale != null && scale.Length > i ? scale[i].ToString() : ""),
-                        (units != null && units.Length > i ? units[i].TrimEnd() : "")}));
-                }
+                this.lvItems.Items.Add(new ListViewItem(new String[] {
+                    (i + 1).ToString(), labels[i].TrimEnd(), (descriptions != null && descriptions.Length > i ? descriptions[i].TrimEnd() : ""),
+                    (offset != null && offset.Length > i ? offset[i].ToString() : ""),
+                    (scale != null && scale.Length > i ? scale[i].ToString() : ""),
+                    (units != null && units.Length > i ? units[i].TrimEnd() : "")}));
             }
         }
 
