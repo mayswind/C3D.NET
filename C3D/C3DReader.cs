@@ -134,20 +134,6 @@ namespace C3D
         /// <summary>
         /// 读取C3D下一帧
         /// </summary>
-        /// <param name="header">C3D文件头</param>
-        /// <returns>C3D帧数据</returns>
-        /// <remarks>
-        /// 万不得已请不要使用此方法，否则模拟数据将读取出现错误。
-        /// 由于文件头不包含AnalogGenScale、AnalogScale、AnalogZeroOffset
-        /// </remarks>
-        internal C3DFrame ReadNextFrame(C3DHeader header)
-        {
-            return this.ReadNextFrame(C3DParameterCache.CreateCache(header));
-        }
-
-        /// <summary>
-        /// 读取C3D下一帧
-        /// </summary>
         /// <param name="dictionary">C3D参数字典</param>
         /// <returns>C3D帧数据</returns>
         public C3DFrame ReadNextFrame(C3DParameterDictionary dictionary)
