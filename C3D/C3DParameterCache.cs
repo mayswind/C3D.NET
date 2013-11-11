@@ -125,7 +125,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "DATA_START"))
             {
-                this._firstDataBlockPosition = (dictionary["POINT", "DATA_START"].GetData<UInt16>() - 1) * C3DFile.SECTION_SIZE;
+                this._firstDataBlockPosition = (Convert.ToUInt16(dictionary["POINT", "DATA_START"].GetData(0)) - 1) * C3DFile.SECTION_SIZE;
             }
             else if (header != null)
             {
@@ -141,7 +141,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "USED"))
             {
-                this._pointCount = dictionary["POINT", "USED"].GetData<UInt16>();
+                this._pointCount = Convert.ToUInt16(dictionary["POINT", "USED"].GetData(0));
             }
             else if (header != null)
             {
@@ -157,7 +157,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "SCALE"))
             {
-                this._scaleFactor = dictionary["POINT", "SCALE"].GetData<Single>();
+                this._scaleFactor = Convert.ToSingle(dictionary["POINT", "SCALE"].GetData(0));
             }
             else if (header != null)
             {
@@ -173,7 +173,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "FRAMES"))
             {
-                this._frameCount = dictionary["POINT", "FRAMES"].GetData<UInt16>();
+                this._frameCount = Convert.ToUInt16(dictionary["POINT", "FRAMES"].GetData(0));
             }
             else if (header != null)
             {
@@ -189,7 +189,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "RATE"))
             {
-                this._frameRate = dictionary["POINT", "RATE"].GetData<Single>();
+                this._frameRate = Convert.ToSingle(dictionary["POINT", "RATE"].GetData(0));
             }
             else if (header != null)
             {
@@ -205,7 +205,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("ANALOG", "USED"))
             {
-                this._analogChannelCount = dictionary["ANALOG", "USED"].GetData<UInt16>();
+                this._analogChannelCount = Convert.ToUInt16(dictionary["ANALOG", "USED"].GetData(0));
             }
             else if (header != null)
             {
@@ -221,7 +221,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("ANALOG", "RATE"))
             {
-                this._analogSamplesPerFrame = (UInt16)(dictionary["ANALOG", "RATE"].GetData<Single>() / this._frameRate);
+                this._analogSamplesPerFrame = (UInt16)(Convert.ToSingle(dictionary["ANALOG", "RATE"].GetData(0)) / this._frameRate);
             }
             else if (header != null)
             {
@@ -237,7 +237,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("ANALOG", "GEN_SCALE"))
             {
-                this._analogGeneralScale = dictionary["ANALOG", "GEN_SCALE"].GetData<Single>();
+                this._analogGeneralScale = Convert.ToSingle(dictionary["ANALOG", "GEN_SCALE"].GetData(0));
             }
             else
             {

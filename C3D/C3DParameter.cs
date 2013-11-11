@@ -100,7 +100,31 @@ namespace C3D
 
         #region GetData
         /// <summary>
-        /// 自动获取第1个参数数据
+        /// 自动获取指定索引的单个数据
+        /// </summary>
+        /// <param name="index">指定索引(从0开始计数)</param>
+        /// <returns>参数数据</returns>
+        public Object GetData(Int32 index)
+        {
+            switch (this._parameterType)
+            {
+                case C3DParameterType.Invalid:
+                    return null;
+                case C3DParameterType.Char:
+                    return this.GetData<Char>(index);
+                case C3DParameterType.Byte:
+                    return this.GetData<Byte>(index);
+                case C3DParameterType.Int16:
+                    return this.GetData<Int16>(index);
+                case C3DParameterType.Single:
+                    return this.GetData<Single>(index);
+            }
+
+            throw new C3DException("Cannot get data automatically.");
+        }
+
+        /// <summary>
+        /// 自动获取参数数据
         /// </summary>
         /// <returns>参数数据</returns>
         public Object GetData()
