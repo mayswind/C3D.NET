@@ -125,7 +125,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "DATA_START"))
             {
-                this._firstDataBlockPosition = (Convert.ToUInt16(dictionary["POINT", "DATA_START"].GetData(0)) - 1) * C3DFile.SECTION_SIZE;
+                this._firstDataBlockPosition = ((UInt16)Convert.ToInt16(dictionary["POINT", "DATA_START"].GetData(0)) - 1) * C3DFile.SECTION_SIZE;
             }
             else if (header != null)
             {
@@ -141,7 +141,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "USED"))
             {
-                this._pointCount = Convert.ToUInt16(dictionary["POINT", "USED"].GetData(0));
+                this._pointCount = (UInt16)Convert.ToInt16(dictionary["POINT", "USED"].GetData(0));
             }
             else if (header != null)
             {
@@ -173,7 +173,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("POINT", "FRAMES"))
             {
-                this._frameCount = Convert.ToUInt16(dictionary["POINT", "FRAMES"].GetData(0));
+                this._frameCount = (UInt16)Convert.ToInt16(dictionary["POINT", "FRAMES"].GetData(0));
             }
             else if (header != null)
             {
@@ -205,7 +205,7 @@ namespace C3D
         {
             if (dictionary != null && dictionary.ContainsParameter("ANALOG", "USED"))
             {
-                this._analogChannelCount = Convert.ToUInt16(dictionary["ANALOG", "USED"].GetData(0));
+                this._analogChannelCount = (UInt16)Convert.ToInt16(dictionary["ANALOG", "USED"].GetData(0));
             }
             else if (header != null)
             {
