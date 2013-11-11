@@ -92,6 +92,7 @@
     <Compile Include="Gesture\MouseGesturedDirection.cs" />
     <Compile Include="Gesture\MouseGestureEventArgs.cs" />
     <Compile Include="Gesture\MouseGestureHandler.cs" />
+    <Compile Include="Helper\ChartZoomHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\uc3DPoint.resx">

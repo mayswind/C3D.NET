@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 using C3D.DataViewer.Controls;
@@ -13,6 +14,16 @@ namespace C3D.DataViewer
         public frmMain()
         {
             InitializeComponent();
+        }
+
+        public frmMain(String filePath)
+        {
+            InitializeComponent();
+
+            if (!String.IsNullOrEmpty(filePath) && File.Exists(filePath))
+            {
+                this.OpenFile(filePath);
+            }
         }
 
         private void frmMain_DragEnter(object sender, DragEventArgs e)
