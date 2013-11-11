@@ -123,17 +123,16 @@ namespace C3D
         #region 私有方法
         private void LoadFirstDataBlockPosition(C3DHeader header, C3DParameterDictionary dictionary)
         {
+            this._firstDataBlockPosition = 0;
+
             if (dictionary != null && dictionary.ContainsParameter("POINT", "DATA_START"))
             {
                 this._firstDataBlockPosition = ((UInt16)Convert.ToInt16(dictionary["POINT", "DATA_START"].GetData(0)) - 1) * C3DFile.SECTION_SIZE;
             }
-            else if (header != null)
+
+            if (header != null && this._firstDataBlockPosition <= 0)
             {
                 this._firstDataBlockPosition = (header.FirstDataSectionID - 1) * C3DFile.SECTION_SIZE;
-            }
-            else
-            {
-                this._firstDataBlockPosition = 0;
             }
         }
 
