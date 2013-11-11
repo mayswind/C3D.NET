@@ -145,11 +145,11 @@ namespace C3D
         /// <param name="dictionary">C3D参数字典</param>
         private void LoadPointsParametersFromDictionary(C3DParameterDictionary dictionary)
         {
-            this._firstDataBlockPosition = ((UInt16)dictionary["POINT", "DATA_START"].GetData<Int16>() - 1) * C3DFile.SECTION_SIZE;
+            this._firstDataBlockPosition = (dictionary["POINT", "DATA_START"].GetData<UInt16>() - 1) * C3DFile.SECTION_SIZE;
 
-            this._pointCount = (UInt16)dictionary["POINT", "USED"].GetData<Int16>();
+            this._pointCount = dictionary["POINT", "USED"].GetData<UInt16>();
             this._scaleFactor = dictionary["POINT", "SCALE"].GetData<Single>();
-            this._frameCount = (UInt16)dictionary["POINT", "FRAMES"].GetData<Int16>();
+            this._frameCount = dictionary["POINT", "FRAMES"].GetData<UInt16>();
             this._frameRate = dictionary["POINT", "RATE"].GetData<Single>();
         }
 
@@ -160,7 +160,7 @@ namespace C3D
         private void LoadAnalogParametersFromHeader(C3DHeader header)
         {
             this._analogChannelCount = (UInt16)(header.AnalogSamplesPerFrame != 0 ? header.AnalogMeasurementCount / header.AnalogSamplesPerFrame : 0);
-            this._analogSamplesPerFrame = (UInt16)header.AnalogSamplesPerFrame;
+            this._analogSamplesPerFrame = header.AnalogSamplesPerFrame;
 
             this._analogGeneralScale = 1.0F;
             this._analogChannelScale = null;
@@ -173,7 +173,7 @@ namespace C3D
         /// <param name="dictionary">C3D参数字典</param>
         private void LoadAnalogParametersFromDictionary(C3DParameterDictionary dictionary)
         {
-            this._analogChannelCount = (UInt16)dictionary["ANALOG", "USED"].GetData<Int16>();
+            this._analogChannelCount = dictionary["ANALOG", "USED"].GetData<UInt16>();
             this._analogSamplesPerFrame = (UInt16)(dictionary["ANALOG", "RATE"].GetData<Single>() / this._frameRate);
 
             this._analogGeneralScale = dictionary["ANALOG", "GEN_SCALE"].GetData<Single>();

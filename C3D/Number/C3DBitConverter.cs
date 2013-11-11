@@ -152,6 +152,31 @@ namespace C3D.Number
 
             return data;
         }
+
+        /// <summary>
+        /// 返回给定数据的字节数组
+        /// </summary>
+        /// <typeparam name="T">给定类型</typeparam>
+        /// <param name="value">给定类型的数据</param>
+        /// <exception cref="C3DException">类型不支持</exception>
+        /// <returns>字节数组</returns>
+        internal static Byte[] GetBytes<T>(T value) where T : IConvertible
+        {
+            if (typeof(T) == typeof(Int16))
+            {
+                return GetBytes(value.ToInt16(null));
+            }
+            else if (typeof(T) == typeof(UInt16))
+            {
+                return GetBytes((Int16)value.ToUInt16(null));
+            }
+            else if (typeof(T) == typeof(Single))
+            {
+                return GetBytes(value.ToSingle(null));
+            }
+
+            throw new C3DException("Parameter type is not supported.");
+        }
         #endregion
 
         #region 私有方法

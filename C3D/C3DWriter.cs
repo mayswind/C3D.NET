@@ -145,8 +145,15 @@ namespace C3D
                 this._writer.Write(lastData);
             }
 
-            this._writer.Write((Byte)param.Description.Length);
-            this._writer.Write(param.GetDescriptionByteArray());
+            if (param.Description == null)
+            {
+                this._writer.Write((Byte)0);
+            }
+            else
+            {
+                this._writer.Write((Byte)param.Description.Length);
+                this._writer.Write(param.GetDescriptionByteArray());
+            }
         }
 
         /// <summary>
@@ -251,7 +258,7 @@ namespace C3D
             C3DParameter dataStart = file.Parameters["POINT", "DATA_START"];
             if (dataStart != null)
             {
-                dataStart.InternalSetData<Int16>((Int16)this._newDataStartBlockIndex);
+                dataStart.InternalSetData<UInt16>(this._newDataStartBlockIndex);
 
                 this._writer.Seek(this._dataStartOffset, SeekOrigin.Begin);
                 this._writer.Write(dataStart.GetLastDataArrayWithoutDescrption());

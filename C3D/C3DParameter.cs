@@ -173,6 +173,11 @@ namespace C3D
                 return (T)(Object)C3DBitConverter.ToInt16(this._parameterData, index * sizeof(Int16));
             }
 
+            if (typeof(T) == typeof(UInt16))
+            {
+                return (T)(Object)(UInt16)C3DBitConverter.ToInt16(this._parameterData, index * sizeof(UInt16));
+            }
+
             if (typeof(T) == typeof(Single))
             {
                 return (T)(Object)C3DBitConverter.ToSingle(this._parameterData, index * sizeof(Single));
@@ -199,10 +204,15 @@ namespace C3D
             {
                 return (T)(Object)this.Get1DArray<Byte>();
             }
-            
+
             if (typeof(T) == typeof(Int16[]))
             {
                 return (T)(Object)this.Get1DArray<Int16>();
+            }
+
+            if (typeof(T) == typeof(UInt16[]))
+            {
+                return (T)(Object)this.Get1DArray<UInt16>();
             }
             
             if (typeof(T) == typeof(Single[]))
@@ -243,6 +253,11 @@ namespace C3D
                 return (T)(Object)this.Get2DArray<Int16>();
             }
 
+            if (typeof(T) == typeof(UInt16[,]))
+            {
+                return (T)(Object)this.Get2DArray<UInt16>();
+            }
+
             if (typeof(T) == typeof(Single[,]))
             {
                 return (T)(Object)this.Get2DArray<Single>();
@@ -263,6 +278,11 @@ namespace C3D
             if (typeof(T) == typeof(Int16[, ,]))
             {
                 return (T)(Object)this.Get3DArray<Int16>();
+            }
+
+            if (typeof(T) == typeof(UInt16[, ,]))
+            {
+                return (T)(Object)this.Get3DArray<UInt16>();
             }
 
             if (typeof(T) == typeof(Single[, ,]))
@@ -486,6 +506,14 @@ namespace C3D
                 return;
             }
 
+            if (typeof(T) == typeof(UInt16))
+            {
+                this.SetDimension();
+                this._parameterType = C3DParameterType.Int16;
+                this._parameterData = C3DBitConverter.GetBytes((Int16)(UInt16)(Object)data);
+                return;
+            }
+
             if (typeof(T) == typeof(Single))
             {
                 this.SetDimension();
@@ -496,7 +524,7 @@ namespace C3D
 
             if (typeof(T) == typeof(String))
             {
-                String s = (String)(Object)data;
+                String s = data as String;
 
                 this.SetDimension((Byte)s.Length);
                 this._parameterType = C3DParameterType.Char;
@@ -508,96 +536,37 @@ namespace C3D
             #region 1D-Array
             if (typeof(T) == typeof(Char[]))
             {
-                Char[] array = ((Char[])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Char);
-
-                this.SetDimension((Byte)array.Length);
-                this._parameterType = C3DParameterType.Char;
-                this._parameterData = new Byte[array.Length * size];
-
-                for (Int32 i = 0; i < array.Length; i++)
-                {
-                    this._parameterData[i] = (Byte)array[i];
-                }
-
+                this.Set1DArray<Char>(data as Char[], C3DParameterType.Char);
                 return;
             }
 
             if (typeof(T) == typeof(Byte[]))
             {
-                Byte[] array = ((Byte[])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Byte);
-
-                this.SetDimension((Byte)array.Length);
-                this._parameterType = C3DParameterType.Byte;
-                this._parameterData = new Byte[array.Length * size];
-
-                for (Int32 i = 0; i < array.Length; i++)
-                {
-                    this._parameterData[i] = array[i];
-                }
-
+                this.Set1DArray<Byte>(data as Byte[], C3DParameterType.Byte);
                 return;
             }
 
             if (typeof(T) == typeof(Int16[]))
             {
-                Int16[] array = ((Int16[])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Int16);
+                this.Set1DArray<Int16>(data as Int16[], C3DParameterType.Int16);
+                return;
+            }
 
-                this.SetDimension((Byte)array.Length);
-                this._parameterType = C3DParameterType.Int16;
-                this._parameterData = new Byte[array.Length * size];
-
-                for (Int32 i = 0; i < array.Length; i++)
-                {
-                    Array.Copy(C3DBitConverter.GetBytes(array[i]), 0, this._parameterData, i * size, size);
-                }
-
+            if (typeof(T) == typeof(UInt16[]))
+            {
+                this.Set1DArray<UInt16>(data as UInt16[], C3DParameterType.Int16);
                 return;
             }
 
             if (typeof(T) == typeof(Single[]))
             {
-                Single[] array = ((Single[])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Single);
-
-                this.SetDimension((Byte)array.Length);
-                this._parameterType = C3DParameterType.Single;
-                this._parameterData = new Byte[array.Length * size];
-
-                for (Int32 i = 0; i < array.Length; i++)
-                {
-                    Array.Copy(C3DBitConverter.GetBytes(array[i]), 0, this._parameterData, i * size, size);
-                }
-
+                this.Set1DArray<Single>(data as Single[], C3DParameterType.Single);
                 return;
             }
 
             if (typeof(T) == typeof(String[]))
             {
-                String[] array = ((String[])(Object)data);
-                Byte count = (Byte)array.Length, maxLen = 0;
-
-                for (Int32 i = 0; i < array.Length; i++)
-                {
-                    maxLen = Math.Max((Byte)array[i].Length, maxLen);
-                }
-
-                this.SetDimension(maxLen, count);
-                this._parameterType = C3DParameterType.Char;
-                this._parameterData = new Byte[count * maxLen];
-
-                for (Int32 i = 0; i < this._parameterData.Length; i++)
-                {
-                    this._parameterData[i] = 0x20;//全部初始化为空格
-                }
-
-                for (Int32 i = 0; i < count; i++)
-                {
-                    this.WrtieStringToBytes(array[i], 0, array[i].Length, this._parameterData, i * maxLen);
-                }
-
+                this.Set1DStringArray(data as String[]);
                 return;
             }
             #endregion
@@ -605,85 +574,31 @@ namespace C3D
             #region 2D-Array
             if (typeof(T) == typeof(Char[,]))
             {
-                Char[,] array = ((Char[,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Char);
-
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1));
-                this._parameterType = C3DParameterType.Char;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        this._parameterData[index++] = (Byte)array[x, y];
-                    }
-                }
-
+                this.Set2DArray<Char>(data as Char[,], C3DParameterType.Char);
                 return;
             }
 
             if (typeof(T) == typeof(Byte[,]))
             {
-                Byte[,] array = ((Byte[,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Byte);
-
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1));
-                this._parameterType = C3DParameterType.Byte;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        this._parameterData[index++] = array[x, y];
-                    }
-                }
-
+                this.Set2DArray<Byte>(data as Byte[,], C3DParameterType.Byte);
                 return;
             }
 
             if (typeof(T) == typeof(Int16[,]))
             {
-                Int16[,] array = ((Int16[,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Int16);
+                this.Set2DArray<Int16>(data as Int16[,], C3DParameterType.Int16);
+                return;
+            }
 
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1));
-                this._parameterType = C3DParameterType.Int16;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        Array.Copy(C3DBitConverter.GetBytes(array[x, y]), 0, this._parameterData, index++ * size, size);
-                    }
-                }
-
+            if (typeof(T) == typeof(UInt16[,]))
+            {
+                this.Set2DArray<UInt16>(data as UInt16[,], C3DParameterType.Int16);
                 return;
             }
 
             if (typeof(T) == typeof(Single[,]))
             {
-                Single[,] array = ((Single[,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Single);
-
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1));
-                this._parameterType = C3DParameterType.Single;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        Array.Copy(C3DBitConverter.GetBytes(array[x, y]), 0, this._parameterData, index++ * size, size);
-                    }
-                }
-
+                this.Set2DArray<Single>(data as Single[,], C3DParameterType.Single);
                 return;
             }
             #endregion
@@ -691,103 +606,139 @@ namespace C3D
             #region 3D-Array
             if (typeof(T) == typeof(Char[, ,]))
             {
-                Char[, ,] array = ((Char[, ,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Char);
-
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1), (Byte)array.GetLength(2));
-                this._parameterType = C3DParameterType.Char;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        for (Int32 z = 0; z < array.GetLength(2); z++)
-                        {
-                            this._parameterData[index++] = (Byte)array[x, y, z];
-                        }
-                    }
-                }
-
+                this.Set3DArray<Char>(data as Char[, ,], C3DParameterType.Char);
                 return;
             }
 
             if (typeof(T) == typeof(Byte[, ,]))
             {
-                Byte[, ,] array = ((Byte[, ,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Byte);
-
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1), (Byte)array.GetLength(2));
-                this._parameterType = C3DParameterType.Byte;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        for (Int32 z = 0; z < array.GetLength(2); z++)
-                        {
-                            this._parameterData[index++] = array[x, y, z];
-                        }
-                    }
-                }
-
+                this.Set3DArray<Byte>(data as Byte[, ,], C3DParameterType.Byte);
                 return;
             }
 
             if (typeof(T) == typeof(Int16[, ,]))
             {
-                Int16[, ,] array = ((Int16[, ,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Int16);
+                this.Set3DArray<Int16>(data as Int16[, ,], C3DParameterType.Int16);
+                return;
+            }
 
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1), (Byte)array.GetLength(2));
-                this._parameterType = C3DParameterType.Int16;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        for (Int32 z = 0; z < array.GetLength(2); z++)
-                        {
-                            Array.Copy(C3DBitConverter.GetBytes(array[x, y, z]), 0, this._parameterData, index++ * size, size);
-                        }
-                    }
-                }
-
+            if (typeof(T) == typeof(UInt16[, ,]))
+            {
+                this.Set3DArray<UInt16>(data as UInt16[, ,], C3DParameterType.Int16);
                 return;
             }
 
             if (typeof(T) == typeof(Single[, ,]))
             {
-                Single[, ,] array = ((Single[, ,])(Object)data);
-                Int32 size = this.GetParameterDataSize(C3DParameterType.Single);
-
-                this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1), (Byte)array.GetLength(2));
-                this._parameterType = C3DParameterType.Single;
-                this._parameterData = new Byte[array.Length * size];
-
-                Int32 index = 0;
-                for (Int32 x = 0; x < array.GetLength(0); x++)
-                {
-                    for (Int32 y = 0; y < array.GetLength(1); y++)
-                    {
-                        for (Int32 z = 0; z < array.GetLength(2); z++)
-                        {
-                            Array.Copy(C3DBitConverter.GetBytes(array[x, y, z]), 0, this._parameterData, index++ * size, size);
-                        }
-                    }
-                }
-
+                this.Set3DArray<Single>(data as Single[, ,], C3DParameterType.Single);
                 return;
             }
             #endregion
 
             throw new C3DException("Parameter type is unknown.");
         }
+
+        #region SetArray
+        private void Set1DArray<T>(T[] array, C3DParameterType type) where T : IConvertible
+        {
+            Int32 size = this.GetParameterDataSize(type);
+
+            this.SetDimension((Byte)array.Length);
+            this._parameterType = type;
+            this._parameterData = new Byte[array.Length * size];
+
+            for (Int32 i = 0; i < array.Length; i++)
+            {
+                if (size == 1)
+                {
+                    this._parameterData[i] = array[i].ToByte(null);
+                }
+                else
+                {
+                    Array.Copy(C3DBitConverter.GetBytes<T>(array[i]), 0, this._parameterData, i * size, size);
+                }
+            }
+        }
+
+        private void Set2DArray<T>(T[,] array, C3DParameterType type) where T : IConvertible
+        {
+            Int32 size = this.GetParameterDataSize(type);
+
+            this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1));
+            this._parameterType = type;
+            this._parameterData = new Byte[array.Length * size];
+
+            Int32 index = 0;
+            for (Int32 x = 0; x < array.GetLength(0); x++)
+            {
+                for (Int32 y = 0; y < array.GetLength(1); y++)
+                {
+                    if (size == 1)
+                    {
+                        this._parameterData[index++] = array[x, y].ToByte(null);
+                    }
+                    else
+                    {
+                        Array.Copy(C3DBitConverter.GetBytes<T>(array[x, y]), 0, this._parameterData, index++ * size, size);
+                    }
+                }
+            }
+        }
+
+        private void Set3DArray<T>(T[, ,] array, C3DParameterType type) where T : IConvertible
+        {
+            Int32 size = this.GetParameterDataSize(type);
+
+            this.SetDimension((Byte)array.GetLength(0), (Byte)array.GetLength(1), (Byte)array.GetLength(2));
+            this._parameterType = type;
+            this._parameterData = new Byte[array.Length * size];
+
+            Int32 index = 0;
+            for (Int32 x = 0; x < array.GetLength(0); x++)
+            {
+                for (Int32 y = 0; y < array.GetLength(1); y++)
+                {
+                    for (Int32 z = 0; z < array.GetLength(2); z++)
+                    {
+                        if (size == 1)
+                        {
+                            this._parameterData[index++] = array[x, y, z].ToByte(null);
+                        }
+                        else
+                        {
+                            Array.Copy(C3DBitConverter.GetBytes<T>(array[x, y, z]), 0, this._parameterData, index++ * size, size);
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region SetStringArray
+        private void Set1DStringArray(String[] array)
+        {
+            Byte count = (Byte)array.Length, maxLen = 0;
+
+            for (Int32 i = 0; i < array.Length; i++)
+            {
+                maxLen = Math.Max((Byte)array[i].Length, maxLen);
+            }
+
+            this.SetDimension(maxLen, count);
+            this._parameterType = C3DParameterType.Char;
+            this._parameterData = new Byte[count * maxLen];
+
+            for (Int32 i = 0; i < this._parameterData.Length; i++)
+            {
+                this._parameterData[i] = 0x20;//全部初始化为空格
+            }
+
+            for (Int32 i = 0; i < count; i++)
+            {
+                this.WrtieStringToBytes(array[i], 0, array[i].Length, this._parameterData, i * maxLen);
+            }
+        }
+        #endregion
         #endregion
 
         #region GetLastDataArrayWithoutDescrption
