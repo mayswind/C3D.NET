@@ -22,7 +22,9 @@ namespace C3D.DataViewer.Controls
             for (Int32 i = 0; i < analogChannelCount; i++)
             {
                 this.lvItems.Items.Add(new ListViewItem(new String[] {
-                    (i + 1).ToString(), labels[i].TrimEnd(), (descriptions != null && descriptions.Length > i ? descriptions[i].TrimEnd() : ""),
+                    (i + 1).ToString(),
+                    (labels != null && labels.Length > i ? labels[i].TrimEnd() : ""),
+                    (descriptions != null && descriptions.Length > i ? descriptions[i].TrimEnd() : ""),
                     (offset != null && offset.Length > i ? offset[i].ToString() : ""),
                     (scale != null && scale.Length > i ? scale[i].ToString() : ""),
                     (units != null && units.Length > i ? units[i].TrimEnd() : "")}));
