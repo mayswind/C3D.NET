@@ -57,10 +57,10 @@ namespace C3D
         /// <summary>
         /// 获取或设置模拟数据测量的个数
         /// </summary>
-        public Int16 AnalogMeasurementCount
+        public UInt16 AnalogMeasurementCount
         {
-            get { return this.GetInt16Record(3); }
-            set { this.SetInt16Record(3, value); }
+            get { return (UInt16)this.GetInt16Record(3); }
+            set { this.SetInt16Record(3, (Int16)value); }
         }
 
         /// <summary>
