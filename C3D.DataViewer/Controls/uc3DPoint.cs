@@ -71,6 +71,12 @@ namespace C3D.DataViewer.Controls
                     point3D.Residual.ToString("F3"), point3D.CameraMaskInfo }));
             }
 
+            for (Int32 i = 1; i <= 3; i++)
+            {
+                this._status[i].Maxs[0] = (this._status[i].Maxs[0] == this._status[i].Mins[0] ? this._status[i].Maxs[0] + 1 : this._status[i].Maxs[0]);
+                this._status[i].Maxs[1] = (this._status[i].Maxs[1] == this._status[i].Mins[1] ? this._status[i].Maxs[1] + 1 : this._status[i].Maxs[1]);
+            }
+
             this._status[4].Mins[1] = -1.0F;
             this._status[4].Maxs[1] = Math.Max(this._status[4].Maxs[1], 1.0F);
             #endregion
