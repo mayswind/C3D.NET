@@ -38,7 +38,6 @@
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.tsMain.SuspendLayout();
             this.ssMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.SuspendLayout();
             this.SuspendLayout();
@@ -139,7 +138,6 @@
             this.ssMain.ResumeLayout(false);
             this.ssMain.PerformLayout();
             this.scMain.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.scMain)).EndInit();
             this.scMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
