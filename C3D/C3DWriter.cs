@@ -14,7 +14,7 @@ namespace C3D
         #region 字段
         private C3DBinaryWriter _writer;
         private Int64 _dataStartOffset;
-        private Int16 _newDataStartBlockIndex;
+        private UInt16 _newDataStartBlockIndex;
         #endregion
 
         #region 构造方法
@@ -106,7 +106,7 @@ namespace C3D
             C3DParameterGroup lastGroup = new C3DParameterGroup(0, "", "");
             this.WriteParameter(null, lastGroup, true);
 
-            this._newDataStartBlockIndex = (Int16)((this._writer.BaseStream.Position + C3DFile.SECTION_SIZE) / C3DFile.SECTION_SIZE + 1);
+            this._newDataStartBlockIndex = (UInt16)((this._writer.BaseStream.Position + C3DFile.SECTION_SIZE) / C3DFile.SECTION_SIZE + 1);
             this._writer.Write(new Byte[(this._newDataStartBlockIndex - 1) * C3DFile.SECTION_SIZE - this._writer.BaseStream.Position]);
 
             this._writer.Seek(startPosition + 2, SeekOrigin.Begin);
@@ -251,7 +251,7 @@ namespace C3D
             C3DParameter dataStart = file.Parameters["POINT", "DATA_START"];
             if (dataStart != null)
             {
-                dataStart.InternalSetData<Int16>(this._newDataStartBlockIndex);
+                dataStart.InternalSetData<Int16>((Int16)this._newDataStartBlockIndex);
 
                 this._writer.Seek(this._dataStartOffset, SeekOrigin.Begin);
                 this._writer.Write(dataStart.GetLastDataArrayWithoutDescrption());

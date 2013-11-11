@@ -102,10 +102,10 @@ namespace C3D
         /// <summary>
         /// 获取或设置每帧模拟样例个数
         /// </summary>
-        public Int16 AnalogSamplesPerFrame
+        public UInt16 AnalogSamplesPerFrame
         {
-            get { return this.GetInt16Record(10); }
-            set { this.SetInt16Record(10, value); }
+            get { return (UInt16)this.GetInt16Record(10); }
+            set { this.SetInt16Record(10, (Int16)value); }
         }
 
         /// <summary>
@@ -157,19 +157,19 @@ namespace C3D
         /// <summary>
         /// 获取或设置3D和模拟数据区第一个Section ID(从1开始计数)
         /// </summary>
-        internal Int16 FirstDataSectionID
+        internal UInt16 FirstDataSectionID
         {
-            get { return this.GetInt16Record(9); }
-            set { this.SetInt16Record(9, value); }
+            get { return (UInt16)this.GetInt16Record(9); }
+            set { this.SetInt16Record(9, (Int16)value); }
         }
 
         /// <summary>
         /// 获取或设置标签和范围开始的SectionID
         /// </summary>
-        internal Int16 FirstLabelRangeSectionID
+        internal UInt16 FirstLabelRangeSectionID
         {
-            get { return this.GetInt16Record(149); }
-            set { this.SetInt16Record(149, value); }
+            get { return (UInt16)this.GetInt16Record(149); }
+            set { this.SetInt16Record(149, (Int16)value); }
         }
         #endregion
         #endregion

@@ -40,7 +40,7 @@ namespace C3D
         /// 初始化新的C3D模拟数据
         /// </summary>
         /// <param name="samplesPerFrame">每帧采样个数</param>
-        public C3DAnalogSamples(Int16 samplesPerFrame)
+        public C3DAnalogSamples(UInt16 samplesPerFrame)
         {
             this._analogSample = new Single[samplesPerFrame];
         }
