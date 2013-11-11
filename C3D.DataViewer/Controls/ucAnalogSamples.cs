@@ -27,7 +27,7 @@ namespace C3D.DataViewer.Controls
             C3DHeaderEvent[] events = file.Header.GetAllHeaderEvents();
             UInt16 firstFrameIndex = file.Header.FirstFrameIndex;
             UInt16 lastFrameIndex = file.Header.LastFrameIndex;
-            UInt16 samplePerFrame = (file.Parameters != null && file.Parameters["ANALOG", "RATE"] != null && file.Parameters["POINT", "RATE"] != null ?
+            UInt16 samplePerFrame = (file.Parameters != null && file.Parameters.ContainsParameter("ANALOG", "RATE") && file.Parameters.ContainsParameter("POINT", "RATE") ?
                 (UInt16)(file.Parameters["ANALOG", "RATE"].GetData<Single>() / file.Parameters["POINT", "RATE"].GetData<Single>()) : file.Header.AnalogSamplesPerFrame);
 
             this._points = new Dictionary<Single, Single>();
