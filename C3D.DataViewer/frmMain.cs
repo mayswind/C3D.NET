@@ -57,7 +57,15 @@ namespace C3D.DataViewer
 
         private void tvItems_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            this.scMain.Panel2.Controls.Clear();
+            while (this.scMain.Panel2.Controls.Count > 0)
+            {
+                Control control = this.scMain.Panel2.Controls[0];
+
+                this.scMain.Panel2.Controls.RemoveAt(0);
+
+                control.Dispose();
+                control = null;
+            }
 
             if (this._currentFile == null)
             {
