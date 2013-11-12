@@ -6,6 +6,13 @@ namespace C3D.DataViewer
 {
     internal static class TreeListConverter
     {
+        internal static TreeNode GetOverviewNode(C3DFile file)
+        {
+            TreeNode overviewNode = new TreeNode("Overview") { Tag = "OVERVIEW" };
+
+            return overviewNode;
+        }
+
         internal static TreeNode GetHeaderNode(C3DFile file)
         {
             TreeNode headerNode = new TreeNode("Header") { Tag = "HEADER" };

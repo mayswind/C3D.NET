@@ -74,13 +74,21 @@ namespace C3D.DataViewer
 
             String tag = e.Node.Tag as String;
 
-            if (tag.Equals("HEADER"))
+            if (tag.Equals("OVERVIEW"))
+            {
+                this.scMain.Panel2.Controls.Add(new ucOverview(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+            }
+            else if (tag.Equals("HEADER"))
             {
                 this.scMain.Panel2.Controls.Add(new ucHeader(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Equals("EVENTS"))
             {
                 this.scMain.Panel2.Controls.Add(new ucEvents(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+            }
+            else if (tag.Equals("PARAMETERS"))
+            {
+                this.scMain.Panel2.Controls.Add(new ucParameterGroup(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Contains("PARAMETERS_GROUP|"))
             {
@@ -144,14 +152,15 @@ namespace C3D.DataViewer
         {
             this.tvItems.Nodes.Clear();
 
-            TreeNode header = TreeListConverter.GetHeaderNode(this._currentFile);
-            this.tvItems.Nodes.Add(header);
+            TreeNode overview = TreeListConverter.GetOverviewNode(this._currentFile);
+            this.tvItems.Nodes.Add(overview);
+            this.tvItems.Nodes.Add(TreeListConverter.GetHeaderNode(this._currentFile));
             this.tvItems.Nodes.Add(TreeListConverter.GetParametersNode(this._currentFile));
             this.tvItems.Nodes.Add(TreeListConverter.Get3DDataNode(this._currentFile));
             this.tvItems.Nodes.Add(TreeListConverter.GetAnalogDataNode(this._currentFile));
 
             this.tvItems.CollapseAll();
-            this.tvItems.SelectedNode = header;
+            this.tvItems.SelectedNode = overview;
         }
     }
 }

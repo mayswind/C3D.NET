@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.lvItems = new System.Windows.Forms.ListView();
-            this.chName = new System.Windows.Forms.ColumnHeader();
-            this.chValue = new System.Windows.Forms.ColumnHeader();
+            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvItems
@@ -53,12 +53,12 @@
             // chName
             // 
             this.chName.Text = "Name";
-            this.chName.Width = 200;
+            this.chName.Width = 210;
             // 
             // chValue
             // 
             this.chValue.Text = "Value";
-            this.chValue.Width = 200;
+            this.chValue.Width = 300;
             // 
             // ucHeader
             // 

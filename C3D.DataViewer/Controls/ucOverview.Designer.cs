@@ -1,6 +1,6 @@
 ﻿namespace C3D.DataViewer.Controls
 {
-    partial class ucParameter
+    partial class ucOverview
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.lvItems = new System.Windows.Forms.ListView();
-            this.chField = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chData = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvItems
             // 
             this.lvItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chField,
-            this.chData});
+            this.chName,
+            this.chValue});
             this.lvItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvItems.FullRowSelect = true;
             this.lvItems.GridLines = true;
@@ -50,23 +50,22 @@
             this.lvItems.UseCompatibleStateImageBehavior = false;
             this.lvItems.View = System.Windows.Forms.View.Details;
             // 
-            // chField
+            // chName
             // 
-            this.chField.Text = "Field";
-            this.chField.Width = 210;
+            this.chName.Text = "Name";
+            this.chName.Width = 210;
             // 
-            // chData
+            // chValue
             // 
-            this.chData.Text = "Data";
-            this.chData.Width = 300;
+            this.chValue.Text = "Value";
+            this.chValue.Width = 300;
             // 
-            // ucParameter
+            // ucOverview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lvItems);
-            this.DoubleBuffered = true;
-            this.Name = "ucParameter";
+            this.Name = "ucOverview";
             this.Size = new System.Drawing.Size(640, 480);
             this.ResumeLayout(false);
 
@@ -75,7 +74,7 @@
         #endregion
 
         private System.Windows.Forms.ListView lvItems;
-        private System.Windows.Forms.ColumnHeader chField;
-        private System.Windows.Forms.ColumnHeader chData;
+        private System.Windows.Forms.ColumnHeader chName;
+        private System.Windows.Forms.ColumnHeader chValue;
     }
 }

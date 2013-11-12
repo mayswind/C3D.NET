@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using C3D.DataViewer.Helper;
+
 namespace C3D.DataViewer.Controls
 {
     public partial class ucPointLabels : UserControl
@@ -9,15 +11,17 @@ namespace C3D.DataViewer.Controls
         {
             InitializeComponent();
 
-            String[] labels = (file.Parameters.ContainsParameter("POINT", "LABELS") ? file.Parameters["POINT", "LABELS"].GetData<String[]>() : null);
-            String[] descriptions = (file.Parameters.ContainsParameter("POINT", "DESCRIPTIONS") ? file.Parameters["POINT", "DESCRIPTIONS"].GetData<String[]>() : null);
+            UInt16 pointCount = (file.Parameters != null && file.Parameters.ContainsParameter("POINT", "USED") ? file.Parameters["POINT", "USED"].GetData<UInt16>() : file.Header.PointCount);
 
-            if (labels != null && labels.Length > 0)
+            String[] labels = C3DParameterHelper.LoadFromParameterArray<String>(file.Parameters["POINT", "LABELS"], pointCount);
+            String[] descriptions = C3DParameterHelper.LoadFromParameterArray<String>(file.Parameters["POINT", "DESCRIPTIONS"], pointCount);
+
+            for (Int32 i = 0; i < pointCount; i++)
             {
-                for (Int32 i = 0; i < labels.Length; i++)
-                {
-                    this.lvItems.Items.Add(new ListViewItem(new String[] { (i + 1).ToString(), labels[i].TrimEnd(), (descriptions != null && descriptions.Length > i ? descriptions[i].TrimEnd() : "") }));
-                }
+                this.lvItems.Items.Add(new ListViewItem(new String[] {
+                    (i + 1).ToString(),
+                    (labels != null && labels.Length > i ? labels[i].TrimEnd() : ""),
+                    (descriptions != null && descriptions.Length > i ? descriptions[i].TrimEnd() : "")}));
             }
         }
     }
