@@ -70,11 +70,23 @@
     <Compile Include="Controls\ucHeader.Designer.cs">
       <DependentUpon>ucHeader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ucOverview.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucOverview.Designer.cs">
+      <DependentUpon>ucOverview.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ucParameter.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ucParameter.Designer.cs">
       <DependentUpon>ucParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ucParameterGroup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ucParameterGroup.Designer.cs">
+      <DependentUpon>ucParameterGroup.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ucPointLabels.cs">
       <SubType>UserControl</SubType>
@@ -92,6 +104,7 @@
     <Compile Include="Gesture\MouseGesturedDirection.cs" />
     <Compile Include="Gesture\MouseGestureEventArgs.cs" />
     <Compile Include="Gesture\MouseGestureHandler.cs" />
+    <Compile Include="Helper\C3DParameterHelper.cs" />
     <Compile Include="Helper\ChartZoomHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,8 +123,14 @@
     <EmbeddedResource Include="Controls\ucHeader.resx">
       <DependentUpon>ucHeader.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucOverview.resx">
+      <DependentUpon>ucOverview.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ucParameter.resx">
       <DependentUpon>ucParameter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ucParameterGroup.resx">
+      <DependentUpon>ucParameterGroup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ucPointLabels.resx">
       <DependentUpon>ucPointLabels.cs</DependentUpon>
