@@ -147,7 +147,7 @@ namespace C3D
         /// <param name="cache">C3D参数缓存</param>
         /// <exception cref="C3DException">帧数据读取错误</exception>
         /// <returns>C3D帧数据</returns>
-        internal C3DFrame ReadNextFrame(C3DParameterCache cache)
+        public C3DFrame ReadNextFrame(C3DParameterCache cache)
         {
             if (cache.FirstDataBlockPosition < 0)
             {

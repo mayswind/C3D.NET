@@ -5,7 +5,7 @@ namespace C3D
     /// <summary>
     /// C3D参数缓存
     /// </summary>
-    internal sealed class C3DParameterCache
+    public sealed class C3DParameterCache
     {
         #region 字段
         private Int32 _firstDataBlockPosition;
@@ -27,7 +27,7 @@ namespace C3D
         /// <summary>
         /// 获取3D和模拟数据区第一个Block位置
         /// </summary>
-        internal Int32 FirstDataBlockPosition
+        public Int32 FirstDataBlockPosition
         {
             get { return this._firstDataBlockPosition; }
         }
@@ -35,7 +35,7 @@ namespace C3D
         /// <summary>
         /// 获取3D坐标点个数
         /// </summary>
-        internal UInt16 PointCount
+        public UInt16 PointCount
         {
             get { return this._pointCount; }
         }
@@ -43,7 +43,7 @@ namespace C3D
         /// <summary>
         /// 获取比例因子(3D浮点坐标为负数)
         /// </summary>
-        internal Single ScaleFactor
+        public Single ScaleFactor
         {
             get { return this._scaleFactor; }
         }
@@ -51,7 +51,7 @@ namespace C3D
         /// <summary>
         /// 获取总帧数
         /// </summary>
-        internal UInt16 FrameCount
+        public UInt16 FrameCount
         {
             get { return this._frameCount; }
         }
@@ -59,7 +59,7 @@ namespace C3D
         /// <summary>
         /// 获取帧率
         /// </summary>
-        internal Single FrameRate
+        public Single FrameRate
         {
             get { return this._frameRate; }
         }
@@ -67,7 +67,7 @@ namespace C3D
         /// <summary>
         /// 获取模拟数据通道的个数
         /// </summary>
-        internal UInt16 AnalogChannelCount
+        public UInt16 AnalogChannelCount
         {
             get { return this._analogChannelCount; }
         }
@@ -75,22 +75,22 @@ namespace C3D
         /// <summary>
         /// 获取每帧模拟样例个数
         /// </summary>
-        internal UInt16 AnalogSamplesPerFrame
+        public UInt16 AnalogSamplesPerFrame
         {
             get { return this._analogSamplesPerFrame; }
         }
 
-        internal Single AnalogGeneralScale
+        public Single AnalogGeneralScale
         {
             get { return this._analogGeneralScale; }
         }
 
-        internal Single[] AnalogChannelScale
+        public Single[] AnalogChannelScale
         {
             get { return this._analogChannelScale; }
         }
 
-        internal Int16[] AnalogZeroOffset
+        public Int16[] AnalogZeroOffset
         {
             get { return this._analogZeroOffset; }
         }
@@ -297,7 +297,7 @@ namespace C3D
         /// 从C3D文件头中创建参数缓存
         /// </summary>
         /// <param name="header">C3D文件头</param>
-        internal static C3DParameterCache CreateCache(C3DHeader header)
+        public static C3DParameterCache CreateCache(C3DHeader header)
         {
             return new C3DParameterCache(header, null);
         }
@@ -306,16 +306,26 @@ namespace C3D
         /// 从C3D参数字典中创建参数缓存
         /// </summary>
         /// <param name="dictionary">C3D参数字典</param>
-        internal static C3DParameterCache CreateCache(C3DParameterDictionary dictionary)
+        public static C3DParameterCache CreateCache(C3DParameterDictionary dictionary)
         {
             return new C3DParameterCache(null, dictionary);
+        }
+
+        /// <summary>
+        /// 从C3D文件头和参数字典中创建参数缓存
+        /// </summary>
+        /// <param name="header">C3D文件头</param>
+        /// <param name="dictionary">C3D参数字典</param>
+        public static C3DParameterCache CreateCache(C3DHeader header, C3DParameterDictionary dictionary)
+        {
+            return new C3DParameterCache(header, dictionary);
         }
 
         /// <summary>
         /// 从C3D文件创建参数缓存
         /// </summary>
         /// <param name="file">C3D文件</param>
-        internal static C3DParameterCache CreateCache(C3DFile file)
+        public static C3DParameterCache CreateCache(C3DFile file)
         {
             return new C3DParameterCache(file.Header, file.Parameters);
         }
