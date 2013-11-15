@@ -6,12 +6,12 @@
 <h2><strong>Examle Usage</strong></h2>
 <p>You can use these code to load a C3D file and output all points.</p>
 <pre>C3DFile file = C3DFile.LoadFromFile("FILE PATH");
-Int16 firstFrameIndex = file.Header.FirstFrameIndex;
-Int16 pointCount = file.Parameters["POINT:USED"].GetData&lt;Int16&gt;();
+UInt16 firstFrameIndex = file.Header.FirstFrameIndex;
+UInt16 pointCount = file.Parameters["POINT:USED"].GetData&lt;UInt16&gt;();
 
-for (Int16 i = 0; i &lt; file.AllFrames.Count; i++)
+for (Int32 i = 0; i &lt; file.AllFrames.Count; i++)
 {
-    for (Int16 j = 0; j &lt; pointCount; j++)
+    for (Int32 j = 0; j &lt; pointCount; j++)
     {
         Console.WriteLine("Frame {0} : X = {1}, Y = {2}, Z = {3}",
             firstFrameIndex + i,
