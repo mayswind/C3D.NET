@@ -27,7 +27,13 @@ namespace C3D.DataViewer.Controls
                 this.lvItems.Items.Add(new ListViewItem(new String[] { "Type", param.C3DParameterType.ToString() }));
 
                 Object data = param.InnerData;
-                if (data != null && (data.GetType() == typeof(Char) || data.GetType() == typeof(Byte) || data.GetType() == typeof(Int16) || data.GetType() == typeof(Single)))
+                if (data != null && data.GetType() == typeof(Int16))
+                {
+                    Int16 num = (Int16)data;
+                    this.lvItems.Items.Add(new ListViewItem(new String[] { "Dimension", "0" }));
+                    this.lvItems.Items.Add(new ListViewItem(new String[] { "Data", (num >= 0 ? num.ToString() : num.ToString() + " (UInt16: " + ((UInt16)num).ToString() + ")") }));
+                }
+                else if (data != null && (data.GetType() == typeof(Char) || data.GetType() == typeof(Byte) || data.GetType() == typeof(Single)))
                 {
                     this.lvItems.Items.Add(new ListViewItem(new String[] { "Dimension", "0" }));
                     this.lvItems.Items.Add(new ListViewItem(new String[] { "Data", data.ToString() }));
