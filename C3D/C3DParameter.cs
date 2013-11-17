@@ -26,7 +26,7 @@ namespace C3D
         }
 
         /// <summary>
-        /// 自动获取第1个参数数据
+        /// 自动获取参数数据
         /// </summary>
         public Object InnerData
         {
