@@ -7,20 +7,20 @@
 <p>You can use these code to load a C3D file and output all points.</p>
 <pre>C3DFile file = C3DFile.LoadFromFile("FILE PATH");
 UInt16 firstFrameIndex = file.Header.FirstFrameIndex;
-UInt16 pointCount = file.Parameters["POINT:USED"].GetData&lt;UInt16&gt;();
+UInt16 pointCount = file.Parameters.GetParameterData&lt;UInt16&gt;("POINT:USED");
 
 for (Int32 i = 0; i &lt; file.AllFrames.Count; i++)
 {
+    C3DFrame frame = file.AllFrames[i];
+
     for (Int32 j = 0; j &lt; pointCount; j++)
     {
+        C3DPoint3DData point3D = frame.Point3Ds[j];
+
         Console.WriteLine("Frame {0} : X = {1}, Y = {2}, Z = {3}",
-            firstFrameIndex + i,
-            file.AllFrames[i].Point3Ds[j].X,
-            file.AllFrames[i].Point3Ds[j].Y ,
-            file.AllFrames[i].Point3Ds[j].Z);
+            firstFrameIndex + i, point3D.X, point3D.Y, point3D.Z);
     }
-}
-</pre>
+}</pre>
 <h2><strong>More</strong></h2>
 <p>CodePlex Page:&nbsp;<a href="https://c3d.codeplex.com" target="_blank">https://c3d.codeplex.com</a><br />
 GitHub Page:&nbsp;<a href="https://github.com/mayswind/C3D.NET" target="_blank">https://github.com/mayswind/C3D.NET</a><br />
