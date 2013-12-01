@@ -42,12 +42,12 @@ namespace C3D
             this._firstParameterBlockIndex = this._reader.ReadByte();
             Byte signature = this._reader.ReadByte();
 
-            if (signature != C3DHeader.SIGNATURE)
+            if (signature != C3DConstants.FILE_SIGNATURE)
             {
                 throw new C3DException("This is not C3D file.");
             }
 
-            Int32 paramsStartPosition = (this._firstParameterBlockIndex - 1) * C3DFile.SECTION_SIZE;
+            Int32 paramsStartPosition = (this._firstParameterBlockIndex - 1) * C3DConstants.FILE_SECTION_SIZE;
             this._reader.BaseStream.Seek(paramsStartPosition + 3, SeekOrigin.Begin);//跳过signature和paramsBlocksCount
             this._processorType = (C3DProcessorType)this._reader.ReadByte();
 
@@ -66,7 +66,7 @@ namespace C3D
         {
             this._reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
-            Byte[] headerData = this._reader.ReadBytes(C3DFile.SECTION_SIZE);
+            Byte[] headerData = this._reader.ReadBytes(C3DConstants.FILE_SECTION_SIZE);
             C3DHeader header = new C3DHeader(this._processorType, headerData);
 
             return header;
@@ -84,13 +84,13 @@ namespace C3D
             Dictionary<Int32, C3DParameterGroup> groups = new Dictionary<Int32, C3DParameterGroup>();
             Dictionary<Int32, List<C3DParameter>> parameters = new Dictionary<Int32, List<C3DParameter>>();
 
-            Int32 startPosition = (this._firstParameterBlockIndex - 1) * C3DFile.SECTION_SIZE;
+            Int32 startPosition = (this._firstParameterBlockIndex - 1) * C3DConstants.FILE_SECTION_SIZE;
             this._reader.BaseStream.Seek(startPosition + 2, SeekOrigin.Begin);//跳过前2个字节
 
             Byte paramsBlocksCount = this._reader.ReadByte();//Parameter所占Block数量
             Byte processorType = this._reader.ReadByte();
 
-            Int64 endPosition = startPosition + paramsBlocksCount * C3DFile.SECTION_SIZE;
+            Int64 endPosition = startPosition + paramsBlocksCount * C3DConstants.FILE_SECTION_SIZE;
             Int16 nextPosition = 0;
 
             do
@@ -126,7 +126,7 @@ namespace C3D
             }
             while (nextPosition > 0 && this._reader.BaseStream.Position < endPosition);
 
-            return new C3DParameterDictionary(groups, parameters);
+            return C3DParameterDictionary.CreateParameterDictionaryFromParameterList(groups, parameters);
         }
         #endregion
 

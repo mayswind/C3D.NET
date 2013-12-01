@@ -10,28 +10,6 @@ namespace C3D
     /// </summary>
     public sealed class C3DHeader
     {
-        #region 常量
-        /// <summary>
-        /// 默认参数部分开始的Section ID
-        /// </summary>
-        private const Byte DEFAULT_FIRST_PARAM_SECTION = 0x02;
-
-        /// <summary>
-        /// 文件标识符
-        /// </summary>
-        internal const Byte SIGNATURE = 0x50;
-
-        /// <summary>
-        /// 关键值
-        /// </summary>
-        internal const Int16 KEY_VALUE = 0x3039;
-
-        /// <summary>
-        /// 最多事件数
-        /// </summary>
-        internal const Int16 MAX_EVENTS_COUNT = 0x12;
-        #endregion
-
         #region 字段
         private Byte[] _data;
         #endregion
@@ -122,8 +100,8 @@ namespace C3D
         /// </summary>
         public Boolean HasLableRangeData
         {
-            get { return this.GetInt16Record(148) == C3DHeader.KEY_VALUE; }
-            set { this.SetInt16Record(148, (value ? C3DHeader.KEY_VALUE : (Int16)0)); }
+            get { return this.GetInt16Record(148) == C3DConstants.FILEHEADER_KEY_VALUE; }
+            set { this.SetInt16Record(148, (value ? C3DConstants.FILEHEADER_KEY_VALUE : (Int16)0)); }
         }
 
         /// <summary>
@@ -131,8 +109,8 @@ namespace C3D
         /// </summary>
         public Boolean IsSupport4CharsLabel
         {
-            get { return this.GetInt16Record(150) == C3DHeader.KEY_VALUE; }
-            set { this.SetInt16Record(150, (value ? C3DHeader.KEY_VALUE : (Int16)0)); }
+            get { return this.GetInt16Record(150) == C3DConstants.FILEHEADER_KEY_VALUE; }
+            set { this.SetInt16Record(150, (value ? C3DConstants.FILEHEADER_KEY_VALUE : (Int16)0)); }
         }
 
         /// <summary>
@@ -192,17 +170,17 @@ namespace C3D
         /// </summary>
         internal C3DHeader()
         {
-            this._data = new Byte[C3DFile.SECTION_SIZE];
+            this._data = new Byte[C3DConstants.FILE_SECTION_SIZE];
 
-            this.Signature = C3DHeader.SIGNATURE;
-            this.FirstParameterSectionID = C3DHeader.DEFAULT_FIRST_PARAM_SECTION;
-            this.PointCount = 0;
-            this.AnalogMeasurementCount = 0;
-            this.FirstFrameIndex = 1;
-            this.LastFrameIndex = 1;
-            this.ScaleFactor = -1.0F;
-            this.AnalogSamplesPerFrame = 0;
-            this.FrameRate = 60.0F;
+            this.Signature = C3DConstants.FILE_SIGNATURE;
+            this.FirstParameterSectionID = C3DConstants.FILE_DEFAULT_FIRST_PARAM_SECTION;
+            this.PointCount = C3DConstants.DEFAULT_POINT_USED;
+            this.AnalogMeasurementCount = (UInt16)(C3DConstants.DEFAULT_POINT_RATE * C3DConstants.DEFAULT_ANALOG_RATE * C3DConstants.DEFAULT_ANALOG_USED);
+            this.FirstFrameIndex = C3DConstants.DEFAULT_POINT_FIRST_FRAME;
+            this.LastFrameIndex = C3DConstants.DEFAULT_POINT_LAST_FRAME;
+            this.ScaleFactor = C3DConstants.DEFAULT_POINT_SCALE;
+            this.AnalogSamplesPerFrame = (UInt16)(C3DConstants.DEFAULT_ANALOG_RATE / C3DConstants.DEFAULT_POINT_RATE);
+            this.FrameRate = C3DConstants.DEFAULT_POINT_RATE;
             this.IsSupport4CharsLabel = true;
         }
         #endregion
@@ -220,9 +198,9 @@ namespace C3D
             {
                 return null;
             }
-            else if (count > C3DHeader.MAX_EVENTS_COUNT)
+            else if (count > C3DConstants.FILEHEADER_MAX_EVENTS_COUNT)
             {
-                count = C3DHeader.MAX_EVENTS_COUNT;
+                count = C3DConstants.FILEHEADER_MAX_EVENTS_COUNT;
             }
 
             C3DHeaderEvent[] array = new C3DHeaderEvent[count];
@@ -247,7 +225,7 @@ namespace C3D
         {
             Int16 count = (Int16)(events != null ? events.Length : 0);
 
-            if (count > C3DHeader.MAX_EVENTS_COUNT)
+            if (count > C3DConstants.FILEHEADER_MAX_EVENTS_COUNT)
             {
                 throw new ArgumentOutOfRangeException("Header events is too much.");
             }

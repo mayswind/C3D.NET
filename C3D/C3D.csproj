@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="AbstractC3DParameter.cs" />
     <Compile Include="C3DAnalogSamples.cs" />
+    <Compile Include="C3DConstants.cs" />
     <Compile Include="C3DException.cs" />
     <Compile Include="C3DFile.cs" />
     <Compile Include="C3DFrame.cs" />

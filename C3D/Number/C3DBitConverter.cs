@@ -46,7 +46,7 @@ namespace C3D.Number
         /// <returns>16位浮点数字</returns>
         internal static Int16 ToInt16(Byte[] data, Int32 startIndex)
         {
-            return ToInt16(C3DFile.DEFAULT_PROCESSOR_TYPE, data, startIndex);
+            return ToInt16(C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE, data, startIndex);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace C3D.Number
         /// <returns>16位浮点数字</returns>
         internal static Int16 ToInt16(Byte[] data)
         {
-            return ToInt16(C3DFile.DEFAULT_PROCESSOR_TYPE, data, 0);
+            return ToInt16(C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE, data, 0);
         }
         #endregion
 
@@ -104,7 +104,7 @@ namespace C3D.Number
         /// <returns>32位单精度浮点数字</returns>
         internal static Single ToSingle(Byte[] data, Int32 startIndex)
         {
-            return ToSingle(C3DFile.DEFAULT_PROCESSOR_TYPE, data, startIndex);
+            return ToSingle(C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE, data, startIndex);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace C3D.Number
         /// <returns>32位单精度浮点数字</returns>
         internal static Single ToSingle(Byte[] data)
         {
-            return ToSingle(C3DFile.DEFAULT_PROCESSOR_TYPE, data, 0);
+            return ToSingle(C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE, data, 0);
         }
         #endregion
 
@@ -128,7 +128,7 @@ namespace C3D.Number
         {
             Byte[] data = BitConverter.GetBytes(value);
 
-            if (C3DBitConverter.IsNeedReverse(C3DFile.DEFAULT_PROCESSOR_TYPE))
+            if (C3DBitConverter.IsNeedReverse(C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE))
             {
                 Array.Reverse(data, 0, 2);
             }
@@ -145,7 +145,7 @@ namespace C3D.Number
         {
             Byte[] data = BitConverter.GetBytes(value);
 
-            if (C3DBitConverter.IsNeedReverse(C3DFile.DEFAULT_PROCESSOR_TYPE))
+            if (C3DBitConverter.IsNeedReverse(C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE))
             {
                 Array.Reverse(data, 0, 4);
             }

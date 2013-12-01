@@ -33,7 +33,7 @@ namespace C3D.IO
         internal C3DBinaryReader(Stream input)
         {
             this._stream = input;
-            this._processorType = C3DFile.DEFAULT_PROCESSOR_TYPE;
+            this._processorType = C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE;
         }
         #endregion
 

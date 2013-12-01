@@ -127,12 +127,17 @@ namespace C3D
 
             if (dictionary != null && dictionary.ContainsParameter("POINT", "DATA_START"))
             {
-                this._firstDataBlockPosition = ((UInt16)Convert.ToInt16(dictionary["POINT", "DATA_START"].GetData(0)) - 1) * C3DFile.SECTION_SIZE;
+                this._firstDataBlockPosition = ((UInt16)Convert.ToInt16(dictionary["POINT", "DATA_START"].GetData(0)) - 1) * C3DConstants.FILE_SECTION_SIZE;
             }
 
             if (header != null && this._firstDataBlockPosition <= 0)
             {
-                this._firstDataBlockPosition = (header.FirstDataSectionID - 1) * C3DFile.SECTION_SIZE;
+                this._firstDataBlockPosition = (header.FirstDataSectionID - 1) * C3DConstants.FILE_SECTION_SIZE;
+            }
+
+            if (this._firstDataBlockPosition <= 0)
+            {
+                this._firstDataBlockPosition = (C3DConstants.FILE_DEFAULT_FIRST_PARAM_SECTION - 1) * C3DConstants.FILE_SECTION_SIZE;
             }
         }
 
@@ -148,7 +153,7 @@ namespace C3D
             }
             else
             {
-                this._pointCount = 0;
+                this._pointCount = C3DConstants.DEFAULT_POINT_USED;
             }
         }
 
@@ -164,7 +169,7 @@ namespace C3D
             }
             else
             {
-                this._scaleFactor = 0;
+                this._scaleFactor = C3DConstants.DEFAULT_POINT_SCALE;
             }
         }
 
@@ -180,7 +185,7 @@ namespace C3D
             }
             else
             {
-                this._frameCount = 0;
+                this._frameCount = C3DConstants.DEFAULT_POINT_LAST_FRAME - C3DConstants.DEFAULT_POINT_FIRST_FRAME + 1;
             }
         }
 
@@ -196,7 +201,7 @@ namespace C3D
             }
             else
             {
-                this._frameRate = 0;
+                this._frameRate = C3DConstants.DEFAULT_POINT_RATE;
             }
         }
 
@@ -212,7 +217,7 @@ namespace C3D
             }
             else
             {
-                this._analogChannelCount = 0;
+                this._analogChannelCount = C3DConstants.DEFAULT_ANALOG_USED;
             }
         }
 
@@ -228,7 +233,7 @@ namespace C3D
             }
             else
             {
-                this._analogSamplesPerFrame = 0;
+                this._analogSamplesPerFrame = (UInt16)(C3DConstants.DEFAULT_ANALOG_RATE / C3DConstants.DEFAULT_POINT_RATE);
             }
         }
 
@@ -240,7 +245,7 @@ namespace C3D
             }
             else
             {
-                this._analogGeneralScale = 1.0F;
+                this._analogGeneralScale = C3DConstants.DEFAULT_ANALOG_GEN_SCALE;
             }
         }
 

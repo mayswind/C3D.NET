@@ -89,6 +89,22 @@ namespace C3D
         }
 
         /// <summary>
+        /// 向参数组内添加一个参数项并返回该项
+        /// </summary>
+        /// <typeparam name="T">参数项数据类型</typeparam>
+        /// <param name="name">参数项名称</param>
+        /// <param name="description">参数项描述</param>
+        /// <param name="data">参数项数据</param>
+        /// <exception cref="ArgumentException">参数项名称已存在</exception>
+        public C3DParameter Add<T>(String name, String description, T data)
+        {
+            C3DParameter param = this.Add(name, description);
+            param.SetData<T>(data);
+
+            return param;
+        }
+
+        /// <summary>
         /// 判断参数组内是否存在指定参数名称的参数项
         /// </summary>
         /// <param name="name">参数名称</param>

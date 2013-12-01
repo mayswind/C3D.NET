@@ -38,7 +38,7 @@ namespace C3D
             this._dataStartOffset = 0;
             this._newDataStartBlockIndex = 0;
 
-            this._writer.Write(new Byte[C3DFile.SECTION_SIZE]);
+            this._writer.Write(new Byte[C3DConstants.FILE_SECTION_SIZE]);
             this.WriteParameters(file.Header.FirstParameterSectionID, file.Parameters);
 
             C3DParameterCache paramCache = C3DParameterCache.CreateCache(file);
@@ -83,12 +83,12 @@ namespace C3D
         /// <param name="dictionary">C3D文件参数字典</param>
         private void WriteParameters(Byte firstParameterBlockIndex, C3DParameterDictionary dictionary)
         {
-            Int32 startPosition = (firstParameterBlockIndex - 1) * C3DFile.SECTION_SIZE;
+            Int32 startPosition = (firstParameterBlockIndex - 1) * C3DConstants.FILE_SECTION_SIZE;
             this._writer.Seek(startPosition, SeekOrigin.Begin);
-            this._writer.Write(C3DParameterDictionary.FIRST_PARAM_BLOCK);
-            this._writer.Write(C3DParameterDictionary.SIGNATURE);
+            this._writer.Write(C3DConstants.FILEPARAMETER_FIRST_PARAM_BLOCK);
+            this._writer.Write(C3DConstants.FILEPARAMETER_SIGNATURE);
             this._writer.Write((Byte)0);//Parameter所占Block数量占位
-            this._writer.Write((Byte)C3DFile.DEFAULT_PROCESSOR_TYPE);
+            this._writer.Write((Byte)C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE);
 
             foreach (C3DParameterGroup group in dictionary)
             {
@@ -106,8 +106,8 @@ namespace C3D
             C3DParameterGroup lastGroup = new C3DParameterGroup(0, "", "");
             this.WriteParameter(null, lastGroup, true);
 
-            this._newDataStartBlockIndex = (UInt16)((this._writer.BaseStream.Position + C3DFile.SECTION_SIZE) / C3DFile.SECTION_SIZE + 1);
-            this._writer.Write(new Byte[(this._newDataStartBlockIndex - 1) * C3DFile.SECTION_SIZE - this._writer.BaseStream.Position]);
+            this._newDataStartBlockIndex = (UInt16)((this._writer.BaseStream.Position + C3DConstants.FILE_SECTION_SIZE) / C3DConstants.FILE_SECTION_SIZE + 1);
+            this._writer.Write(new Byte[(this._newDataStartBlockIndex - 1) * C3DConstants.FILE_SECTION_SIZE - this._writer.BaseStream.Position]);
 
             this._writer.Seek(startPosition + 2, SeekOrigin.Begin);
             this._writer.Write((Byte)(this._newDataStartBlockIndex - 2));//减去Header所占第1个Block
@@ -163,7 +163,7 @@ namespace C3D
         /// <param name="frameCollection">C3D帧集合</param>
         private void WriteFrameCollection(C3DParameterCache cache, C3DFrameCollection frameCollection)
         {
-            Int32 startPosition = (this._newDataStartBlockIndex - 1) * C3DFile.SECTION_SIZE;
+            Int32 startPosition = (this._newDataStartBlockIndex - 1) * C3DConstants.FILE_SECTION_SIZE;
             this._writer.Seek(startPosition, SeekOrigin.Begin);
 
             for (Int32 i = 0; i < frameCollection.Count; i++)
@@ -178,8 +178,8 @@ namespace C3D
                 }
             }
 
-            Int16 finalIndex = (Int16)((this._writer.BaseStream.Position + C3DFile.SECTION_SIZE) / C3DFile.SECTION_SIZE + 1);
-            this._writer.Write(new Byte[(finalIndex - 1) * C3DFile.SECTION_SIZE - this._writer.BaseStream.Position]);
+            Int16 finalIndex = (Int16)((this._writer.BaseStream.Position + C3DConstants.FILE_SECTION_SIZE) / C3DConstants.FILE_SECTION_SIZE + 1);
+            this._writer.Write(new Byte[(finalIndex - 1) * C3DConstants.FILE_SECTION_SIZE - this._writer.BaseStream.Position]);
         }
 
         /// <summary>

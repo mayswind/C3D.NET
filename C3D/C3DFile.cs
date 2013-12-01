@@ -9,18 +9,6 @@ namespace C3D
     /// </summary>
     public sealed class C3DFile
     {
-        #region 常量
-        /// <summary>
-        /// 文档Section大小(字节)
-        /// </summary>
-        internal const Int32 SECTION_SIZE = 0x200;
-
-        /// <summary>
-        /// CPU类型
-        /// </summary>
-        internal const C3DProcessorType DEFAULT_PROCESSOR_TYPE = C3DProcessorType.Intel;
-        #endregion
-
         #region 字段
         private C3DProcessorType _processorType;
         private C3DHeader _header;
@@ -67,9 +55,9 @@ namespace C3D
         #region 构造方法
         private C3DFile()
         {
-            this._processorType = C3DFile.DEFAULT_PROCESSOR_TYPE;
+            this._processorType = C3DConstants.FILE_DEFAULT_PROCESSOR_TYPE;
             this._header = new C3DHeader();
-            this._parameterDictionary = new C3DParameterDictionary();
+            this._parameterDictionary = C3DParameterDictionary.CreateNewParameterDictionary();
             this._frameCollection = new C3DFrameCollection();
         }
 

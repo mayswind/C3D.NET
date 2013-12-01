@@ -9,18 +9,6 @@ namespace C3D
     /// </summary>
     public sealed class C3DParameterDictionary : IEnumerable<C3DParameterGroup>, ICollection<C3DParameterGroup>
     {
-        #region 常量
-        /// <summary>
-        /// 第一块参数位置
-        /// </summary>
-        internal const Byte FIRST_PARAM_BLOCK = 0x01;
-
-        /// <summary>
-        /// 参数块标识符
-        /// </summary>
-        internal const Byte SIGNATURE = 0x50;
-        #endregion
-
         #region 字段
         private IDictionary<Int32, C3DParameterGroup> _paramGroups = null;
         #endregion
@@ -29,40 +17,9 @@ namespace C3D
         /// <summary>
         /// 初始化空的C3D参数字典
         /// </summary>
-        public C3DParameterDictionary()
+        private C3DParameterDictionary()
         {
             this._paramGroups = new SortedDictionary<Int32, C3DParameterGroup>();
-        }
-
-        /// <summary>
-        /// 初始化新的C3D参数字典
-        /// </summary>
-        /// <param name="signature">参数字典标识符</param>
-        /// <param name="groups">C3D参数组字典</param>
-        /// <param name="parameters">C3D参数项字典</param>
-        internal C3DParameterDictionary(IDictionary<Int32, C3DParameterGroup> groups, IDictionary<Int32, List<C3DParameter>> parameters)
-        {
-            this._paramGroups = new SortedDictionary<Int32, C3DParameterGroup>();
-
-            if (groups == null || groups.Count <= 0)
-            {
-                return;
-            }
-
-            foreach (KeyValuePair<Int32, C3DParameterGroup> pair in groups)
-            {
-                List<C3DParameter> list = null;
-                
-                if (pair.Key > 0 && parameters.TryGetValue(pair.Key, out list))
-                {
-                    for (Int32 i = 0; i < list.Count; i++)
-                    {
-                        pair.Value[list[i].Name] = list[i];
-                    }
-
-                    this._paramGroups[pair.Key] = pair.Value;
-                }
-            }
         }
         #endregion
 
@@ -72,6 +29,7 @@ namespace C3D
         /// </summary>
         /// <param name="groupName">参数组名称</param>
         /// <param name="parameterName">参数项名称</param>
+        /// <exception cref="C3DException">参数组不存在</exception>
         /// <returns>参数项</returns>
         public C3DParameter this[String groupName, String parameterName]
         {
@@ -271,26 +229,23 @@ namespace C3D
         }
 
         /// <summary>
-        /// 添加C3D参数组
+        /// 设置C3D参数组
         /// </summary>
         /// <param name="id">参数组ID(大于0的数字)</param>
         /// <param name="name">参数组名称</param>
         /// <param name="description">参数组描述</param>
-        /// <exception cref="ArgumentException">参数组ID已存在</exception>
-        /// <exception cref="ArgumentException">参数组ID小于等于0</exception>
-        public void AddGroup(Byte id, String name, String description)
+        /// <exception cref="ArgumentOutOfRangeException">参数组ID小于等于0</exception>
+        public C3DParameterGroup SetGroup(Byte id, String name, String description)
         {
-            if (this._paramGroups.ContainsKey(id))
-            {
-                throw new ArgumentException("This parameter group ID exists.");
-            }
-
             if (id <= 0)
             {
                 throw new ArgumentOutOfRangeException("Parameter group ID cannot be less than or equal zero.");
             }
 
-            this._paramGroups[id] = new C3DParameterGroup((SByte)(-id), name.ToUpperInvariant(), description);
+            C3DParameterGroup group = new C3DParameterGroup((SByte)(-id), name.ToUpperInvariant(), description);
+            this._paramGroups[id] = group;
+
+            return group;
         }
 
         /// <summary>
@@ -397,6 +352,78 @@ namespace C3D
             }
         }
         #endregion
+        #endregion
+
+        #region 静态方法
+        /// <summary>
+        /// 创建完全空的C3D参数组字典
+        /// </summary>
+        /// <returns>C3D参数组字典</returns>
+        public static C3DParameterDictionary CreateEmptyParameterDictionary()
+        {
+            return new C3DParameterDictionary();
+        }
+
+        /// <summary>
+        /// 创建新的C3D参数组字典
+        /// </summary>
+        /// <returns>C3D参数组字典</returns>
+        public static C3DParameterDictionary CreateNewParameterDictionary()
+        {
+            C3DParameterDictionary dict = new C3DParameterDictionary();
+
+            C3DParameterGroup groupPoint = dict.SetGroup(1, "POINT", "");
+            groupPoint.Add<UInt16>("USED", "", C3DConstants.DEFAULT_POINT_USED);
+            groupPoint.Add<Single>("SCALE", "", C3DConstants.DEFAULT_POINT_SCALE);
+            groupPoint.Add<Single>("RATE", "", C3DConstants.DEFAULT_POINT_RATE);
+            groupPoint.Add<UInt16>("DATA_START", "", C3DConstants.FILE_DEFAULT_FIRST_PARAM_SECTION);
+            groupPoint.Add<UInt16>("FRAMES", "", C3DConstants.DEFAULT_POINT_LAST_FRAME - C3DConstants.DEFAULT_POINT_FIRST_FRAME + 1);
+
+            C3DParameterGroup groupAnalog = dict.SetGroup(2, "ANALOG", "");
+            groupAnalog.Add<UInt16>("USED", "", C3DConstants.DEFAULT_ANALOG_USED);
+            groupAnalog.Add<Single>("RATE", "", C3DConstants.DEFAULT_ANALOG_RATE);
+
+            C3DParameterGroup groupForcePlatform = dict.SetGroup(3, "FORCE_PLATFORM", "");
+
+            return dict;
+        }
+
+        /// <summary>
+        /// 从已有参数组列表里创建C3D参数组字典
+        /// </summary>
+        /// <param name="groups">C3D参数组字典</param>
+        /// <param name="parameters">C3D参数项字典</param>
+        /// <returns>C3D参数组字典</returns>
+        internal static C3DParameterDictionary CreateParameterDictionaryFromParameterList(IDictionary<Int32, C3DParameterGroup> groups, IDictionary<Int32, List<C3DParameter>> parameters)
+        {
+            C3DParameterDictionary dict = new C3DParameterDictionary();
+
+            if (groups == null || groups.Count <= 0)
+            {
+                return dict;
+            }
+
+            foreach (KeyValuePair<Int32, C3DParameterGroup> pair in groups)
+            {
+                C3DParameterGroup group = pair.Value;
+                List<C3DParameter> groupParameters = null;
+
+                if (group != null && group.ID < 0)
+                {
+                    if (parameters.TryGetValue(-group.ID, out groupParameters) && groupParameters != null)
+                    {
+                        for (Int32 i = 0; i < groupParameters.Count; i++)
+                        {
+                            group[groupParameters[i].Name] = groupParameters[i];
+                        }
+                    }
+
+                    dict._paramGroups[-group.ID] = group;
+                }
+            }
+
+            return dict;
+        }
         #endregion
     }
 }
