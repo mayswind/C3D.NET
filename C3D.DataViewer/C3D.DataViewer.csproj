@@ -115,36 +115,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helper\TreeListHelper.cs" />
-    <EmbeddedResource Include="Controls\Point3DControl.resx">
-      <DependentUpon>Point3DControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\AnalogLabelsControl.resx">
-      <DependentUpon>AnalogLabelsControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\AnalogSamplesControl.resx">
-      <DependentUpon>AnalogSamplesControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\EventsControl.resx">
-      <DependentUpon>EventsControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\HeaderControl.resx">
-      <DependentUpon>HeaderControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\OverviewControl.resx">
-      <DependentUpon>OverviewControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ParameterControl.resx">
-      <DependentUpon>ParameterControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ParameterGroupControl.resx">
-      <DependentUpon>ParameterGroupControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\PointLabelsControl.resx">
-      <DependentUpon>PointLabelsControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\C3D\C3D.csproj">
