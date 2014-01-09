@@ -10,6 +10,15 @@ namespace C3D.DataViewer.Controls
         public PointLabelsControl(C3DFile file)
         {
             InitializeComponent();
+            this.LoadData(file);
+        }
+
+        private void LoadData(C3DFile file)
+        {
+            if (file == null)
+            {
+                return;
+            }
 
             UInt16 pointCount = (file.Parameters != null && file.Parameters.ContainsParameter("POINT", "USED") ? file.Parameters["POINT", "USED"].GetData<UInt16>() : file.Header.PointCount);
 

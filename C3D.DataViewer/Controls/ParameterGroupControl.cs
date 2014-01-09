@@ -8,6 +8,15 @@ namespace C3D.DataViewer.Controls
         public ParameterGroupControl(C3DFile file)
         {
             InitializeComponent();
+            this.LoadData(file);
+        }
+
+        private void LoadData(C3DFile file)
+        {
+            if (file == null)
+            {
+                return;
+            }
 
             if (file.Parameters != null && file.Parameters.Count > 0)
             {

@@ -24,14 +24,26 @@ namespace C3D.DataViewer.Controls
             InitializeComponent();
 
             this.tcMain.SelectedIndex = _currentTab;
-
             this._points = new Dictionary<Int32, Dictionary<Int32, Single>>();
             this._charts = new Dictionary<Int32, Chart>();
             this._status = new Dictionary<Int32, ChartScaleStatus>();
             this._gestureHandlers = new Dictionary<Int32, MouseGestureHandler>();
 
-            #region 读取数据
+            this.LoadData(file, pid, false);
+        }
+
+        #region 读取数据
+        private void LoadData(C3DFile file, Int32 pid, Boolean showResidual)
+        {
+            if (file == null)
+            {
+                return;
+            }
+
+            #region 初始化
+            C3DParameterCache cache = C3DParameterCache.CreateCache(file);
             C3DHeaderEvent[] events = file.Header.GetAllHeaderEvents();
+
             UInt16 firstFrameIndex = file.Header.FirstFrameIndex;
             UInt16 lastFrameIndex = file.Header.LastFrameIndex;
 
@@ -45,13 +57,15 @@ namespace C3D.DataViewer.Controls
             this._charts[2] = this.chartY;
             this._charts[3] = this.chartZ;
             this._charts[4] = this.chartResidual;
+            #endregion
 
+            #region 列表内容填充
             for (Int32 i = 0; i < file.AllFrames.Count; i++)
             {
                 Int32 index = firstFrameIndex + i;
                 C3DPoint3DData point3D = file.AllFrames[i].Point3Ds[pid];
 
-                if (point3D.Residual > -1)
+                if (showResidual || point3D.Residual > -1)
                 {
                     this._points[1][index] = point3D.X;
                     this._points[2][index] = point3D.Y;
@@ -71,7 +85,9 @@ namespace C3D.DataViewer.Controls
                     (index).ToString(), point3D.X.ToString("F3"), point3D.Y.ToString("F3"), point3D.Z.ToString("F3"),
                     point3D.Residual.ToString("F3"), point3D.CameraMaskInfo }));
             }
+            #endregion
 
+            #region 设置缩放状态
             for (Int32 i = 1; i <= 3; i++)
             {
                 this._status[i].Maxs[0] = (this._status[i].Maxs[0] == this._status[i].Mins[0] ? this._status[i].Maxs[0] + 1 : this._status[i].Maxs[0]);
@@ -82,39 +98,35 @@ namespace C3D.DataViewer.Controls
             this._status[4].Maxs[1] = Math.Max(this._status[4].Maxs[1], 1.0F);
             #endregion
 
-            #region 绑定数据
+            #region 显示数据
             for (Int32 i = 1; i <= 4; i++)
             {
-                this.DataBind(this._charts[i], this._points[i], this._status[i].Mins[0], this._status[i].Maxs[0], this._status[i].Mins[1], this._status[i].Maxs[1]);
-
-                this._gestureHandlers[i] = new MouseGestureHandler();
-                this._gestureHandlers[i].BaseControl = this._charts[i];
-                this._gestureHandlers[i].OnMouseGestureToLeft += gesturehandler_OnMouseGestureToLeftOrRight;
-                this._gestureHandlers[i].OnMouseGestureToRight += gesturehandler_OnMouseGestureToLeftOrRight;
-                this._gestureHandlers[i].OnMouseGestureToTop += gesturehandler_OnMouseGestureToTopOrBottom;
-                this._gestureHandlers[i].OnMouseGestureToBottom += gesturehandler_OnMouseGestureToTopOrBottom;
-                this._gestureHandlers[i].OnMouseGestureUp += gesturehandler_OnMouseGestureUp;
+                ChartBindingHelper.BindDataToChart<Int32, Single>(this._charts[i], this._points[i], this._status[i].Mins[0], this._status[i].Maxs[0], this._status[i].Mins[1], this._status[i].Maxs[1]);
             }
 
-            if (events != null && events.Length > 0)
-            {
-                Single frameRate = (file.Parameters != null && file.Parameters["POINT", "RATE"] != null ? file.Parameters["POINT", "RATE"].GetData<Single>() : file.Header.FrameRate);
-
-                for (Int32 i = 0; i < events.Length; i++)
-                {
-                    if (events[i] == null || !events[i].IsDisplay)
-                    {
-                        continue;
-                    }
-
-                    this.SetStripLine(this.chartX, events[i].EventTime * frameRate, events[i].EventName);
-                    this.SetStripLine(this.chartY, events[i].EventTime * frameRate, events[i].EventName);
-                    this.SetStripLine(this.chartZ, events[i].EventTime * frameRate, events[i].EventName);
-                    this.SetStripLine(this.chartResidual, events[i].EventTime * frameRate, events[i].EventName);
-                }
-            }
+            this.ShowStripLine(events, cache.FrameRate);
             #endregion
         }
+
+        private void ShowStripLine(C3DHeaderEvent[] events, Single frameRate)
+        {
+            if (events == null || events.Length == 0)
+            {
+                return;
+            }
+
+            for (Int32 i = 0; i < events.Length; i++)
+            {
+                if (events[i] != null && events[i].IsDisplay)
+                {
+                    ChartBindingHelper.SetStripLineToChart(this.chartX, events[i].EventTime * frameRate, events[i].EventName);
+                    ChartBindingHelper.SetStripLineToChart(this.chartY, events[i].EventTime * frameRate, events[i].EventName);
+                    ChartBindingHelper.SetStripLineToChart(this.chartZ, events[i].EventTime * frameRate, events[i].EventName);
+                    ChartBindingHelper.SetStripLineToChart(this.chartResidual, events[i].EventTime * frameRate, events[i].EventName);
+                }
+            }
+        }
+        #endregion
 
         #region 界面事件
         private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
@@ -175,30 +187,6 @@ namespace C3D.DataViewer.Controls
             this._charts[2].Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
             this._charts[3].Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
             this._charts[4].Series[0].MarkerStyle = (this.mnuShowMarker.Checked ? MarkerStyle.Square : MarkerStyle.None);
-        }
-        #endregion
-
-        #region 私有方法
-        private void DataBind(Chart chart, Dictionary<Int32, Single> data, Single minX, Single maxX, Single minY, Single maxY)
-        {
-            chart.Series[0].Points.DataBind(data, "Key", "Value", "");
-            chart.ChartAreas[0].AxisX.Minimum = minX;
-            chart.ChartAreas[0].AxisX.Maximum = maxX;
-            chart.ChartAreas[0].AxisY.Minimum = minY;
-            chart.ChartAreas[0].AxisY.Maximum = maxY;
-        }
-
-        private void SetStripLine(Chart chart, Double offset, String name)
-        {
-            StripLine line = new StripLine();
-            line.Interval = 0;
-            line.IntervalOffset = offset;
-            line.Text = name;
-            line.BorderColor = Color.Black;
-            line.BorderDashStyle = ChartDashStyle.Dash;
-            line.BorderWidth = 1;
-
-            chart.ChartAreas[0].AxisX.StripLines.Add(line);
         }
         #endregion
     }

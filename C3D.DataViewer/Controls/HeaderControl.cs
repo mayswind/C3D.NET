@@ -8,6 +8,15 @@ namespace C3D.DataViewer.Controls
         public HeaderControl(C3DFile file)
         {
             InitializeComponent();
+            this.LoadData(file);
+        }
+
+        private void LoadData(C3DFile file)
+        {
+            if (file == null)
+            {
+                return;
+            }
 
             this.lvItems.Items.Add(new ListViewItem(new String[] { "Point Count", file.Header.PointCount.ToString() }));
             this.lvItems.Items.Add(new ListViewItem(new String[] { "First Frame Index", file.Header.FirstFrameIndex.ToString() }));

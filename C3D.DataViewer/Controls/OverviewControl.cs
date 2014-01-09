@@ -8,6 +8,15 @@ namespace C3D.DataViewer.Controls
         public OverviewControl(C3DFile file)
         {
             InitializeComponent();
+            this.LoadData(file);
+        }
+
+        private void LoadData(C3DFile file)
+        {
+            if (file == null)
+            {
+                return;
+            }
 
             C3DParameterCache parameterCache = C3DParameterCache.CreateCache(file);
 

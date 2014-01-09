@@ -22,13 +22,24 @@ namespace C3D.DataViewer.Controls
             InitializeComponent();
 
             this.tcMain.SelectedIndex = _currentTab;
+            this.LoadData(file, cid);
+        }
 
-            #region 读取数据
+        #region 读取数据
+        private void LoadData(C3DFile file, Int32 cid)
+        {
+            if (file == null)
+            {
+                return;
+            }
+
+            #region 初始化
+            C3DParameterCache cache = C3DParameterCache.CreateCache(file);
             C3DHeaderEvent[] events = file.Header.GetAllHeaderEvents();
+
             UInt16 firstFrameIndex = file.Header.FirstFrameIndex;
             UInt16 lastFrameIndex = file.Header.LastFrameIndex;
-            UInt16 samplePerFrame = (file.Parameters != null && file.Parameters.ContainsParameter("ANALOG", "RATE") && file.Parameters.ContainsParameter("POINT", "RATE") ?
-                (UInt16)(file.Parameters["ANALOG", "RATE"].GetData<Single>() / file.Parameters["POINT", "RATE"].GetData<Single>()) : file.Header.AnalogSamplesPerFrame);
+            UInt16 samplePerFrame = cache.AnalogSamplesPerFrame;
 
             this._points = new Dictionary<Single, Single>();
             this._status = new ChartScaleStatus(firstFrameIndex, lastFrameIndex, Single.MaxValue, Single.MinValue);
@@ -37,7 +48,9 @@ namespace C3D.DataViewer.Controls
             {
                 this.lvItems.Columns.Add(new ColumnHeader() { Text = String.Format("SP {0}", (i + 1).ToString()), Width = 70 });
             }
+            #endregion
 
+            #region 列表内容填充
             for (Int32 i = 0; i < file.AllFrames.Count; i++)
             {
                 Int32 index = firstFrameIndex + i;
@@ -60,33 +73,35 @@ namespace C3D.DataViewer.Controls
 
                 this.lvItems.Items.Add(new ListViewItem(item));
             }
+            #endregion
 
+            #region 设置缩放状态
             this._status.Maxs[0] = (this._status.Maxs[0] == this._status.Mins[0] ? this._status.Maxs[0] + 1 : this._status.Maxs[0]);
             this._status.Maxs[1] = (this._status.Maxs[1] == this._status.Mins[1] ? this._status.Maxs[1] + 1 : this._status.Maxs[1]);
             #endregion
 
-            #region 绑定数据
-            for (Int32 i = 1; i <= 1; i++)
-            {
-                this.DataBind(this.chartView, this._points, this._status.Mins[0], this._status.Maxs[0], this._status.Mins[1], this._status.Maxs[1]);
-            }
-
-            if (events != null && events.Length > 0)
-            {
-                Single frameRate = (file.Parameters != null && file.Parameters["POINT", "RATE"] != null ? file.Parameters["POINT", "RATE"].GetData<Single>() : file.Header.FrameRate);
-
-                for (Int32 i = 0; i < events.Length; i++)
-                {
-                    if (events[i] == null || !events[i].IsDisplay)
-                    {
-                        continue;
-                    }
-
-                    this.SetStripLine(this.chartView, events[i].EventTime * frameRate, events[i].EventName);
-                }
-            }
+            #region 显示数据
+            ChartBindingHelper.BindDataToChart<Single, Single>(this.chartView, this._points, this._status.Mins[0], this._status.Maxs[0], this._status.Mins[1], this._status.Maxs[1]);
+            this.ShowStripLine(events, cache.FrameRate);
             #endregion
         }
+
+        private void ShowStripLine(C3DHeaderEvent[] events, Single frameRate)
+        {
+            if (events == null || events.Length == 0)
+            {
+                return;
+            }
+
+            for (Int32 i = 0; i < events.Length; i++)
+            {
+                if (events[i] != null && events[i].IsDisplay)
+                {
+                    ChartBindingHelper.SetStripLineToChart(this.chartView, events[i].EventTime * frameRate, events[i].EventName);
+                }
+            }
+        }
+        #endregion
 
         #region 界面事件
         private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
@@ -144,30 +159,6 @@ namespace C3D.DataViewer.Controls
         private void mnuShowMarker_Click(object sender, EventArgs e)
         {
             this.chartView.Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
-        }
-        #endregion
-
-        #region 私有方法
-        private void DataBind(Chart chart, Dictionary<Single, Single> data, Single minX, Single maxX, Single minY, Single maxY)
-        {
-            chart.Series[0].Points.DataBind(data, "Key", "Value", "");
-            chart.ChartAreas[0].AxisX.Minimum = minX;
-            chart.ChartAreas[0].AxisX.Maximum = maxX;
-            chart.ChartAreas[0].AxisY.Minimum = minY;
-            chart.ChartAreas[0].AxisY.Maximum = maxY;
-        }
-
-        private void SetStripLine(Chart chart, Double offset, String name)
-        {
-            StripLine line = new StripLine();
-            line.Interval = 0;
-            line.IntervalOffset = offset;
-            line.Text = name;
-            line.BorderColor = Color.Black;
-            line.BorderDashStyle = ChartDashStyle.Dash;
-            line.BorderWidth = 1;
-
-            chart.ChartAreas[0].AxisX.StripLines.Add(line);
         }
         #endregion
     }

@@ -46,9 +46,11 @@
             this.mnuContext = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuHZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHZoomOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHZoomReset = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLine = new System.Windows.Forms.ToolStripSeparator();
             this.mnuVZoomIn = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuVZoomOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuVZoomReset = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLine2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuShowMarker = new System.Windows.Forms.ToolStripMenuItem();
             this.tpPointZ = new System.Windows.Forms.TabPage();
@@ -66,8 +68,10 @@
             this.chResidual = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chMask = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tcMain = new System.Windows.Forms.TabControl();
-            this.mnuHZoomReset = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuVZoomReset = new System.Windows.Forms.ToolStripMenuItem();
+            this.gestureHandler1 = new C3D.DataViewer.Gesture.MouseGestureHandler();
+            this.gestureHandler2 = new C3D.DataViewer.Gesture.MouseGestureHandler();
+            this.gestureHandler3 = new C3D.DataViewer.Gesture.MouseGestureHandler();
+            this.gestureHandler4 = new C3D.DataViewer.Gesture.MouseGestureHandler();
             this.tpResidual.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartResidual)).BeginInit();
             this.mnuContext.SuspendLayout();
@@ -152,7 +156,7 @@
             this.mnuLine2,
             this.mnuShowMarker});
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(220, 192);
+            this.mnuContext.Size = new System.Drawing.Size(220, 170);
             // 
             // mnuHZoomIn
             // 
@@ -167,6 +171,13 @@
             this.mnuHZoomOut.Size = new System.Drawing.Size(219, 22);
             this.mnuHZoomOut.Text = "Zoom Out Horizontally";
             this.mnuHZoomOut.Click += new System.EventHandler(this.mnuHZoomOut_Click);
+            // 
+            // mnuHZoomReset
+            // 
+            this.mnuHZoomReset.Name = "mnuHZoomReset";
+            this.mnuHZoomReset.Size = new System.Drawing.Size(219, 22);
+            this.mnuHZoomReset.Text = "Zoom Reset Horizontally";
+            this.mnuHZoomReset.Click += new System.EventHandler(this.mnuHZoomReset_Click);
             // 
             // mnuLine
             // 
@@ -186,6 +197,13 @@
             this.mnuVZoomOut.Size = new System.Drawing.Size(219, 22);
             this.mnuVZoomOut.Text = "Zoom Out Vertically";
             this.mnuVZoomOut.Click += new System.EventHandler(this.mnuVZoomOut_Click);
+            // 
+            // mnuVZoomReset
+            // 
+            this.mnuVZoomReset.Name = "mnuVZoomReset";
+            this.mnuVZoomReset.Size = new System.Drawing.Size(219, 22);
+            this.mnuVZoomReset.Text = "Zoom Reset Vertically";
+            this.mnuVZoomReset.Click += new System.EventHandler(this.mnuVZoomReset_Click);
             // 
             // mnuLine2
             // 
@@ -457,27 +475,57 @@
             this.tcMain.TabIndex = 0;
             this.tcMain.SelectedIndexChanged += new System.EventHandler(this.tcMain_SelectedIndexChanged);
             // 
-            // mnuHZoomReset
+            // gestureHandler1
             // 
-            this.mnuHZoomReset.Name = "mnuHZoomReset";
-            this.mnuHZoomReset.Size = new System.Drawing.Size(219, 22);
-            this.mnuHZoomReset.Text = "Zoom Reset Horizontally";
-            this.mnuHZoomReset.Click += new System.EventHandler(this.mnuHZoomReset_Click);
+            this.gestureHandler1.AutoRegister = true;
+            this.gestureHandler1.BaseControl = this.chartX;
+            this.gestureHandler1.SupportButton = System.Windows.Forms.MouseButtons.Left;
+            this.gestureHandler1.OnMouseGestureToLeft += new C3D.DataViewer.Gesture.MouseGestureToLeft(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler1.OnMouseGestureToRight += new C3D.DataViewer.Gesture.MouseGestureToRight(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler1.OnMouseGestureToTop += new C3D.DataViewer.Gesture.MouseGestureToTop(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler1.OnMouseGestureToBottom += new C3D.DataViewer.Gesture.MouseGestureToBottom(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler1.OnMouseGestureUp += new System.Windows.Forms.MouseEventHandler(this.gesturehandler_OnMouseGestureUp);
             // 
-            // mnuVZoomReset
+            // gestureHandler2
             // 
-            this.mnuVZoomReset.Name = "mnuVZoomReset";
-            this.mnuVZoomReset.Size = new System.Drawing.Size(219, 22);
-            this.mnuVZoomReset.Text = "Zoom Reset Vertically";
-            this.mnuVZoomReset.Click += new System.EventHandler(this.mnuVZoomReset_Click);
+            this.gestureHandler2.AutoRegister = true;
+            this.gestureHandler2.BaseControl = this.chartY;
+            this.gestureHandler2.SupportButton = System.Windows.Forms.MouseButtons.Left;
+            this.gestureHandler2.OnMouseGestureToLeft += new C3D.DataViewer.Gesture.MouseGestureToLeft(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler2.OnMouseGestureToRight += new C3D.DataViewer.Gesture.MouseGestureToRight(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler2.OnMouseGestureToTop += new C3D.DataViewer.Gesture.MouseGestureToTop(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler2.OnMouseGestureToBottom += new C3D.DataViewer.Gesture.MouseGestureToBottom(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler2.OnMouseGestureUp += new System.Windows.Forms.MouseEventHandler(this.gesturehandler_OnMouseGestureUp);
             // 
-            // uc3DPoint
+            // gestureHandler3
+            // 
+            this.gestureHandler3.AutoRegister = true;
+            this.gestureHandler3.BaseControl = this.chartZ;
+            this.gestureHandler3.SupportButton = System.Windows.Forms.MouseButtons.Left;
+            this.gestureHandler3.OnMouseGestureToLeft += new C3D.DataViewer.Gesture.MouseGestureToLeft(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler3.OnMouseGestureToRight += new C3D.DataViewer.Gesture.MouseGestureToRight(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler3.OnMouseGestureToTop += new C3D.DataViewer.Gesture.MouseGestureToTop(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler3.OnMouseGestureToBottom += new C3D.DataViewer.Gesture.MouseGestureToBottom(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler3.OnMouseGestureUp += new System.Windows.Forms.MouseEventHandler(this.gesturehandler_OnMouseGestureUp);
+            // 
+            // gestureHandler4
+            // 
+            this.gestureHandler4.AutoRegister = true;
+            this.gestureHandler4.BaseControl = this.chartResidual;
+            this.gestureHandler4.SupportButton = System.Windows.Forms.MouseButtons.Left;
+            this.gestureHandler4.OnMouseGestureToLeft += new C3D.DataViewer.Gesture.MouseGestureToLeft(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler4.OnMouseGestureToRight += new C3D.DataViewer.Gesture.MouseGestureToRight(this.gesturehandler_OnMouseGestureToLeftOrRight);
+            this.gestureHandler4.OnMouseGestureToTop += new C3D.DataViewer.Gesture.MouseGestureToTop(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler4.OnMouseGestureToBottom += new C3D.DataViewer.Gesture.MouseGestureToBottom(this.gesturehandler_OnMouseGestureToTopOrBottom);
+            this.gestureHandler4.OnMouseGestureUp += new System.Windows.Forms.MouseEventHandler(this.gesturehandler_OnMouseGestureUp);
+            // 
+            // Point3DControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tcMain);
             this.DoubleBuffered = true;
-            this.Name = "uc3DPoint";
+            this.Name = "Point3DControl";
             this.Size = new System.Drawing.Size(640, 480);
             this.tpResidual.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartResidual)).EndInit();
@@ -523,6 +571,10 @@
         private System.Windows.Forms.ToolStripMenuItem mnuShowMarker;
         private System.Windows.Forms.ToolStripMenuItem mnuHZoomReset;
         private System.Windows.Forms.ToolStripMenuItem mnuVZoomReset;
+        private Gesture.MouseGestureHandler gestureHandler1;
+        private Gesture.MouseGestureHandler gestureHandler2;
+        private Gesture.MouseGestureHandler gestureHandler3;
+        private Gesture.MouseGestureHandler gestureHandler4;
 
     }
 }

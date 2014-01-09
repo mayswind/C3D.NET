@@ -99,6 +99,7 @@
     <Compile Include="Controls\PointLabelsControl.Designer.cs">
       <DependentUpon>PointLabelsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ChartBindingHelper.cs" />
     <Compile Include="Status\ChartScaleStatus.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -109,7 +110,9 @@
     <Compile Include="Gesture\Delegate.cs" />
     <Compile Include="Gesture\MouseGesturedDirection.cs" />
     <Compile Include="Gesture\MouseGestureEventArgs.cs" />
-    <Compile Include="Gesture\MouseGestureHandler.cs" />
+    <Compile Include="Gesture\MouseGestureHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Helper\C3DParameterHelper.cs" />
     <Compile Include="Helper\ChartZoomHelper.cs" />
     <Compile Include="Program.cs" />
@@ -121,6 +124,11 @@
       <Project>{a2b772df-9f26-4820-a159-c68970553063}</Project>
       <Name>C3D</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\Point3DControl.resx">
+      <DependentUpon>Point3DControl.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

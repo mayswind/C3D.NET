@@ -8,6 +8,15 @@ namespace C3D.DataViewer.Controls
         public EventsControl(C3DFile file)
         {
             InitializeComponent();
+            this.LoadData(file);
+        }
+
+        private void LoadData(C3DFile file)
+        {
+            if (file == null)
+            {
+                return;
+            }
 
             C3DHeaderEvent[] events = file.Header.GetAllHeaderEvents();
             if (events != null && events.Length > 0)
