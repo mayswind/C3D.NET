@@ -184,6 +184,10 @@ namespace C3D
         #endregion
 
         #region 重载方法
+        /// <summary>
+        /// 输出C3D参数项的信息
+        /// </summary>
+        /// <returns>参数项的信息</returns>
         public override String ToString()
         {
             return String.Format("{0}, Name = {1}", this.GetType().ToString(), this.Name);

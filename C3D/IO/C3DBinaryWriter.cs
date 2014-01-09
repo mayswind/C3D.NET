@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-using C3D.Number;
+using C3D.Numerics;
 
 namespace C3D.IO
 {
@@ -28,7 +28,7 @@ namespace C3D.IO
         /// <summary>
         /// 初始化新的C3D二进制文件写入器
         /// </summary>
-        /// <param name="input">C3D文件流</param>
+        /// <param name="output">C3D文件流</param>
         internal C3DBinaryWriter(Stream output)
         {
             this._stream = output;

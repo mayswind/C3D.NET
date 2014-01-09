@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class ucParameter : UserControl
+    public partial class ParameterControl : UserControl
     {
-        public ucParameter(C3DFile file, Int32 type, String name)
+        public ParameterControl(C3DFile file, Int32 type, String name)
         {
             InitializeComponent();
 

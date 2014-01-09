@@ -47,6 +47,10 @@ namespace C3D
         #endregion
 
         #region 重载方法
+        /// <summary>
+        /// 输出C3D模拟数据的信息
+        /// </summary>
+        /// <returns>模拟数据的信息</returns>
         public override String ToString()
         {
             StringBuilder sb = new StringBuilder();

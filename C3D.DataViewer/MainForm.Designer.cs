@@ -1,6 +1,6 @@
 ﻿namespace C3D.DataViewer
 {
-    partial class frmMain
+    partial class MainForm
     {
         /// <summary>
         /// 必需的设计器变量。

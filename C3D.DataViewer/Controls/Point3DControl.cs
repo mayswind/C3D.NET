@@ -6,10 +6,11 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 using C3D.DataViewer.Gesture;
 using C3D.DataViewer.Helper;
+using C3D.DataViewer.Status;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class uc3DPoint : UserControl
+    public partial class Point3DControl : UserControl
     {
         private static Int32 _currentTab = 0;
 
@@ -18,7 +19,7 @@ namespace C3D.DataViewer.Controls
         private Dictionary<Int32, ChartScaleStatus> _status = null;
         private Dictionary<Int32, MouseGestureHandler> _gestureHandlers = null;
 
-        public uc3DPoint(C3DFile file, Int32 pid)
+        public Point3DControl(C3DFile file, Int32 pid)
         {
             InitializeComponent();
 

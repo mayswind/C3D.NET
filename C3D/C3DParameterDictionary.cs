@@ -272,11 +272,19 @@ namespace C3D
 
         #region 接口方法
         #region IEnumerable
+        /// <summary>
+        /// 返回一个循环访问C3D参数字典集合的枚举器
+        /// </summary>
+        /// <returns>枚举器</returns>
         public IEnumerator<C3DParameterGroup> GetEnumerator()
         {
             return this._paramGroups.Values.GetEnumerator();
         }
 
+        /// <summary>
+        /// 返回一个循环访问C3D参数字典集合的枚举器
+        /// </summary>
+        /// <returns>枚举器</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this._paramGroups.Values.GetEnumerator();
@@ -284,6 +292,9 @@ namespace C3D
         #endregion
 
         #region ICollection
+        /// <summary>
+        /// 获取C3D参数集合内参数组的数量
+        /// </summary>
         public Int32 Count
         {
             get { return this._paramGroups.Count; }
@@ -306,6 +317,9 @@ namespace C3D
             }
         }
 
+        /// <summary>
+        /// 清空C3D参数字段中所有的参数组
+        /// </summary>
         public void Clear()
         {
             this._paramGroups.Clear();

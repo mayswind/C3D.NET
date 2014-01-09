@@ -1,6 +1,6 @@
 ﻿namespace C3D.DataViewer.Controls
 {
-    partial class ucParameterGroup
+    partial class PointLabelsControl
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.lvItems = new System.Windows.Forms.ListView();
-            this.chID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chID = new System.Windows.Forms.ColumnHeader();
+            this.chName = new System.Windows.Forms.ColumnHeader();
+            this.chDescription = new System.Windows.Forms.ColumnHeader();
             this.SuspendLayout();
             // 
             // lvItems
@@ -48,7 +48,7 @@
             this.lvItems.MultiSelect = false;
             this.lvItems.Name = "lvItems";
             this.lvItems.Size = new System.Drawing.Size(640, 480);
-            this.lvItems.TabIndex = 2;
+            this.lvItems.TabIndex = 1;
             this.lvItems.UseCompatibleStateImageBehavior = false;
             this.lvItems.View = System.Windows.Forms.View.Details;
             // 
@@ -66,12 +66,13 @@
             this.chDescription.Text = "Description";
             this.chDescription.Width = 300;
             // 
-            // ucParameterGroup
+            // ucPointLabels
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lvItems);
-            this.Name = "ucParameterGroup";
+            this.DoubleBuffered = true;
+            this.Name = "ucPointLabels";
             this.Size = new System.Drawing.Size(640, 480);
             this.ResumeLayout(false);
 
@@ -80,8 +81,8 @@
         #endregion
 
         private System.Windows.Forms.ListView lvItems;
-        private System.Windows.Forms.ColumnHeader chID;
         private System.Windows.Forms.ColumnHeader chName;
         private System.Windows.Forms.ColumnHeader chDescription;
+        private System.Windows.Forms.ColumnHeader chID;
     }
 }

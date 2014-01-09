@@ -128,11 +128,19 @@ namespace C3D
 
         #region 接口方法
         #region IEnumerable
+        /// <summary>
+        /// 返回一个循环访问C3D参数组集合的枚举器
+        /// </summary>
+        /// <returns>枚举器</returns>
         public IEnumerator<C3DParameter> GetEnumerator()
         {
             return this._parameters.Values.GetEnumerator();
         }
 
+        /// <summary>
+        /// 返回一个循环访问C3D参数组集合的枚举器
+        /// </summary>
+        /// <returns>枚举器</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this._parameters.Values.GetEnumerator();
@@ -140,6 +148,9 @@ namespace C3D
         #endregion
 
         #region ICollection
+        /// <summary>
+        /// 获取C3D参数组内参数的数量
+        /// </summary>
         public Int32 Count
         {
             get { return this._parameters.Count; }
@@ -150,6 +161,10 @@ namespace C3D
             get { return false; }
         }
 
+        /// <summary>
+        /// 添加一个新的C3D参数
+        /// </summary>
+        /// <param name="item">C3D参数</param>
         public void Add(C3DParameter item)
         {
             if (item == null)
@@ -165,11 +180,19 @@ namespace C3D
             this._parameters[item.Name.ToUpperInvariant()] = item;
         }
 
+        /// <summary>
+        /// 清空C3D参数组内所有参数
+        /// </summary>
         public void Clear()
         {
             this._parameters.Clear();
         }
 
+        /// <summary>
+        /// 判断是否包含指定的C3D参数
+        /// </summary>
+        /// <param name="item">指定的C3D参数</param>
+        /// <returns>是否包含指定的C3D参数</returns>
         public Boolean Contains(C3DParameter item)
         {
             return this._parameters.Values.Contains(item);

@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class ucParameterGroup : UserControl
+    public partial class ParameterGroupControl : UserControl
     {
-        public ucParameterGroup(C3DFile file)
+        public ParameterGroupControl(C3DFile file)
         {
             InitializeComponent();
 

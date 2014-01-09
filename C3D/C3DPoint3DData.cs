@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-using C3D.Number;
+using C3D.Numerics;
 
 namespace C3D
 {
@@ -218,6 +218,10 @@ namespace C3D
         #endregion
 
         #region 重载方法
+        /// <summary>
+        /// 输出C3D 3D坐标点的信息
+        /// </summary>
+        /// <returns>3D坐标点的信息</returns>
         public override String ToString()
         {
             return String.Format("C3DPoint3DData, [{0}, {1}, {2}]", this._x.ToString(), this._y.ToString(), this._z.ToString());

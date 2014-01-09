@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using C3D.DataViewer.Controls;
+using C3D.DataViewer.Status;
 
 namespace C3D.DataViewer.Helper
 {

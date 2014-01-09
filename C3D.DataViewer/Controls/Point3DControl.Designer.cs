@@ -1,6 +1,6 @@
 ﻿namespace C3D.DataViewer.Controls
 {
-    partial class uc3DPoint
+    partial class Point3DControl
     {
         /// <summary> 
         /// 必需的设计器变量。

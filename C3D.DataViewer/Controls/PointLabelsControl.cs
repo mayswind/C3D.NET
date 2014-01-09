@@ -5,9 +5,9 @@ using C3D.DataViewer.Helper;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class ucPointLabels : UserControl
+    public partial class PointLabelsControl : UserControl
     {
-        public ucPointLabels(C3DFile file)
+        public PointLabelsControl(C3DFile file)
         {
             InitializeComponent();
 

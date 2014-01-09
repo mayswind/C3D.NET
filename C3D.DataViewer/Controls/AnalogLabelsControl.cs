@@ -5,9 +5,9 @@ using C3D.DataViewer.Helper;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class ucAnalogLabels : UserControl
+    public partial class AnalogLabelsControl : UserControl
     {
-        public ucAnalogLabels(C3DFile file)
+        public AnalogLabelsControl(C3DFile file)
         {
             InitializeComponent();
 

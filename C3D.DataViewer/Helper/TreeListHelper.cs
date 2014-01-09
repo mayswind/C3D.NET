@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace C3D.DataViewer
+namespace C3D.DataViewer.Helper
 {
-    internal static class TreeListConverter
+    internal static class TreeListHelper
     {
         internal static TreeNode GetOverviewNode(C3DFile file)
         {

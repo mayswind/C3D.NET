@@ -77,7 +77,6 @@ namespace C3D
         /// <summary>
         /// 读取C3D文件参数
         /// </summary>
-        /// <param name="header">C3D文件头</param>
         /// <returns>C3D文件参数集合</returns>
         public C3DParameterDictionary ReadParameters()
         {
@@ -277,6 +276,9 @@ namespace C3D
             }
         }
 
+        /// <summary>
+        /// 释放C3D文件读取器所占用的资源
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);

@@ -6,10 +6,11 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 using C3D.DataViewer.Gesture;
 using C3D.DataViewer.Helper;
+using C3D.DataViewer.Status;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class ucAnalogSamples : UserControl
+    public partial class AnalogSamplesControl : UserControl
     {
         private static Int32 _currentTab = 0;
 
@@ -17,7 +18,7 @@ namespace C3D.DataViewer.Controls
         private ChartScaleStatus _status = null;
         private MouseGestureHandler _gestureHandler = null;
 
-        public ucAnalogSamples(C3DFile file, Int32 cid)
+        public AnalogSamplesControl(C3DFile file, Int32 cid)
         {
             InitializeComponent();
 

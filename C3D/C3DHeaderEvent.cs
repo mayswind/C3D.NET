@@ -65,6 +65,10 @@ namespace C3D
         #endregion
 
         #region 重载方法
+        /// <summary>
+        /// 输出C3D头部事件的信息
+        /// </summary>
+        /// <returns>头部事件的信息</returns>
         public override String ToString()
         {
             return String.Format("C3DHeaderEvent, [{0}, {1}, {2}]", this._eventName, this._eventTime.ToString(), this._isDisplay.ToString());

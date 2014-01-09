@@ -13,7 +13,7 @@ namespace C3D.DataViewer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain((args != null && args.Length == 1) ? args[0] : String.Empty));
+            Application.Run(new MainForm((args != null && args.Length == 1) ? args[0] : String.Empty));
         }
     }
 }

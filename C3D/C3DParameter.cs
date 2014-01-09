@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-using C3D.Number;
+using C3D.Numerics;
 
 namespace C3D
 {
@@ -935,6 +935,10 @@ namespace C3D
         #endregion
 
         #region 重载方法
+        /// <summary>
+        /// 输出C3D参数项的信息
+        /// </summary>
+        /// <returns>参数项的信息</returns>
         public override String ToString()
         {
             return String.Format("{0}, Name = {1}, Type = {2}", this.GetType().ToString(), this.Name, this._parameterType.ToString());

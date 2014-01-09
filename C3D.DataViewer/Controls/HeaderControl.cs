@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class ucHeader : UserControl
+    public partial class HeaderControl : UserControl
     {
-        public ucHeader(C3DFile file)
+        public HeaderControl(C3DFile file)
         {
             InitializeComponent();
 

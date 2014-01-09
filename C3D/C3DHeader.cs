@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-using C3D.Number;
+using C3D.Numerics;
 
 namespace C3D
 {

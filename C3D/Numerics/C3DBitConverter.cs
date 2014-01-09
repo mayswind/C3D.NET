@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace C3D.Number
+namespace C3D.Numerics
 {
     /// <summary>
     /// C3D字节转换器

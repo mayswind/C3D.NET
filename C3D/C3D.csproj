@@ -34,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\C3D.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -65,8 +66,8 @@
     <Compile Include="C3DWriter.cs" />
     <Compile Include="IO\C3DBinaryReader.cs" />
     <Compile Include="IO\C3DBinaryWriter.cs" />
-    <Compile Include="Number\C3DBitConverter.cs" />
-    <Compile Include="Number\VAXSingle.cs" />
+    <Compile Include="Numerics\C3DBitConverter.cs" />
+    <Compile Include="Numerics\VAXSingle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,22 +3,23 @@ using System.IO;
 using System.Windows.Forms;
 
 using C3D.DataViewer.Controls;
+using C3D.DataViewer.Helper;
 
 namespace C3D.DataViewer
 {
-    public partial class frmMain : Form
+    public partial class MainForm : Form
     {
         private const String PROGRAM_TITLE = "C3D.NET DataViewer";
 
         private String _currentFileName;
         private C3DFile _currentFile;
 
-        public frmMain()
+        public MainForm()
         {
             InitializeComponent();
         }
 
-        public frmMain(String filePath)
+        public MainForm(String filePath)
         {
             InitializeComponent();
 
@@ -76,47 +77,47 @@ namespace C3D.DataViewer
 
             if (tag.Equals("OVERVIEW"))
             {
-                this.scMain.Panel2.Controls.Add(new ucOverview(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new OverviewControl(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Equals("HEADER"))
             {
-                this.scMain.Panel2.Controls.Add(new ucHeader(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new HeaderControl(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Equals("EVENTS"))
             {
-                this.scMain.Panel2.Controls.Add(new ucEvents(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new EventsControl(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Equals("PARAMETERS"))
             {
-                this.scMain.Panel2.Controls.Add(new ucParameterGroup(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new ParameterGroupControl(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Contains("PARAMETERS_GROUP|"))
             {
                 String name = tag.Replace("PARAMETERS_GROUP|", "");
-                this.scMain.Panel2.Controls.Add(new ucParameter(this._currentFile, 0, name) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new ParameterControl(this._currentFile, 0, name) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Contains("PARAMETERS_ITEM|"))
             {
                 String name = tag.Replace("PARAMETERS_ITEM|", "");
-                this.scMain.Panel2.Controls.Add(new ucParameter(this._currentFile, 1, name) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new ParameterControl(this._currentFile, 1, name) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Equals("3D"))
             {
-                this.scMain.Panel2.Controls.Add(new ucPointLabels(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new PointLabelsControl(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Contains("3D|"))
             {
                 Int32 id = Int32.Parse(tag.Replace("3D|", ""));
-                this.scMain.Panel2.Controls.Add(new uc3DPoint(this._currentFile, id) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new Point3DControl(this._currentFile, id) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Equals("ANALOG"))
             {
-                this.scMain.Panel2.Controls.Add(new ucAnalogLabels(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new AnalogLabelsControl(this._currentFile) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
             else if (tag.Contains("ANALOG|"))
             {
                 Int32 id = Int32.Parse(tag.Replace("ANALOG|", ""));
-                this.scMain.Panel2.Controls.Add(new ucAnalogSamples(this._currentFile, id) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
+                this.scMain.Panel2.Controls.Add(new AnalogSamplesControl(this._currentFile, id) { Width = this.scMain.Panel2.Width, Height = this.scMain.Panel2.Height, Dock = DockStyle.Fill });
             }
         }
         
@@ -126,7 +127,7 @@ namespace C3D.DataViewer
             {
                 this._currentFileName = filePath;
                 this._currentFile = C3DFile.LoadFromFile(this._currentFileName);
-                this.Text = String.Format("{0} - {1}", this._currentFileName, frmMain.PROGRAM_TITLE);
+                this.Text = String.Format("{0} - {1}", this._currentFileName, MainForm.PROGRAM_TITLE);
 
                 this.scMain.Panel2.Controls.Clear();
                 this.ShowTreeList();
@@ -134,7 +135,7 @@ namespace C3D.DataViewer
             catch (Exception ex)
             {
                 this.CloseFile();
-                MessageBox.Show(String.Format("Error: {0}", ex.Message), frmMain.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                MessageBox.Show(String.Format("Error: {0}", ex.Message), MainForm.PROGRAM_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
             }
         }
 
@@ -142,7 +143,7 @@ namespace C3D.DataViewer
         {
             this._currentFileName = null;
             this._currentFile = null;
-            this.Text = frmMain.PROGRAM_TITLE;
+            this.Text = MainForm.PROGRAM_TITLE;
 
             this.scMain.Panel2.Controls.Clear();
             this.tvItems.Nodes.Clear();
@@ -152,12 +153,12 @@ namespace C3D.DataViewer
         {
             this.tvItems.Nodes.Clear();
 
-            TreeNode overview = TreeListConverter.GetOverviewNode(this._currentFile);
+            TreeNode overview = TreeListHelper.GetOverviewNode(this._currentFile);
             this.tvItems.Nodes.Add(overview);
-            this.tvItems.Nodes.Add(TreeListConverter.GetHeaderNode(this._currentFile));
-            this.tvItems.Nodes.Add(TreeListConverter.GetParametersNode(this._currentFile));
-            this.tvItems.Nodes.Add(TreeListConverter.Get3DDataNode(this._currentFile));
-            this.tvItems.Nodes.Add(TreeListConverter.GetAnalogDataNode(this._currentFile));
+            this.tvItems.Nodes.Add(TreeListHelper.GetHeaderNode(this._currentFile));
+            this.tvItems.Nodes.Add(TreeListHelper.GetParametersNode(this._currentFile));
+            this.tvItems.Nodes.Add(TreeListHelper.Get3DDataNode(this._currentFile));
+            this.tvItems.Nodes.Add(TreeListHelper.GetAnalogDataNode(this._currentFile));
 
             this.tvItems.CollapseAll();
             this.tvItems.SelectedNode = overview;

@@ -278,6 +278,9 @@ namespace C3D
             }
         }
 
+        /// <summary>
+        /// 释放C3D文件写入器所占用的资源
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);

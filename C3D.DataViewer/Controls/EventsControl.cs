@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace C3D.DataViewer.Controls
 {
-    public partial class ucEvents : UserControl
+    public partial class EventsControl : UserControl
     {
-        public ucEvents(C3DFile file)
+        public EventsControl(C3DFile file)
         {
             InitializeComponent();
 

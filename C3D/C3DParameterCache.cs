@@ -80,16 +80,25 @@ namespace C3D
             get { return this._analogSamplesPerFrame; }
         }
 
+        /// <summary>
+        /// 获取模拟采样必须的比例因子
+        /// </summary>
         public Single AnalogGeneralScale
         {
             get { return this._analogGeneralScale; }
         }
 
+        /// <summary>
+        /// 获取模拟采样每个通道的比例因子
+        /// </summary>
         public Single[] AnalogChannelScale
         {
             get { return this._analogChannelScale; }
         }
 
+        /// <summary>
+        /// 获取模拟采样的偏移
+        /// </summary>
         public Int16[] AnalogZeroOffset
         {
             get { return this._analogZeroOffset; }

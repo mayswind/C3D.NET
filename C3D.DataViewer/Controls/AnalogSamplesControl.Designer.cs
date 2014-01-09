@@ -1,6 +1,6 @@
 ﻿namespace C3D.DataViewer.Controls
 {
-    partial class ucAnalogSamples
+    partial class AnalogSamplesControl
     {
         /// <summary> 
         /// 必需的设计器变量。

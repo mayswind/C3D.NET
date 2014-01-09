@@ -35,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,66 +45,66 @@
     <Reference Include="System.Windows.Forms.DataVisualization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\uc3DPoint.cs">
+    <Compile Include="Controls\Point3DControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\uc3DPoint.Designer.cs">
-      <DependentUpon>uc3DPoint.cs</DependentUpon>
+    <Compile Include="Controls\Point3DControl.Designer.cs">
+      <DependentUpon>Point3DControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucAnalogLabels.cs">
+    <Compile Include="Controls\AnalogLabelsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucAnalogLabels.Designer.cs">
-      <DependentUpon>ucAnalogLabels.cs</DependentUpon>
+    <Compile Include="Controls\AnalogLabelsControl.Designer.cs">
+      <DependentUpon>AnalogLabelsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucAnalogSamples.cs">
+    <Compile Include="Controls\AnalogSamplesControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucAnalogSamples.Designer.cs">
-      <DependentUpon>ucAnalogSamples.cs</DependentUpon>
+    <Compile Include="Controls\AnalogSamplesControl.Designer.cs">
+      <DependentUpon>AnalogSamplesControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucEvents.cs">
+    <Compile Include="Controls\EventsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucEvents.Designer.cs">
-      <DependentUpon>ucEvents.cs</DependentUpon>
+    <Compile Include="Controls\EventsControl.Designer.cs">
+      <DependentUpon>EventsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucHeader.cs">
+    <Compile Include="Controls\HeaderControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucHeader.Designer.cs">
-      <DependentUpon>ucHeader.cs</DependentUpon>
+    <Compile Include="Controls\HeaderControl.Designer.cs">
+      <DependentUpon>HeaderControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucOverview.cs">
+    <Compile Include="Controls\OverviewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucOverview.Designer.cs">
-      <DependentUpon>ucOverview.cs</DependentUpon>
+    <Compile Include="Controls\OverviewControl.Designer.cs">
+      <DependentUpon>OverviewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucParameter.cs">
+    <Compile Include="Controls\ParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucParameter.Designer.cs">
-      <DependentUpon>ucParameter.cs</DependentUpon>
+    <Compile Include="Controls\ParameterControl.Designer.cs">
+      <DependentUpon>ParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucParameterGroup.cs">
+    <Compile Include="Controls\ParameterGroupControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucParameterGroup.Designer.cs">
-      <DependentUpon>ucParameterGroup.cs</DependentUpon>
+    <Compile Include="Controls\ParameterGroupControl.Designer.cs">
+      <DependentUpon>ParameterGroupControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ucPointLabels.cs">
+    <Compile Include="Controls\PointLabelsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ucPointLabels.Designer.cs">
-      <DependentUpon>ucPointLabels.cs</DependentUpon>
+    <Compile Include="Controls\PointLabelsControl.Designer.cs">
+      <DependentUpon>PointLabelsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ChartScaleStatus.cs" />
-    <Compile Include="frmMain.cs">
+    <Compile Include="Status\ChartScaleStatus.cs" />
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Gesture\Delegate.cs" />
     <Compile Include="Gesture\MouseGesturedDirection.cs" />
@@ -113,36 +114,36 @@
     <Compile Include="Helper\ChartZoomHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TreeListConverter.cs" />
-    <EmbeddedResource Include="Controls\uc3DPoint.resx">
-      <DependentUpon>uc3DPoint.cs</DependentUpon>
+    <Compile Include="Helper\TreeListHelper.cs" />
+    <EmbeddedResource Include="Controls\Point3DControl.resx">
+      <DependentUpon>Point3DControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucAnalogLabels.resx">
-      <DependentUpon>ucAnalogLabels.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AnalogLabelsControl.resx">
+      <DependentUpon>AnalogLabelsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucAnalogSamples.resx">
-      <DependentUpon>ucAnalogSamples.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AnalogSamplesControl.resx">
+      <DependentUpon>AnalogSamplesControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucEvents.resx">
-      <DependentUpon>ucEvents.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\EventsControl.resx">
+      <DependentUpon>EventsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucHeader.resx">
-      <DependentUpon>ucHeader.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\HeaderControl.resx">
+      <DependentUpon>HeaderControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucOverview.resx">
-      <DependentUpon>ucOverview.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\OverviewControl.resx">
+      <DependentUpon>OverviewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucParameter.resx">
-      <DependentUpon>ucParameter.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ParameterControl.resx">
+      <DependentUpon>ParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucParameterGroup.resx">
-      <DependentUpon>ucParameterGroup.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ParameterGroupControl.resx">
+      <DependentUpon>ParameterGroupControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ucPointLabels.resx">
-      <DependentUpon>ucPointLabels.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\PointLabelsControl.resx">
+      <DependentUpon>PointLabelsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

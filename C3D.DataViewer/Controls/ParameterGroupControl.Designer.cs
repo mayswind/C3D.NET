@@ -1,6 +1,6 @@
 ﻿namespace C3D.DataViewer.Controls
 {
-    partial class ucEvents
+    partial class ParameterGroupControl
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.lvItems = new System.Windows.Forms.ListView();
+            this.chID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.chDisplay = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // lvItems
             // 
             this.lvItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chID,
             this.chName,
-            this.chTime,
-            this.chDisplay});
+            this.chDescription});
             this.lvItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvItems.FullRowSelect = true;
             this.lvItems.GridLines = true;
@@ -48,32 +48,30 @@
             this.lvItems.MultiSelect = false;
             this.lvItems.Name = "lvItems";
             this.lvItems.Size = new System.Drawing.Size(640, 480);
-            this.lvItems.TabIndex = 1;
+            this.lvItems.TabIndex = 2;
             this.lvItems.UseCompatibleStateImageBehavior = false;
             this.lvItems.View = System.Windows.Forms.View.Details;
+            // 
+            // chID
+            // 
+            this.chID.Text = "ID";
             // 
             // chName
             // 
             this.chName.Text = "Name";
-            this.chName.Width = 110;
+            this.chName.Width = 150;
             // 
-            // chTime
+            // chDescription
             // 
-            this.chTime.Text = "Time";
-            this.chTime.Width = 100;
+            this.chDescription.Text = "Description";
+            this.chDescription.Width = 300;
             // 
-            // chDisplay
-            // 
-            this.chDisplay.Text = "Display";
-            this.chDisplay.Width = 100;
-            // 
-            // ucEvents
+            // ucParameterGroup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.lvItems);
-            this.DoubleBuffered = true;
-            this.Name = "ucEvents";
+            this.Name = "ucParameterGroup";
             this.Size = new System.Drawing.Size(640, 480);
             this.ResumeLayout(false);
 
@@ -82,8 +80,8 @@
         #endregion
 
         private System.Windows.Forms.ListView lvItems;
+        private System.Windows.Forms.ColumnHeader chID;
         private System.Windows.Forms.ColumnHeader chName;
-        private System.Windows.Forms.ColumnHeader chTime;
-        private System.Windows.Forms.ColumnHeader chDisplay;
+        private System.Windows.Forms.ColumnHeader chDescription;
     }
 }
