@@ -138,6 +138,11 @@
             chartArea1.BackSecondaryColor = System.Drawing.Color.Silver;
             chartArea1.BorderColor = System.Drawing.Color.Gray;
             chartArea1.Name = "ChartArea1";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 99F;
+            chartArea1.Position.Width = 99F;
+            chartArea1.Position.X = 0.5F;
+            chartArea1.Position.Y = 0.5F;
             this.chartView.ChartAreas.Add(chartArea1);
             this.chartView.ContextMenuStrip = this.mnuContext;
             this.chartView.Dock = System.Windows.Forms.DockStyle.Fill;

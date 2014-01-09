@@ -123,6 +123,11 @@
             chartArea1.BackSecondaryColor = System.Drawing.Color.Silver;
             chartArea1.BorderColor = System.Drawing.Color.Gray;
             chartArea1.Name = "ChartArea1";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 99F;
+            chartArea1.Position.Width = 99F;
+            chartArea1.Position.X = 0.5F;
+            chartArea1.Position.Y = 0.5F;
             this.chartResidual.ChartAreas.Add(chartArea1);
             this.chartResidual.ContextMenuStrip = this.mnuContext;
             this.chartResidual.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -271,6 +276,11 @@
             chartArea2.BackSecondaryColor = System.Drawing.Color.Silver;
             chartArea2.BorderColor = System.Drawing.Color.Gray;
             chartArea2.Name = "ChartArea1";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 99F;
+            chartArea2.Position.Width = 99F;
+            chartArea2.Position.X = 0.5F;
+            chartArea2.Position.Y = 0.5F;
             this.chartZ.ChartAreas.Add(chartArea2);
             this.chartZ.ContextMenuStrip = this.mnuContext;
             this.chartZ.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -335,6 +345,11 @@
             chartArea3.BackSecondaryColor = System.Drawing.Color.Silver;
             chartArea3.BorderColor = System.Drawing.Color.Gray;
             chartArea3.Name = "ChartArea1";
+            chartArea3.Position.Auto = false;
+            chartArea3.Position.Height = 99F;
+            chartArea3.Position.Width = 99F;
+            chartArea3.Position.X = 0.5F;
+            chartArea3.Position.Y = 0.5F;
             this.chartY.ChartAreas.Add(chartArea3);
             this.chartY.ContextMenuStrip = this.mnuContext;
             this.chartY.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -400,6 +415,11 @@
             chartArea4.BackSecondaryColor = System.Drawing.Color.Silver;
             chartArea4.BorderColor = System.Drawing.Color.Gray;
             chartArea4.Name = "ChartArea1";
+            chartArea4.Position.Auto = false;
+            chartArea4.Position.Height = 99F;
+            chartArea4.Position.Width = 99F;
+            chartArea4.Position.X = 0.5F;
+            chartArea4.Position.Y = 0.5F;
             this.chartX.ChartAreas.Add(chartArea4);
             this.chartX.ContextMenuStrip = this.mnuContext;
             this.chartX.Dock = System.Windows.Forms.DockStyle.Fill;
