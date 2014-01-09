@@ -93,6 +93,7 @@
     <Compile Include="Controls\PointLabelsControl.Designer.cs">
       <DependentUpon>PointLabelsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ChartBindingHelper.cs" />
     <Compile Include="Status\ChartScaleStatus.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
