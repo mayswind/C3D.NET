@@ -13,6 +13,8 @@ namespace C3D.DataViewer.Controls
     public partial class Point3DControl : UserControl
     {
         private static Int32 _currentTab = 0;
+        private static Boolean _showResidual = false;
+        private static Boolean _showMarker = false;
 
         private C3DFile _file = null;
         private Int32 _pid = 0;
@@ -26,6 +28,9 @@ namespace C3D.DataViewer.Controls
             InitializeComponent();
 
             this.tcMain.SelectedIndex = _currentTab;
+            this.mnuShowResidual.Checked = _showResidual;
+            this.mnuShowMarker.Checked = _showMarker;
+
             this._points = new Dictionary<Int32, Dictionary<Int32, Single>>();
             this._charts = new Dictionary<Int32, Chart>();
             this._status = new Dictionary<Int32, ChartScaleStatus>();
@@ -33,11 +38,11 @@ namespace C3D.DataViewer.Controls
 
             this._file = file;
             this._pid = pid;
-            this.LoadData(this._file, this._pid, false);
+            this.LoadData(this._file, this._pid);
         }
 
         #region 读取数据
-        private void LoadData(C3DFile file, Int32 pid, Boolean showResidual)
+        private void LoadData(C3DFile file, Int32 pid)
         {
             if (file == null)
             {
@@ -69,7 +74,7 @@ namespace C3D.DataViewer.Controls
                 Int32 index = firstFrameIndex + i;
                 C3DPoint3DData point3D = file.AllFrames[i].Point3Ds[pid];
 
-                if (showResidual || point3D.Residual > -1)
+                if (_showResidual || point3D.Residual > -1)
                 {
                     this._points[1][index] = point3D.X;
                     this._points[2][index] = point3D.Y;
@@ -109,6 +114,7 @@ namespace C3D.DataViewer.Controls
             }
 
             this.ShowStripLine(events, cache.FrameRate);
+            this.SetMarker();
             #endregion
         }
 
@@ -129,6 +135,14 @@ namespace C3D.DataViewer.Controls
                     ChartBindingHelper.SetStripLineToChart(this.chartResidual, events[i].EventTime * frameRate, events[i].EventName);
                 }
             }
+        }
+
+        private void SetMarker()
+        {
+            this._charts[1].Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);
+            this._charts[2].Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);
+            this._charts[3].Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);
+            this._charts[4].Series[0].MarkerStyle = (_showMarker ? MarkerStyle.Square : MarkerStyle.None);
         }
         #endregion
 
@@ -187,15 +201,14 @@ namespace C3D.DataViewer.Controls
 
         private void mnuShowResidual_Click(object sender, EventArgs e)
         {
-            this.LoadData(this._file, this._pid, this.mnuShowResidual.Checked);
+            _showResidual = this.mnuShowResidual.Checked;
+            this.LoadData(this._file, this._pid);
         }
 
         private void mnuShowMarker_Click(object sender, EventArgs e)
         {
-            this._charts[1].Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
-            this._charts[2].Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
-            this._charts[3].Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
-            this._charts[4].Series[0].MarkerStyle = (this.mnuShowMarker.Checked ? MarkerStyle.Square : MarkerStyle.None);
+            _showMarker = this.mnuShowMarker.Checked;
+            this.SetMarker();
         }
         #endregion
     }

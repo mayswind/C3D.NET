@@ -13,6 +13,7 @@ namespace C3D.DataViewer.Controls
     public partial class AnalogSamplesControl : UserControl
     {
         private static Int32 _currentTab = 0;
+        private static Boolean _showMarker = false;
 
         private Dictionary<Single, Single> _points = null;
         private ChartScaleStatus _status = null;
@@ -22,6 +23,8 @@ namespace C3D.DataViewer.Controls
             InitializeComponent();
 
             this.tcMain.SelectedIndex = _currentTab;
+            this.mnuShowMarker.Checked = _showMarker;
+
             this.LoadData(file, cid);
         }
 
@@ -83,6 +86,7 @@ namespace C3D.DataViewer.Controls
             #region 显示数据
             ChartBindingHelper.BindDataToChart<Single, Single>(this.chartView, this._points, this._status.Mins[0], this._status.Maxs[0], this._status.Mins[1], this._status.Maxs[1]);
             this.ShowStripLine(events, cache.FrameRate);
+            this.SetMarker();
             #endregion
         }
 
@@ -100,6 +104,11 @@ namespace C3D.DataViewer.Controls
                     ChartBindingHelper.SetStripLineToChart(this.chartView, events[i].EventTime * frameRate, events[i].EventName);
                 }
             }
+        }
+
+        private void SetMarker()
+        {
+            this.chartView.Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);
         }
         #endregion
 
@@ -158,7 +167,8 @@ namespace C3D.DataViewer.Controls
 
         private void mnuShowMarker_Click(object sender, EventArgs e)
         {
-            this.chartView.Series[0].ChartType = (this.mnuShowMarker.Checked ? SeriesChartType.Line : SeriesChartType.FastLine);
+            _showMarker = this.mnuShowMarker.Checked;
+            this.SetMarker();
         }
         #endregion
     }
