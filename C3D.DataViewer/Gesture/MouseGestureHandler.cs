@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -7,18 +8,19 @@ namespace C3D.DataViewer.Gesture
     /// <summary>
     /// 鼠标手势处理器
     /// </summary>
-    public class MouseGestureHandler
+    public class MouseGestureHandler : Component
     {
         #region 字段
-        private Control m_control;
-        private Boolean m_isRegistered;
-        private Boolean m_isCaptured;
-        private Int32 m_lastX;
-        private Int32 m_lastY;
-        private MouseButtons m_supportButton;
-        private MouseEventHandler m_mouseDownHandler;
-        private MouseEventHandler m_mouseUpHandler;
-        private MouseEventHandler m_mouseMoveHandler;
+        private Control _control;
+        private Boolean _autoRegister;
+        private Boolean _isRegistered;
+        private Boolean _isCaptured;
+        private Int32 _lastX;
+        private Int32 _lastY;
+        private MouseButtons _supportButton;
+        private MouseEventHandler _mouseDownHandler;
+        private MouseEventHandler _mouseUpHandler;
+        private MouseEventHandler _mouseMoveHandler;
         #endregion
 
         #region 事件
@@ -33,9 +35,33 @@ namespace C3D.DataViewer.Gesture
         /// <summary>
         /// 获取事件是否已注册
         /// </summary>
+        [Browsable(false)]
         public Boolean IsRegistered
         {
-            get { return this.m_isRegistered; }
+            get { return this._isRegistered; }
+        }
+
+        /// <summary>
+        /// 获取或设置是否自动注册控件
+        /// </summary>
+        public Boolean AutoRegister
+        {
+            get { return this._autoRegister; }
+            set { this._autoRegister = value; }
+        }
+
+        /// <summary>
+        /// 获取或设置父控件
+        /// </summary>
+        public Control BaseControl
+        {
+            get { return this._control; }
+            set
+            {
+                this.UnRegistreHandler();
+                this._control = value;
+                if (this._autoRegister) this.RegisterHandler();
+            }
         }
 
         /// <summary>
@@ -43,8 +69,8 @@ namespace C3D.DataViewer.Gesture
         /// </summary>
         public MouseButtons SupportButton
         {
-            get { return this.m_supportButton; }
-            set { this.m_supportButton = value; }
+            get { return this._supportButton; }
+            set { this._supportButton = value; }
         }
         #endregion
 
@@ -53,39 +79,44 @@ namespace C3D.DataViewer.Gesture
         /// 初始化新的鼠标手势处理器
         /// </summary>
         /// <param name="baseCtl">父控件</param>
-        public MouseGestureHandler(Control baseCtl)
+        public MouseGestureHandler()
         {
-            this.m_control = baseCtl;
-            this.m_supportButton = MouseButtons.Left;
+            this._autoRegister = true;
+            this._isRegistered = false;
+            this._supportButton = MouseButtons.Left;
 
-            this.m_mouseDownHandler = new MouseEventHandler(this.control_MouseDown);
-            this.m_mouseUpHandler = new MouseEventHandler(this.control_MouseUp);
-            this.m_mouseMoveHandler = new MouseEventHandler(this.control_MouseMove);
-
-            this.RegisterHandler();
+            this._mouseDownHandler = new MouseEventHandler(this.control_MouseDown);
+            this._mouseUpHandler = new MouseEventHandler(this.control_MouseUp);
+            this._mouseMoveHandler = new MouseEventHandler(this.control_MouseMove);
         }
 
+        /// <summary>
+        /// 注册控件事件
+        /// </summary>
         public void RegisterHandler()
         {
-            if (this.m_control != null && !this.m_isRegistered)
+            if (this._control != null && !this._isRegistered)
             {
-                this.m_isRegistered = true;
+                this._isRegistered = true;
 
-                this.m_control.MouseDown += this.m_mouseDownHandler;
-                this.m_control.MouseUp += this.m_mouseUpHandler;
-                this.m_control.MouseMove += this.m_mouseMoveHandler;
+                this._control.MouseDown += this._mouseDownHandler;
+                this._control.MouseUp += this._mouseUpHandler;
+                this._control.MouseMove += this._mouseMoveHandler;
             }
         }
 
+        /// <summary>
+        /// 取消注册控件事件
+        /// </summary>
         public void UnRegistreHandler()
         {
-            if (this.m_control != null && this.m_isRegistered)
+            if (this._control != null && this._isRegistered)
             {
-                this.m_control.MouseDown -= this.m_mouseDownHandler;
-                this.m_control.MouseUp -= this.m_mouseUpHandler;
-                this.m_control.MouseMove -= this.m_mouseMoveHandler;
+                this._control.MouseDown -= this._mouseDownHandler;
+                this._control.MouseUp -= this._mouseUpHandler;
+                this._control.MouseMove -= this._mouseMoveHandler;
 
-                this.m_isRegistered = false;
+                this._isRegistered = false;
             }
         }
         #endregion
@@ -93,21 +124,21 @@ namespace C3D.DataViewer.Gesture
         #region 事件方法
         private void control_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!this.m_isCaptured && e.Button == this.m_supportButton)
+            if (!this._isCaptured && e.Button == this._supportButton)
             {
-                this.m_isCaptured = true;
+                this._isCaptured = true;
 
-                Point p = (this.m_control.Parent == null ? e.Location : this.m_control.Parent.PointToClient(this.m_control.PointToScreen(e.Location)));
-                this.m_lastX = p.X;
-                this.m_lastY = p.Y;
+                Point p = (this._control.Parent == null ? e.Location : this._control.Parent.PointToClient(this._control.PointToScreen(e.Location)));
+                this._lastX = p.X;
+                this._lastY = p.Y;
             }
         }
 
         private void control_MouseUp(object sender, MouseEventArgs e)
         {
-            if (this.m_isCaptured && e.Button == this.m_supportButton)
+            if (this._isCaptured && e.Button == this._supportButton)
             {
-                this.m_isCaptured = false;
+                this._isCaptured = false;
 
                 if (this.OnMouseGestureUp != null)
                 {
@@ -118,13 +149,13 @@ namespace C3D.DataViewer.Gesture
 
         private void control_MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.m_isCaptured && e.Button == this.m_supportButton)
+            if (this._isCaptured && e.Button == this._supportButton)
             {
-                Point p = (this.m_control.Parent == null ? e.Location : this.m_control.Parent.PointToClient(this.m_control.PointToScreen(e.Location)));
+                Point p = (this._control.Parent == null ? e.Location : this._control.Parent.PointToClient(this._control.PointToScreen(e.Location)));
 
                 this.DoMouseGesture(p.X, p.Y);
-                this.m_lastX = p.X;
-                this.m_lastY = p.Y;
+                this._lastX = p.X;
+                this._lastY = p.Y;
             }
         }
         #endregion
@@ -133,8 +164,8 @@ namespace C3D.DataViewer.Gesture
         private void DoMouseGesture(Int32 x, Int32 y)
         {
             MouseGesturedDirection direction = MouseGesturedDirection.None;
-            Double dx = x - this.m_lastX;
-            Double dy = y - this.m_lastY;
+            Double dx = x - this._lastX;
+            Double dy = y - this._lastY;
             Double delta = Math.Abs(dy / dx);
 
             if (delta < 0.50)//左右移动 < 30度

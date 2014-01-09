@@ -87,7 +87,8 @@ namespace C3D.DataViewer.Controls
             {
                 this.DataBind(this._charts[i], this._points[i], this._status[i].Mins[0], this._status[i].Maxs[0], this._status[i].Mins[1], this._status[i].Maxs[1]);
 
-                this._gestureHandlers[i] = new MouseGestureHandler(this._charts[i]);
+                this._gestureHandlers[i] = new MouseGestureHandler();
+                this._gestureHandlers[i].BaseControl = this._charts[i];
                 this._gestureHandlers[i].OnMouseGestureToLeft += gesturehandler_OnMouseGestureToLeftOrRight;
                 this._gestureHandlers[i].OnMouseGestureToRight += gesturehandler_OnMouseGestureToLeftOrRight;
                 this._gestureHandlers[i].OnMouseGestureToTop += gesturehandler_OnMouseGestureToTopOrBottom;

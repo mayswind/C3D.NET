@@ -16,7 +16,6 @@ namespace C3D.DataViewer.Controls
 
         private Dictionary<Single, Single> _points = null;
         private ChartScaleStatus _status = null;
-        private MouseGestureHandler _gestureHandler = null;
 
         public AnalogSamplesControl(C3DFile file, Int32 cid)
         {
@@ -70,13 +69,6 @@ namespace C3D.DataViewer.Controls
             for (Int32 i = 1; i <= 1; i++)
             {
                 this.DataBind(this.chartView, this._points, this._status.Mins[0], this._status.Maxs[0], this._status.Mins[1], this._status.Maxs[1]);
-
-                this._gestureHandler = new MouseGestureHandler(this.chartView);
-                this._gestureHandler.OnMouseGestureToLeft += gesturehandler_OnMouseGestureToLeftOrRight;
-                this._gestureHandler.OnMouseGestureToRight += gesturehandler_OnMouseGestureToLeftOrRight;
-                this._gestureHandler.OnMouseGestureToTop += gesturehandler_OnMouseGestureToTopOrBottom;
-                this._gestureHandler.OnMouseGestureToBottom += gesturehandler_OnMouseGestureToTopOrBottom;
-                this._gestureHandler.OnMouseGestureUp += gesturehandler_OnMouseGestureUp;
             }
 
             if (events != null && events.Length > 0)
