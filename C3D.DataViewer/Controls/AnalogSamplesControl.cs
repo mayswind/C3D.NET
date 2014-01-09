@@ -108,9 +108,7 @@ namespace C3D.DataViewer.Controls
         {
             _currentTab = this.tcMain.SelectedIndex;
         }
-        #endregion
 
-        #region 缩放相关
         private void gesturehandler_OnMouseGestureUp(object sender, MouseEventArgs e)
         {
             ChartZoomHelper.SetChartMouseUp(this.chartView);
@@ -125,7 +123,9 @@ namespace C3D.DataViewer.Controls
         {
             ChartZoomHelper.SetChartMouseMoveTopOrBottom(this.chartView, e.Delta);
         }
+        #endregion
 
+        #region 菜单事件
         private void mnuHZoomIn_Click(object sender, EventArgs e)
         {
             ChartZoomHelper.ZoomChart(this.chartView, this._status, 0, -1);
