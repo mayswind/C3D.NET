@@ -52,6 +52,7 @@
             this.mnuVZoomOut = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuVZoomReset = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLine2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuShowResidual = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuShowMarker = new System.Windows.Forms.ToolStripMenuItem();
             this.tpPointZ = new System.Windows.Forms.TabPage();
             this.chartZ = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -154,9 +155,10 @@
             this.mnuVZoomOut,
             this.mnuVZoomReset,
             this.mnuLine2,
+            this.mnuShowResidual,
             this.mnuShowMarker});
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(220, 170);
+            this.mnuContext.Size = new System.Drawing.Size(220, 214);
             // 
             // mnuHZoomIn
             // 
@@ -209,6 +211,14 @@
             // 
             this.mnuLine2.Name = "mnuLine2";
             this.mnuLine2.Size = new System.Drawing.Size(216, 6);
+            // 
+            // mnuShowResidual
+            // 
+            this.mnuShowResidual.CheckOnClick = true;
+            this.mnuShowResidual.Name = "mnuShowResidual";
+            this.mnuShowResidual.Size = new System.Drawing.Size(219, 22);
+            this.mnuShowResidual.Text = "Show Residual";
+            this.mnuShowResidual.Click += new System.EventHandler(this.mnuShowResidual_Click);
             // 
             // mnuShowMarker
             // 
@@ -575,6 +585,7 @@
         private Gesture.MouseGestureHandler gestureHandler2;
         private Gesture.MouseGestureHandler gestureHandler3;
         private Gesture.MouseGestureHandler gestureHandler4;
+        private System.Windows.Forms.ToolStripMenuItem mnuShowResidual;
 
     }
 }

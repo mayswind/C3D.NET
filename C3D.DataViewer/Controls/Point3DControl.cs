@@ -14,6 +14,8 @@ namespace C3D.DataViewer.Controls
     {
         private static Int32 _currentTab = 0;
 
+        private C3DFile _file = null;
+        private Int32 _pid = 0;
         private Dictionary<Int32, Dictionary<Int32, Single>> _points = null;
         private Dictionary<Int32, Chart> _charts = null;
         private Dictionary<Int32, ChartScaleStatus> _status = null;
@@ -29,7 +31,9 @@ namespace C3D.DataViewer.Controls
             this._status = new Dictionary<Int32, ChartScaleStatus>();
             this._gestureHandlers = new Dictionary<Int32, MouseGestureHandler>();
 
-            this.LoadData(file, pid, false);
+            this._file = file;
+            this._pid = pid;
+            this.LoadData(this._file, this._pid, false);
         }
 
         #region 读取数据
@@ -133,9 +137,7 @@ namespace C3D.DataViewer.Controls
         {
             _currentTab = this.tcMain.SelectedIndex;
         }
-        #endregion
 
-        #region 缩放相关
         private void gesturehandler_OnMouseGestureUp(object sender, MouseEventArgs e)
         {
             ChartZoomHelper.SetChartMouseUp(this._charts[_currentTab]);
@@ -150,7 +152,9 @@ namespace C3D.DataViewer.Controls
         {
             ChartZoomHelper.SetChartMouseMoveTopOrBottom(this._charts[_currentTab], e.Delta);
         }
+        #endregion
 
+        #region 菜单事件
         private void mnuHZoomIn_Click(object sender, EventArgs e)
         {
             ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 0, -1);
@@ -179,6 +183,11 @@ namespace C3D.DataViewer.Controls
         private void mnuVZoomReset_Click(object sender, EventArgs e)
         {
             ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 1, 0);
+        }
+
+        private void mnuShowResidual_Click(object sender, EventArgs e)
+        {
+            this.LoadData(this._file, this._pid, this.mnuShowResidual.Checked);
         }
 
         private void mnuShowMarker_Click(object sender, EventArgs e)
