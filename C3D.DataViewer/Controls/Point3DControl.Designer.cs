@@ -109,6 +109,7 @@
             chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea1.AxisX.Minimum = 0D;
+            chartArea1.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
             chartArea1.AxisY.IsInterlaced = true;
             chartArea1.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep45 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
@@ -118,6 +119,7 @@
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea1.AxisY.Minimum = -1D;
+            chartArea1.AxisY.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
             chartArea1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.DiagonalLeft;
             chartArea1.BackSecondaryColor = System.Drawing.Color.Silver;
@@ -141,13 +143,12 @@
             series1.CustomProperties = "PixelPointWidth=1";
             series1.IsVisibleInLegend = false;
             series1.LabelToolTip = "Frame: #VALX\\nResidual: #VAL";
-            series1.ToolTip = "Frame: #VALX\\nResidual: #VAL";
             series1.Legend = "Legend1";
+            series1.MarkerBorderColor = System.Drawing.Color.Black;
             series1.MarkerColor = System.Drawing.Color.White;
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series1.MarkerBorderWidth = 1;
-            series1.MarkerBorderColor = System.Drawing.Color.Black;
             series1.Name = "Residual";
+            series1.ToolTip = "Frame: #VALX\\nResidual: #VAL";
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
             this.chartResidual.Series.Add(series1);
@@ -168,7 +169,7 @@
             this.mnuShowResidual,
             this.mnuShowMarker});
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(220, 214);
+            this.mnuContext.Size = new System.Drawing.Size(220, 192);
             // 
             // mnuHZoomIn
             // 
@@ -261,6 +262,7 @@
             chartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea2.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea2.AxisX.Minimum = 0D;
+            chartArea2.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea2.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
             chartArea2.AxisY.IsInterlaced = true;
             chartArea2.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep45 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
@@ -269,6 +271,7 @@
             chartArea2.AxisY.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea2.AxisY.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea2.AxisY2.Maximum = 1D;
             chartArea2.AxisY2.Minimum = 0D;
             chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -294,13 +297,12 @@
             series2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(36)))), ((int)(((byte)(107)))));
             series2.IsVisibleInLegend = false;
             series2.LabelToolTip = "Frame: #VALX\\nAxis-Z: #VAL";
-            series2.ToolTip = "Frame: #VALX\\nAxis-Z: #VAL";
             series2.Legend = "Legend1";
+            series2.MarkerBorderColor = System.Drawing.Color.Black;
             series2.MarkerColor = System.Drawing.Color.White;
             series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series2.MarkerBorderWidth = 1;
-            series2.MarkerBorderColor = System.Drawing.Color.Black;
             series2.Name = "PointZ";
+            series2.ToolTip = "Frame: #VALX\\nAxis-Z: #VAL";
             series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
             series2.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
             this.chartZ.Series.Add(series2);
@@ -330,6 +332,7 @@
             chartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea3.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea3.AxisX.Minimum = 0D;
+            chartArea3.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea3.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
             chartArea3.AxisY.IsInterlaced = true;
             chartArea3.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep45 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
@@ -338,6 +341,7 @@
             chartArea3.AxisY.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea3.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea3.AxisY.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea3.AxisY2.Maximum = 1D;
             chartArea3.AxisY2.Minimum = 0D;
             chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -363,13 +367,12 @@
             series3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(36)))), ((int)(((byte)(107)))));
             series3.IsVisibleInLegend = false;
             series3.LabelToolTip = "Frame: #VALX\\nAxis-Y: #VAL";
-            series3.ToolTip = "Frame: #VALX\\nAxis-Y: #VAL";
             series3.Legend = "Legend1";
+            series3.MarkerBorderColor = System.Drawing.Color.Black;
             series3.MarkerColor = System.Drawing.Color.White;
             series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series3.MarkerBorderWidth = 1;
-            series3.MarkerBorderColor = System.Drawing.Color.Black;
             series3.Name = "PointY";
+            series3.ToolTip = "Frame: #VALX\\nAxis-Y: #VAL";
             series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
             series3.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
             this.chartY.Series.Add(series3);
@@ -400,6 +403,7 @@
             chartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea4.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea4.AxisX.Minimum = 0D;
+            chartArea4.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea4.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
             chartArea4.AxisY.IsInterlaced = true;
             chartArea4.AxisY.LabelAutoFitStyle = ((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.LabelsAngleStep45 | System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap)));
@@ -408,6 +412,7 @@
             chartArea4.AxisY.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
             chartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.WhiteSmoke;
             chartArea4.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash;
+            chartArea4.AxisY.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea4.AxisY2.Maximum = 1D;
             chartArea4.AxisY2.Minimum = 0D;
             chartArea4.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -433,13 +438,12 @@
             series4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(36)))), ((int)(((byte)(107)))));
             series4.IsVisibleInLegend = false;
             series4.LabelToolTip = "Frame: #VALX\\nAxis-X: #VAL";
-            series4.ToolTip = "Frame: #VALX\\nAxis-X: #VAL";
             series4.Legend = "Legend1";
+            series4.MarkerBorderColor = System.Drawing.Color.Black;
             series4.MarkerColor = System.Drawing.Color.White;
             series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series4.MarkerBorderWidth = 1;
-            series4.MarkerBorderColor = System.Drawing.Color.Black;
             series4.Name = "PointX";
+            series4.ToolTip = "Frame: #VALX\\nAxis-X: #VAL";
             series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
             series4.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Single;
             this.chartX.Series.Add(series4);
