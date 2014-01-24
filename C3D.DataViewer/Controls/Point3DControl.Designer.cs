@@ -227,7 +227,7 @@
             this.mnuShowResidual.CheckOnClick = true;
             this.mnuShowResidual.Name = "mnuShowResidual";
             this.mnuShowResidual.Size = new System.Drawing.Size(219, 22);
-            this.mnuShowResidual.Text = "Show Residual";
+            this.mnuShowResidual.Text = "Show Residual Point";
             this.mnuShowResidual.Click += new System.EventHandler(this.mnuShowResidual_Click);
             // 
             // mnuShowMarker
