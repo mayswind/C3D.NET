@@ -183,65 +183,75 @@
             this.mnuLine2,
             this.mnuShowMarker});
             this.mnuContext.Name = "mnuContext";
-            this.mnuContext.Size = new System.Drawing.Size(220, 170);
+            this.mnuContext.Size = new System.Drawing.Size(282, 192);
             // 
             // mnuHZoomIn
             // 
             this.mnuHZoomIn.Name = "mnuHZoomIn";
-            this.mnuHZoomIn.Size = new System.Drawing.Size(219, 22);
+            this.mnuHZoomIn.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.mnuHZoomIn.Size = new System.Drawing.Size(281, 22);
             this.mnuHZoomIn.Text = "Zoom In Horizontally";
             this.mnuHZoomIn.Click += new System.EventHandler(this.mnuHZoomIn_Click);
             // 
             // mnuHZoomOut
             // 
             this.mnuHZoomOut.Name = "mnuHZoomOut";
-            this.mnuHZoomOut.Size = new System.Drawing.Size(219, 22);
+            this.mnuHZoomOut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.mnuHZoomOut.Size = new System.Drawing.Size(281, 22);
             this.mnuHZoomOut.Text = "Zoom Out Horizontally";
             this.mnuHZoomOut.Click += new System.EventHandler(this.mnuHZoomOut_Click);
             // 
             // mnuHZoomReset
             // 
             this.mnuHZoomReset.Name = "mnuHZoomReset";
-            this.mnuHZoomReset.Size = new System.Drawing.Size(219, 22);
+            this.mnuHZoomReset.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.mnuHZoomReset.Size = new System.Drawing.Size(281, 22);
             this.mnuHZoomReset.Text = "Zoom Reset Horizontally";
             this.mnuHZoomReset.Click += new System.EventHandler(this.mnuHZoomReset_Click);
             // 
             // mnuLine
             // 
             this.mnuLine.Name = "mnuLine";
-            this.mnuLine.Size = new System.Drawing.Size(216, 6);
+            this.mnuLine.Size = new System.Drawing.Size(278, 6);
             // 
             // mnuVZoomIn
             // 
             this.mnuVZoomIn.Name = "mnuVZoomIn";
-            this.mnuVZoomIn.Size = new System.Drawing.Size(219, 22);
+            this.mnuVZoomIn.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.I)));
+            this.mnuVZoomIn.Size = new System.Drawing.Size(281, 22);
             this.mnuVZoomIn.Text = "Zoom In Vertically";
             this.mnuVZoomIn.Click += new System.EventHandler(this.mnuVZoomIn_Click);
             // 
             // mnuVZoomOut
             // 
             this.mnuVZoomOut.Name = "mnuVZoomOut";
-            this.mnuVZoomOut.Size = new System.Drawing.Size(219, 22);
+            this.mnuVZoomOut.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.mnuVZoomOut.Size = new System.Drawing.Size(281, 22);
             this.mnuVZoomOut.Text = "Zoom Out Vertically";
             this.mnuVZoomOut.Click += new System.EventHandler(this.mnuVZoomOut_Click);
             // 
             // mnuVZoomReset
             // 
             this.mnuVZoomReset.Name = "mnuVZoomReset";
-            this.mnuVZoomReset.Size = new System.Drawing.Size(219, 22);
+            this.mnuVZoomReset.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.R)));
+            this.mnuVZoomReset.Size = new System.Drawing.Size(281, 22);
             this.mnuVZoomReset.Text = "Zoom Reset Vertically";
             this.mnuVZoomReset.Click += new System.EventHandler(this.mnuVZoomReset_Click);
             // 
             // mnuLine2
             // 
             this.mnuLine2.Name = "mnuLine2";
-            this.mnuLine2.Size = new System.Drawing.Size(216, 6);
+            this.mnuLine2.Size = new System.Drawing.Size(278, 6);
             // 
             // mnuShowMarker
             // 
             this.mnuShowMarker.CheckOnClick = true;
             this.mnuShowMarker.Name = "mnuShowMarker";
-            this.mnuShowMarker.Size = new System.Drawing.Size(219, 22);
+            this.mnuShowMarker.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
+            this.mnuShowMarker.Size = new System.Drawing.Size(281, 22);
             this.mnuShowMarker.Text = "Show Marker";
             this.mnuShowMarker.Click += new System.EventHandler(this.mnuShowMarker_Click);
             // 

@@ -17,47 +17,46 @@ namespace C3D.DataViewer.Helper
         /// </summary>
         /// <param name="chart">图表控件</param>
         /// <param name="status">图表状态</param>
-        /// <param name="type">缩放类型(1为放大,2为缩小,0为还原)</param>
+        /// <param name="type">轴类型(0为X轴,1为Y轴)</param>
         /// <param name="scale">缩放等级</param>
         internal static void ZoomChart(Chart chart, ChartScaleStatus status, Byte type, Int32 scale)
         {
             Axis axis = (type == 0 ? chart.ChartAreas[0].AxisX : chart.ChartAreas[0].AxisY);
+            Int32 newScale = status.Scales[type] + scale;
 
-            if (scale == 0)//Zoom Reset
+            if (scale == 0 || newScale == 0)//重置
             {
                 axis.Maximum = status.Maxs[type];
                 axis.Minimum = status.Mins[type];
-                axis.ScaleView.ZoomReset();
+                axis.ScaleView.ZoomReset(0);
 
-                status.Scales[type] = scale;
+                status.Scales[type] = 0;
             }
             else
             {
-                Double diff = status.Maxs[type] - status.Mins[type];
-                Int32 newScale = status.Scales[type] + scale;
+                if (newScale > 0)//图表区域小于显示区域
+                {
+                    Double diff = status.Maxs[type] - status.Mins[type];
 
-                if (newScale > 0)
-                {
-                    axis.Maximum = status.Maxs[type] + diff * 0.1 * Math.Abs(newScale);
-                    axis.Minimum = status.Mins[type] - diff * 0.1 * Math.Abs(newScale);
+                    axis.Maximum = status.Maxs[type] + diff * 0.1 * Math.Pow(1.5, newScale);
+                    axis.Minimum = status.Mins[type] - diff * 0.1 * Math.Pow(1.5, newScale);
                 }
-                else if (newScale < 0)
+                else if (newScale < 0 && scale < 0)//图表区域大于显示区域 放大
                 {
-                    Double vMax = status.Maxs[type] - diff * 0.5 * (1.0 - 1.0 / Math.Pow(2, Math.Abs(newScale)));
-                    Double vMin = status.Mins[type] + diff * 0.5 * (1.0 - 1.0 / Math.Pow(2, Math.Abs(newScale)));
+                    Double diff = axis.ScaleView.ViewMaximum - axis.ScaleView.ViewMinimum;
+
+                    Double vMin = axis.ScaleView.ViewMinimum + diff * 0.1 * (1.0 + Math.Pow(1.5, newScale));
+                    Double vMax = axis.ScaleView.ViewMaximum - diff * 0.1 * (1.0 + Math.Pow(1.5, newScale));
 
                     if (vMin >= vMax)
                     {
                         return;
                     }
 
-                    axis.ScaleView.Zoom(vMin, vMax);
+                    axis.ScaleView.Zoom(vMin, vMax - vMin, DateTimeIntervalType.Number, true);
                 }
-                else
+                else if (newScale < 0 && scale > 0)//图表区域大于显示区域 缩小
                 {
-                    axis.Maximum = status.Maxs[type];
-                    axis.Minimum = status.Mins[type];
-
                     axis.ScaleView.ZoomReset();
                 }
 
