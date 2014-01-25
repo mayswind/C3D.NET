@@ -222,6 +222,17 @@ namespace C3D.DataViewer.Controls
         {
             _showResidual = this.mnuShowResidual.Checked;
             this.LoadData(false);
+
+            for (Int32 i = 0; i < 4; i++)
+            {
+                for (Int32 j = 0; j < 2; j++)
+                {
+                    if (this._status[i].Scales[j] > 0)
+                    {
+                        this._status[i].Scales[j] = 0;
+                    }
+                }
+            }
         }
 
         private void mnuShowMarker_Click(object sender, EventArgs e)
