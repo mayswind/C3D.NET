@@ -18,10 +18,10 @@ namespace C3D.DataViewer.Controls
 
         private C3DFile _file = null;
         private Int32 _pid = 0;
-        private Dictionary<Int32, Dictionary<Int32, Single>> _points = null;
-        private Dictionary<Int32, Chart> _charts = null;
-        private Dictionary<Int32, ChartScaleStatus> _status = null;
-        private Dictionary<Int32, MouseGestureHandler> _gestureHandlers = null;
+
+        private Chart[] _charts = null;
+        private Dictionary<Int32, Single>[] _points = null;
+        private ChartScaleStatus[] _status = null;
 
         public Point3DControl(C3DFile file, Int32 pid)
         {
@@ -31,90 +31,92 @@ namespace C3D.DataViewer.Controls
             this.mnuShowResidual.Checked = _showResidual;
             this.mnuShowMarker.Checked = _showMarker;
 
-            this._points = new Dictionary<Int32, Dictionary<Int32, Single>>();
-            this._charts = new Dictionary<Int32, Chart>();
-            this._status = new Dictionary<Int32, ChartScaleStatus>();
-            this._gestureHandlers = new Dictionary<Int32, MouseGestureHandler>();
+            this._charts = new Chart[4] { this.chartX, this.chartY, this.chartZ, this.chartResidual };
+            this._points = new Dictionary<Int32, Single>[4];
+            this._status = new ChartScaleStatus[4];
 
             this._file = file;
             this._pid = pid;
-            this.LoadData(this._file, this._pid);
+            this.LoadData(true);
         }
 
         #region 读取数据
-        private void LoadData(C3DFile file, Int32 pid)
+        private void LoadData(Boolean isFirstLoad)
         {
-            if (file == null)
+            if (this._file == null)
             {
                 return;
             }
 
-            #region 初始化
-            C3DParameterCache cache = C3DParameterCache.CreateCache(file);
-            C3DHeaderEvent[] events = file.Header.GetAllHeaderEvents();
+            C3DParameterCache cache = C3DParameterCache.CreateCache(this._file);
+            C3DHeaderEvent[] events = this._file.Header.GetAllHeaderEvents();
 
-            UInt16 firstFrameIndex = file.Header.FirstFrameIndex;
-            UInt16 lastFrameIndex = file.Header.LastFrameIndex;
+            UInt16 firstFrameIndex = this._file.Header.FirstFrameIndex;
+            UInt16 lastFrameIndex = this._file.Header.LastFrameIndex;
 
-            for (Int32 i = 1; i <= 4; i++)
+            #region 第一次初始化
+            if (isFirstLoad)
             {
-                this._points[i] = new Dictionary<Int32, Single>();
-                this._status[i] = new ChartScaleStatus(firstFrameIndex, lastFrameIndex, Single.MaxValue, Single.MinValue);
-            }
+                for (Int32 i = 0; i < 4; i++)
+                {
+                    this._status[i] = new ChartScaleStatus(firstFrameIndex, lastFrameIndex, Single.MaxValue, Single.MinValue);
+                }
 
-            this._charts[1] = this.chartX;
-            this._charts[2] = this.chartY;
-            this._charts[3] = this.chartZ;
-            this._charts[4] = this.chartResidual;
+                this.ShowStripLine(events, cache.FrameRate);
+                this.SetMarker();
+            }
             #endregion
 
             #region 列表内容填充
-            for (Int32 i = 0; i < file.AllFrames.Count; i++)
+            for (Int32 i = 0; i < 4; i++)
+            {
+                this._points[i] = new Dictionary<Int32, Single>();
+
+                this._status[i].Mins[1] = Single.MaxValue;
+                this._status[i].Maxs[1] = Single.MinValue;
+
+                this._status[i].Maxs[0] = (this._status[i].Maxs[0] == this._status[i].Mins[0] ? this._status[i].Maxs[0] + 1 : this._status[i].Maxs[0]);
+                this._status[i].Maxs[1] = (this._status[i].Maxs[1] == this._status[i].Mins[1] ? this._status[i].Maxs[1] + 1 : this._status[i].Maxs[1]);
+            }
+            
+            this._status[3].Mins[1] = -1.0F;
+            this._status[3].Maxs[1] = Math.Max(this._status[3].Maxs[1], 1.0F);
+
+            for (Int32 i = 0; i < this._file.AllFrames.Count; i++)
             {
                 Int32 index = firstFrameIndex + i;
-                C3DPoint3DData point3D = file.AllFrames[i].Point3Ds[pid];
+                C3DPoint3DData point3D = this._file.AllFrames[i].Point3Ds[this._pid];
 
                 if (_showResidual || point3D.Residual > -1)
                 {
-                    this._points[1][index] = point3D.X;
-                    this._points[2][index] = point3D.Y;
-                    this._points[3][index] = point3D.Z;
+                    this._points[0][index] = point3D.X;
+                    this._points[1][index] = point3D.Y;
+                    this._points[2][index] = point3D.Z;
 
-                    for (Int32 j = 1; j <= 3; j++)
+                    for (Int32 j = 0; j < 3; j++)
                     {
                         this._status[j].Mins[1] = Math.Min(this._status[j].Mins[1], this._points[j][index]);
                         this._status[j].Maxs[1] = Math.Max(this._status[j].Maxs[1], this._points[j][index]);
                     }
                 }
 
-                this._points[4][index] = point3D.Residual;
-                this._status[4].Maxs[1] = Math.Max(this._status[4].Maxs[1], point3D.Residual);
+                this._points[3][index] = point3D.Residual;
+                this._status[3].Maxs[1] = Math.Max(this._status[3].Maxs[1], point3D.Residual);
 
-                this.lvItems.Items.Add(new ListViewItem(new String[] {
-                    (index).ToString(), point3D.X.ToString("F3"), point3D.Y.ToString("F3"), point3D.Z.ToString("F3"),
-                    point3D.Residual.ToString("F3"), point3D.CameraMaskInfo }));
+                if (isFirstLoad)
+                {
+                    this.lvItems.Items.Add(new ListViewItem(new String[] {
+                        (index).ToString(), point3D.X.ToString("F3"), point3D.Y.ToString("F3"), point3D.Z.ToString("F3"),
+                        point3D.Residual.ToString("F3"), point3D.CameraMaskInfo }));
+                }
             }
             #endregion
 
-            #region 设置缩放状态
-            for (Int32 i = 1; i <= 3; i++)
-            {
-                this._status[i].Maxs[0] = (this._status[i].Maxs[0] == this._status[i].Mins[0] ? this._status[i].Maxs[0] + 1 : this._status[i].Maxs[0]);
-                this._status[i].Maxs[1] = (this._status[i].Maxs[1] == this._status[i].Mins[1] ? this._status[i].Maxs[1] + 1 : this._status[i].Maxs[1]);
-            }
-
-            this._status[4].Mins[1] = -1.0F;
-            this._status[4].Maxs[1] = Math.Max(this._status[4].Maxs[1], 1.0F);
-            #endregion
-
-            #region 显示数据
-            for (Int32 i = 1; i <= 4; i++)
+            #region 绑定数据
+            for (Int32 i = 0; i < 4; i++)
             {
                 ChartBindingHelper.BindDataToChart<Int32, Single>(this._charts[i], this._points[i], this._status[i].Mins[0], this._status[i].Maxs[0], this._status[i].Mins[1], this._status[i].Maxs[1]);
             }
-
-            this.ShowStripLine(events, cache.FrameRate);
-            this.SetMarker();
             #endregion
         }
 
@@ -125,24 +127,41 @@ namespace C3D.DataViewer.Controls
                 return;
             }
 
-            for (Int32 i = 0; i < events.Length; i++)
+            for (Int32 j = 0; j < events.Length; j++)
             {
-                if (events[i] != null && events[i].IsDisplay)
+                if (events[j] == null || !events[j].IsDisplay)
                 {
-                    ChartBindingHelper.SetStripLineToChart(this.chartX, events[i].EventTime * frameRate, events[i].EventName);
-                    ChartBindingHelper.SetStripLineToChart(this.chartY, events[i].EventTime * frameRate, events[i].EventName);
-                    ChartBindingHelper.SetStripLineToChart(this.chartZ, events[i].EventTime * frameRate, events[i].EventName);
-                    ChartBindingHelper.SetStripLineToChart(this.chartResidual, events[i].EventTime * frameRate, events[i].EventName);
+                    continue;
+                }
+
+                Double offset = events[j].EventTime * frameRate;
+                String name = events[j].EventName;
+
+                for (Int32 i = 0; i < 4; i++)
+                {
+                    ChartBindingHelper.SetStripLineToChart(this._charts[i], offset, name);
                 }
             }
         }
 
         private void SetMarker()
         {
-            this._charts[1].Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);
-            this._charts[2].Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);
-            this._charts[3].Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);
-            this._charts[4].Series[0].MarkerStyle = (_showMarker ? MarkerStyle.Square : MarkerStyle.None);
+            for (Int32 i = 0; i < 3; i++)
+            {
+                this._charts[i].Series[0].ChartType = (_showMarker ? SeriesChartType.Line : SeriesChartType.FastLine);//XYZ
+            }
+
+            this._charts[3].Series[0].MarkerStyle = (_showMarker ? MarkerStyle.Square : MarkerStyle.None);//Residual
+        }
+
+        private Chart GetCurrentChart()
+        {
+            return this._charts[_currentTab - 1];
+        }
+
+        private ChartScaleStatus GetCurrentStatus()
+        {
+            return this._status[_currentTab - 1];
         }
         #endregion
 
@@ -154,55 +173,55 @@ namespace C3D.DataViewer.Controls
 
         private void gesturehandler_OnMouseGestureUp(object sender, MouseEventArgs e)
         {
-            ChartZoomHelper.SetChartMouseUp(this._charts[_currentTab]);
+            ChartZoomHelper.SetChartMouseUp(this.GetCurrentChart());
         }
 
         private void gesturehandler_OnMouseGestureToLeftOrRight(object sender, MouseGestureEventArgs e)
         {
-            ChartZoomHelper.SetChartMouseMoveLeftOrRight(this._charts[_currentTab], e.Delta);
+            ChartZoomHelper.SetChartMouseMoveLeftOrRight(this.GetCurrentChart(), e.Delta);
         }
 
         private void gesturehandler_OnMouseGestureToTopOrBottom(object sender, MouseGestureEventArgs e)
         {
-            ChartZoomHelper.SetChartMouseMoveTopOrBottom(this._charts[_currentTab], e.Delta);
+            ChartZoomHelper.SetChartMouseMoveTopOrBottom(this.GetCurrentChart(), e.Delta);
         }
         #endregion
 
         #region 菜单事件
         private void mnuHZoomIn_Click(object sender, EventArgs e)
         {
-            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 0, -1);
+            ChartZoomHelper.ZoomChart(this.GetCurrentChart(), this.GetCurrentStatus(), 0, -1);
         }
 
         private void mnuHZoomOut_Click(object sender, EventArgs e)
         {
-            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 0, 1);
+            ChartZoomHelper.ZoomChart(this.GetCurrentChart(), this.GetCurrentStatus(), 0, 1);
         }
 
         private void mnuHZoomReset_Click(object sender, EventArgs e)
         {
-            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 0, 0);
+            ChartZoomHelper.ZoomChart(this.GetCurrentChart(), this.GetCurrentStatus(), 0, 0);
         }
 
         private void mnuVZoomIn_Click(object sender, EventArgs e)
         {
-            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 1, -1);
+            ChartZoomHelper.ZoomChart(this.GetCurrentChart(), this.GetCurrentStatus(), 1, -1);
         }
 
         private void mnuVZoomOut_Click(object sender, EventArgs e)
         {
-            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 1, 1);
+            ChartZoomHelper.ZoomChart(this.GetCurrentChart(), this.GetCurrentStatus(), 1, 1);
         }
 
         private void mnuVZoomReset_Click(object sender, EventArgs e)
         {
-            ChartZoomHelper.ZoomChart(this._charts[_currentTab], this._status[_currentTab], 1, 0);
+            ChartZoomHelper.ZoomChart(this.GetCurrentChart(), this.GetCurrentStatus(), 1, 0);
         }
 
         private void mnuShowResidual_Click(object sender, EventArgs e)
         {
             _showResidual = this.mnuShowResidual.Checked;
-            this.LoadData(this._file, this._pid);
+            this.LoadData(false);
         }
 
         private void mnuShowMarker_Click(object sender, EventArgs e)
