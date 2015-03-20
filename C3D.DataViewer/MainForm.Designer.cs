@@ -28,49 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tsMain = new System.Windows.Forms.ToolStrip();
-            this.btnOpen = new System.Windows.Forms.ToolStripButton();
-            this.btnClose = new System.Windows.Forms.ToolStripButton();
             this.ssMain = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.scMain = new System.Windows.Forms.SplitContainer();
             this.tvItems = new System.Windows.Forms.TreeView();
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
-            this.tsMain.SuspendLayout();
+            this.mnuMain = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuLine = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.ssMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scMain)).BeginInit();
             this.scMain.Panel1.SuspendLayout();
             this.scMain.SuspendLayout();
+            this.mnuMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tsMain
-            // 
-            this.tsMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOpen,
-            this.btnClose});
-            this.tsMain.Location = new System.Drawing.Point(0, 0);
-            this.tsMain.Name = "tsMain";
-            this.tsMain.Size = new System.Drawing.Size(884, 25);
-            this.tsMain.TabIndex = 0;
-            this.tsMain.Text = "toolStrip1";
-            // 
-            // btnOpen
-            // 
-            this.btnOpen.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(62, 22);
-            this.btnOpen.Text = "Open(&O)";
-            this.btnOpen.ToolTipText = "Open File";
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
-            // 
-            // btnClose
-            // 
-            this.btnClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnClose.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(60, 22);
-            this.btnClose.Text = "Close(&C)";
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // ssMain
             // 
@@ -118,7 +93,65 @@
             this.dlgOpen.DefaultExt = "c3d";
             this.dlgOpen.Filter = "C3D File(*.c3d)|*.c3d";
             // 
-            // frmMain
+            // mnuMain
+            // 
+            this.mnuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.mnuMain.Location = new System.Drawing.Point(0, 0);
+            this.mnuMain.Name = "mnuMain";
+            this.mnuMain.Size = new System.Drawing.Size(884, 25);
+            this.mnuMain.TabIndex = 3;
+            this.mnuMain.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuOpen,
+            this.mnuReload,
+            this.mnuClose,
+            this.mnuLine,
+            this.mnuExit});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // mnuOpen
+            // 
+            this.mnuOpen.Name = "mnuOpen";
+            this.mnuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.mnuOpen.Size = new System.Drawing.Size(155, 22);
+            this.mnuOpen.Text = "&Open";
+            this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
+            // 
+            // mnuReload
+            // 
+            this.mnuReload.Name = "mnuReload";
+            this.mnuReload.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.mnuReload.Size = new System.Drawing.Size(155, 22);
+            this.mnuReload.Text = "&Reload";
+            this.mnuReload.Click += new System.EventHandler(this.mnuReload_Click);
+            // 
+            // mnuClose
+            // 
+            this.mnuClose.Name = "mnuClose";
+            this.mnuClose.Size = new System.Drawing.Size(155, 22);
+            this.mnuClose.Text = "&Close";
+            this.mnuClose.Click += new System.EventHandler(this.mnuClose_Click);
+            // 
+            // mnuLine
+            // 
+            this.mnuLine.Name = "mnuLine";
+            this.mnuLine.Size = new System.Drawing.Size(152, 6);
+            // 
+            // mnuExit
+            // 
+            this.mnuExit.Name = "mnuExit";
+            this.mnuExit.ShortcutKeyDisplayString = "Alt+F4";
+            this.mnuExit.Size = new System.Drawing.Size(155, 22);
+            this.mnuExit.Text = "E&xit";
+            this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
+            // 
+            // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -126,19 +159,21 @@
             this.ClientSize = new System.Drawing.Size(884, 511);
             this.Controls.Add(this.scMain);
             this.Controls.Add(this.ssMain);
-            this.Controls.Add(this.tsMain);
+            this.Controls.Add(this.mnuMain);
             this.DoubleBuffered = true;
-            this.Name = "frmMain";
+            this.MainMenuStrip = this.mnuMain;
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "C3D.NET DataViewer";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.frmMain_DragEnter);
-            this.tsMain.ResumeLayout(false);
-            this.tsMain.PerformLayout();
             this.ssMain.ResumeLayout(false);
             this.ssMain.PerformLayout();
             this.scMain.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.scMain)).EndInit();
             this.scMain.ResumeLayout(false);
+            this.mnuMain.ResumeLayout(false);
+            this.mnuMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,14 +181,18 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip tsMain;
-        private System.Windows.Forms.ToolStripButton btnOpen;
         private System.Windows.Forms.StatusStrip ssMain;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.SplitContainer scMain;
         private System.Windows.Forms.TreeView tvItems;
         private System.Windows.Forms.OpenFileDialog dlgOpen;
-        private System.Windows.Forms.ToolStripButton btnClose;
+        private System.Windows.Forms.MenuStrip mnuMain;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuOpen;
+        private System.Windows.Forms.ToolStripMenuItem mnuReload;
+        private System.Windows.Forms.ToolStripMenuItem mnuClose;
+        private System.Windows.Forms.ToolStripSeparator mnuLine;
+        private System.Windows.Forms.ToolStripMenuItem mnuExit;
     }
 }
 

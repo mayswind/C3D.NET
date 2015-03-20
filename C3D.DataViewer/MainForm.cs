@@ -43,7 +43,7 @@ namespace C3D.DataViewer
             }
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void mnuOpen_Click(object sender, EventArgs e)
         {
             if (this.dlgOpen.ShowDialog() == DialogResult.OK && !String.IsNullOrEmpty(this.dlgOpen.FileName))
             {
@@ -51,9 +51,22 @@ namespace C3D.DataViewer
             }
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
+        private void mnuReload_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(this._currentFileName))
+            {
+                this.OpenFile(this._currentFileName);
+            }
+        }
+
+        private void mnuClose_Click(object sender, EventArgs e)
         {
             this.CloseFile();
+        }
+
+        private void mnuExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         private void tvItems_AfterSelect(object sender, TreeViewEventArgs e)
