@@ -135,6 +135,12 @@ namespace C3D.DataViewer.Controls
         #endregion
 
         #region 菜单事件
+        private void mnuCopy_Click(object sender, EventArgs e)
+        {
+            String content = this.lvItems.GetTableContent();
+            Clipboard.SetText(content);
+        }
+
         private void mnuHZoomIn_Click(object sender, EventArgs e)
         {
             ChartZoomHelper.ZoomChart(this.chartView, this._status, 0, -1);

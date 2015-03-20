@@ -73,9 +73,12 @@
             this.gestureHandler2 = new C3D.DataViewer.Gesture.MouseGestureHandler();
             this.gestureHandler3 = new C3D.DataViewer.Gesture.MouseGestureHandler();
             this.gestureHandler4 = new C3D.DataViewer.Gesture.MouseGestureHandler();
+            this.mnuContextForData = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.tpResidual.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartResidual)).BeginInit();
             this.mnuContext.SuspendLayout();
+            this.mnuContextForData.SuspendLayout();
             this.tpPointZ.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartZ)).BeginInit();
             this.tpPointY.SuspendLayout();
@@ -480,6 +483,7 @@
             this.chPointZ,
             this.chResidual,
             this.chMask});
+            this.lvItems.ContextMenuStrip = this.mnuContextForData;
             this.lvItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvItems.FullRowSelect = true;
             this.lvItems.GridLines = true;
@@ -580,6 +584,20 @@
             this.gestureHandler4.OnMouseGestureToBottom += new C3D.DataViewer.Gesture.MouseGestureToBottom(this.gesturehandler_OnMouseGestureToTopOrBottom);
             this.gestureHandler4.OnMouseGestureUp += new System.Windows.Forms.MouseEventHandler(this.gesturehandler_OnMouseGestureUp);
             // 
+            // mnuContextForData
+            // 
+            this.mnuContextForData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuCopy});
+            this.mnuContextForData.Name = "mnuContextForData";
+            this.mnuContextForData.Size = new System.Drawing.Size(153, 48);
+            // 
+            // mnuCopy
+            // 
+            this.mnuCopy.Name = "mnuCopy";
+            this.mnuCopy.Size = new System.Drawing.Size(152, 22);
+            this.mnuCopy.Text = "Copy All Data";
+            this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
+            // 
             // Point3DControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -599,6 +617,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartX)).EndInit();
             this.tpData.ResumeLayout(false);
             this.tcMain.ResumeLayout(false);
+            this.mnuContextForData.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -637,6 +656,7 @@
         private Gesture.MouseGestureHandler gestureHandler3;
         private Gesture.MouseGestureHandler gestureHandler4;
         private System.Windows.Forms.ToolStripMenuItem mnuShowResidual;
-
+        private System.Windows.Forms.ContextMenuStrip mnuContextForData;
+        private System.Windows.Forms.ToolStripMenuItem mnuCopy;
     }
 }
