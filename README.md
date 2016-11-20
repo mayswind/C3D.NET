@@ -21,7 +21,11 @@ for (Int32 i = 0; i &lt; file.AllFrames.Count; i++)
             firstFrameIndex + i, point3D.X, point3D.Y, point3D.Z);
     }
 }</pre>
+<h2><strong>Installation</strong></h2>
+<h3>Using Nuget</h3>
+<pre>PM> Install-Package C3D.NET</pre>
 <h2><strong>More</strong></h2>
 <p>CodePlex Page:&nbsp;<a href="https://c3d.codeplex.com" target="_blank">https://c3d.codeplex.com</a><br />
+<p>NuGet:&nbsp;<a href="http://www.nuget.org/packages/C3D.NET" target="_blank">http://www.nuget.org/packages/C3D.NET/</a><br />
 GitHub Page:&nbsp;<a href="https://github.com/mayswind/C3D.NET" target="_blank">https://github.com/mayswind/C3D.NET</a><br />
 A Chinese article about C3D file type and this project:&nbsp;<a href="http://www.cnblogs.com/mayswind/p/3369090.html" target="_blank">http://www.cnblogs.com/mayswind/p/3369090.html</a></p>
