@@ -6,7 +6,7 @@
 ## Project Description
 C3D.NET is a free class library written in C# for manipulating C3D file. This project supports .NET 2.0 and .NET 4.0, and provides a free Data Viewer based on this library.
 
-![C3D.NET DataViewer](http://download-codeplex.sec.s-msft.com/Download?ProjectName=c3d&DownloadId=757078)
+![C3D.NET DataViewer](https://raw.githubusercontent.com/wiki/mayswind/C3D.NET/screenshots/c3dnet_dataviewer.png)
 
 The C3D format is a public domain, binary file format that has been used in Biomechanics, Animation and Gait Analysis laboratories to record synchronized 3D and analog data.
 
