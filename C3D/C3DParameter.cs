@@ -410,12 +410,12 @@ namespace C3D
                 throw new C3DException("Parameter \"" + Name + "\" is not 2D array.");
             }
 
-            Byte[,][] ret = new Byte[this._dimensions[0], this._dimensions[1]][];
+            Byte[,][] ret = new Byte[this._dimensions[1], this._dimensions[0]][];
             Int32 index = 0;
 
-            for (Int32 x = 0; x < this._dimensions[0]; x++)
+            for (Int32 x = 0; x < this._dimensions[1]; x++)
             {
-                for (Int32 y = 0; y < this._dimensions[1]; y++)
+                for (Int32 y = 0; y < this._dimensions[0]; y++)
                 {
                     ret[x, y] = new Byte[size];
 
