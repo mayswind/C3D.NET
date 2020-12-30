@@ -250,11 +250,11 @@ namespace C3D
                     throw new C3DException("Parameter \"" + Name + "\" is not string array type.");
                 }
 
-                String[] ret = new String[this._dimensions[1]];
+                String[] ret = new String[this._dimensions[0]];
 
-                for (Int32 i = 0; i < this._dimensions[1]; i++)
+                for (Int32 i = 0; i < this._dimensions[0]; i++)
                 {
-                    ret[i] = this.ReadStringFromBytes(this._parameterData, i * this._dimensions[0], this._dimensions[0]);
+                    ret[i] = this.ReadStringFromBytes(this._parameterData, i * this._dimensions[1], this._dimensions[1]);
                 }
 
                 return (T)(Object)ret;
